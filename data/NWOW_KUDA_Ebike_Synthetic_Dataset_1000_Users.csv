@@ -1,0 +1,1001 @@
+User ID,Brand,Model,Name,Age,Address,Number of Issues,Issue 1,Issue 2,Issue 3
+NWOW-0001,NWOW,GC10,Ryan Cruz,21,"Brgy. Poblacion, Acacia St., Tagaytay, Cavite",2,Loose wiring,Horn not working,
+NWOW-0002,NWOW,ERVS2,Francis Flores,61,"Brgy. San Jose, Del Pilar St., Santo Tomas, Batangas",2,Controller malfunction,Weak acceleration,
+NWOW-0003,NWOW,ERVS3,Clarisse Hernandez,21,"Brgy. San Jose, Mabini St., Lucban, Quezon",2,Brake problem,Charging problem,
+NWOW-0004,NWOW,EPED,Daniel Castillo,43,"Brgy. Santo Niño, Bonifacio St., Santo Tomas, Batangas",2,Flat tire,Throttle not responding,
+NWOW-0005,NWOW,ERVS2,Beatrice Manalo,32,"Brgy. Santo Niño, Del Pilar St., Angono, Rizal",3,Loose wiring,Headlight not working,Battery drains quickly
+NWOW-0006,NWOW,ERV2,Jerome Hernandez,59,"Brgy. San Isidro, Mabini St., Santa Rosa, Laguna",3,Display malfunction,Controller malfunction,Unusual motor noise
+NWOW-0007,NWOW,GC10,Sarah De Leon,20,"Brgy. San Jose, Quezon St., Nasugbu, Batangas",3,Horn not working,Charging problem,Battery drains quickly
+NWOW-0008,NWOW,ERV2,John Pascual,49,"Brgy. San Jose, Acacia St., Kawit, Cavite",2,Charger not working,Weak acceleration,
+NWOW-0009,NWOW,ERV,Zoe Hernandez,32,"Brgy. San Juan, Kalayaan Ave., Binangonan, Rizal",1,Charger not working,,
+NWOW-0010,NWOW,EPED,Vanessa Fernandez,29,"Brgy. Poblacion, Acacia St., Bauan, Batangas",1,Display malfunction,,
+NWOW-0011,NWOW,GC10,Alyssa Fernandez,65,"Brgy. Santo Niño, Mabini St., Cabuyao, Laguna",3,Flat tire,Charger not working,Battery drains quickly
+NWOW-0012,NWOW,ERV Mini,Francis Morales,28,"Brgy. Maligaya, Quezon St., Santo Tomas, Batangas",2,Display malfunction,Key/ignition problem,
+NWOW-0013,NWOW,ERVS3,Jasmine Aquino,52,"Brgy. Santo Niño, Kalayaan Ave., Rosario, Batangas",1,Motor not running,,
+NWOW-0014,NWOW,ERVS2,Elaine Castillo,24,"Brgy. San Juan, Acacia St., Cardona, Rizal",1,Battery failure,,
+NWOW-0015,NWOW,ERV2,Leah Cruz,47,"Brgy. San Isidro, Acacia St., Dasmarinas, Cavite",1,Weak acceleration,,
+NWOW-0016,NWOW,ERV,Anthony Tolentino,25,"Brgy. Santo Niño, Sampaguita St., Nasugbu, Batangas",3,Battery drains quickly,Charger not working,Flat tire
+NWOW-0017,NWOW,ERV,Maria Garcia,59,"Brgy. Santo Niño, Bonifacio St., Malvar, Batangas",1,Loose wiring,,
+NWOW-0018,NWOW,ERV,Clarisse Morales,22,"Brgy. San Juan, Rizal St., Sariaya, Quezon",2,Brake sensor error,Display malfunction,
+NWOW-0019,NWOW,ERV Mini,Rachel Bernardo,26,"Brgy. San Juan, Mabini St., Nasugbu, Batangas",1,Battery drains quickly,,
+NWOW-0020,NWOW,GC10,Trisha Salazar,24,"Brgy. San Isidro, Mabini St., Biñan, Laguna",1,Unusual motor noise,,
+NWOW-0021,NWOW,ERVS2,Angela Salazar,60,"Brgy. San Juan, Rizal St., Gumaca, Quezon",1,Flat tire,,
+NWOW-0022,NWOW,ERVS3,Christine Rivera,51,"Brgy. San Jose, Del Pilar St., Gumaca, Quezon",3,Key/ignition problem,Tire puncture,Charger not working
+NWOW-0023,NWOW,ERVS3,Trisha Macapagal,19,"Brgy. Maligaya, Sampaguita St., Dasmarinas, Cavite",2,Charger not working,Battery failure,
+NWOW-0024,NWOW,ERVS3,Jasmine Flores,34,"Brgy. San Isidro, Kalayaan Ave., Angono, Rizal",1,Charging problem,,
+NWOW-0025,NWOW,ERVS2,Alyssa Valencia,62,"Brgy. Maligaya, Kalayaan Ave., Silang, Cavite",1,Throttle not responding,,
+NWOW-0026,NWOW,ERV2,Patricia Lim,33,"Brgy. Poblacion, Quezon St., Rosario, Batangas",2,Display malfunction,Horn not working,
+NWOW-0027,NWOW,GC10,Kevin Santiago,59,"Brgy. San Isidro, Acacia St., Malvar, Batangas",2,Key/ignition problem,Display malfunction,
+NWOW-0028,NWOW,GC10,Beatrice David,22,"Brgy. Poblacion, Bonifacio St., Cabuyao, Laguna",2,Turn signal not working,Throttle not responding,
+NWOW-0029,NWOW,GC10,Trisha Gonzales,51,"Brgy. Santo Niño, Acacia St., Imus, Cavite",2,Turn signal not working,Battery failure,
+NWOW-0030,NWOW,ERVS2,Faith Alcantara,57,"Brgy. Poblacion, Quezon St., Rosario, Cavite",1,Unusual motor noise,,
+NWOW-0031,NWOW,EPED,Zoe Morales,18,"Brgy. Santo Niño, Sampaguita St., Batangas City, Batangas",2,Throttle not responding,Battery failure,
+NWOW-0032,NWOW,ERVS3,Alyssa Macapagal,41,"Brgy. Maligaya, Sampaguita St., Malvar, Batangas",1,Battery drains quickly,,
+NWOW-0033,NWOW,ERVS2,Leah Santiago,62,"Brgy. San Jose, National Road, Gumaca, Quezon",2,Unusual motor noise,Turn signal not working,
+NWOW-0034,NWOW,ERVS3,Hannah Flores,65,"Brgy. Maligaya, Kalayaan Ave., Kawit, Cavite",3,Charging problem,Battery drains quickly,Unusual motor noise
+NWOW-0035,NWOW,ERVS2,Michael Ramos,31,"Brgy. San Jose, National Road, Imus, Cavite",2,Brake sensor error,Charger not working,
+NWOW-0036,NWOW,ERV2,Daniel Navarro,58,"Brgy. Santo Niño, Mabini St., Bay, Laguna",2,Tire puncture,Horn not working,
+NWOW-0037,NWOW,ERV2,Angela Ocampo,24,"Brgy. San Juan, Kalayaan Ave., Biñan, Laguna",2,Brake sensor error,Turn signal not working,
+NWOW-0038,NWOW,ERV,Christine Mercado,43,"Brgy. Maligaya, Quezon St., Tanza, Cavite",2,Suspension problem,Tire puncture,
+NWOW-0039,NWOW,ERVS2,Maria Pascual,20,"Brgy. San Juan, Rizal St., Morong, Rizal",3,Unusual motor noise,Flat tire,Turn signal not working
+NWOW-0040,NWOW,EPED,Clarisse Mendoza,65,"Brgy. San Isidro, Mabini St., Cainta, Rizal",2,Charging problem,Display malfunction,
+NWOW-0041,NWOW,GC10,Irene Reyes,26,"Brgy. Poblacion, National Road, San Mateo, Rizal",1,Battery drains quickly,,
+NWOW-0042,NWOW,ERV Mini,Grace Torres,32,"Brgy. Maligaya, Del Pilar St., Taytay, Rizal",2,Charger not working,Tire puncture,
+NWOW-0043,NWOW,ERV2,Karen Salazar,45,"Brgy. Santo Niño, National Road, Atimonan, Quezon",1,Throttle not responding,,
+NWOW-0044,NWOW,ERVS2,Christian Torres,41,"Brgy. San Isidro, Sampaguita St., Rosario, Cavite",2,Motor not running,Battery drains quickly,
+NWOW-0045,NWOW,ERVS2,Mika Garcia,45,"Brgy. San Jose, Bonifacio St., Batangas City, Batangas",1,Charging problem,,
+NWOW-0046,NWOW,ERVS3,Miguel Tolentino,54,"Brgy. San Jose, Quezon St., Tagaytay, Cavite",2,Charging problem,Suspension problem,
+NWOW-0047,NWOW,GC10,Faith Torres,58,"Brgy. Santo Niño, Rizal St., Lucena, Quezon",2,Battery failure,Horn not working,
+NWOW-0048,NWOW,ERV2,Faith Mendoza,59,"Brgy. Poblacion, Mabini St., Gumaca, Quezon",1,Turn signal not working,,
+NWOW-0049,NWOW,GC10,James Valencia,38,"Brgy. Poblacion, Acacia St., Pagbilao, Quezon",3,Charger not working,Unusual motor noise,Key/ignition problem
+NWOW-0050,NWOW,ERV Mini,Gabriel Castillo,27,"Brgy. Poblacion, Kalayaan Ave., Bacoor, Cavite",1,Weak acceleration,,
+NWOW-0051,NWOW,ERVS3,Andrea Lazaro,20,"Brgy. San Isidro, Del Pilar St., Silang, Cavite",1,Unusual motor noise,,
+NWOW-0052,NWOW,GC10,Jerome Samson,19,"Brgy. Santo Niño, Kalayaan Ave., Sariaya, Quezon",3,Tire puncture,Loose wiring,Motor not running
+NWOW-0053,NWOW,ERVS2,Hannah Garcia,18,"Brgy. Poblacion, Rizal St., Sariaya, Quezon",2,Headlight not working,Charging problem,
+NWOW-0054,NWOW,EPED,Paolo David,43,"Brgy. San Jose, Bonifacio St., Cabuyao, Laguna",1,Charging problem,,
+NWOW-0055,NWOW,ERV Mini,Leah Bernardo,38,"Brgy. San Isidro, Rizal St., Pagsanjan, Laguna",2,Headlight not working,Suspension problem,
+NWOW-0056,NWOW,ERVS2,Vanessa Espiritu,33,"Brgy. Santo Niño, Bonifacio St., Rosario, Cavite",2,Headlight not working,Tire puncture,
+NWOW-0057,NWOW,ERV,Anthony Samson,56,"Brgy. San Juan, Bonifacio St., Antipolo, Rizal",2,Loose wiring,Battery failure,
+NWOW-0058,NWOW,ERVS3,John Lim,22,"Brgy. Poblacion, Bonifacio St., Santa Cruz, Laguna",2,Brake sensor error,Suspension problem,
+NWOW-0059,NWOW,ERV2,Faith Padilla,32,"Brgy. Santo Niño, Rizal St., Trece Martires, Cavite",2,Brake problem,Turn signal not working,
+NWOW-0060,NWOW,ERV,Diana Gonzales,41,"Brgy. Santo Niño, Mabini St., Binangonan, Rizal",1,Unusual motor noise,,
+NWOW-0061,NWOW,GC10,Nadine Aguilar,21,"Brgy. Santo Niño, Acacia St., Rodriguez, Rizal",1,Tire puncture,,
+NWOW-0062,NWOW,ERVS3,Ryan Lazaro,20,"Brgy. Maligaya, Mabini St., Imus, Cavite",1,Brake sensor error,,
+NWOW-0063,NWOW,ERV Mini,Hannah Fernandez,47,"Brgy. Santo Niño, Del Pilar St., Rosario, Batangas",2,Tire puncture,Suspension problem,
+NWOW-0064,NWOW,ERV,Anthony Valdez,41,"Brgy. Maligaya, Mabini St., General Trias, Cavite",1,Unusual motor noise,,
+NWOW-0065,NWOW,EPED,Faith Salazar,58,"Brgy. Poblacion, Quezon St., San Pedro, Laguna",3,Flat tire,Brake problem,Headlight not working
+NWOW-0066,NWOW,ERV Mini,James Manalo,40,"Brgy. San Jose, Quezon St., Morong, Rizal",3,Headlight not working,Motor not running,Brake problem
+NWOW-0067,NWOW,ERV,Christine Tolentino,19,"Brgy. San Isidro, Mabini St., Batangas City, Batangas",2,Headlight not working,Battery failure,
+NWOW-0068,NWOW,ERV,Miguel David,23,"Brgy. Maligaya, Acacia St., Candelaria, Quezon",3,Brake problem,Controller malfunction,Throttle not responding
+NWOW-0069,NWOW,ERVS2,Francis Reyes,35,"Brgy. San Juan, Sampaguita St., Atimonan, Quezon",2,Charger not working,Motor not running,
+NWOW-0070,NWOW,ERV Mini,Beatrice Sy,55,"Brgy. San Isidro, Bonifacio St., Santa Cruz, Laguna",1,Battery drains quickly,,
+NWOW-0071,NWOW,ERV2,Faith Valdez,30,"Brgy. San Isidro, National Road, Pagbilao, Quezon",1,Suspension problem,,
+NWOW-0072,NWOW,ERV2,Leah Valdez,22,"Brgy. Maligaya, Sampaguita St., Bauan, Batangas",3,Flat tire,Tire puncture,Brake problem
+NWOW-0073,NWOW,GC10,Paolo Castro,19,"Brgy. Maligaya, Acacia St., Teresa, Rizal",3,Brake sensor error,Brake problem,Key/ignition problem
+NWOW-0074,NWOW,ERV Mini,Andrea Del Rosario,22,"Brgy. Maligaya, Sampaguita St., Tagaytay, Cavite",1,Charging problem,,
+NWOW-0075,NWOW,ERV2,Ethan Salazar,31,"Brgy. Santo Niño, Bonifacio St., Rodriguez, Rizal",1,Headlight not working,,
+NWOW-0076,NWOW,ERV,Joshua Villanueva,33,"Brgy. San Isidro, Mabini St., Santo Tomas, Batangas",2,Charging problem,Motor not running,
+NWOW-0077,NWOW,ERVS2,Trisha Hernandez,60,"Brgy. San Jose, Acacia St., Santa Cruz, Laguna",2,Motor not running,Brake problem,
+NWOW-0078,NWOW,EPED,Faith Rosales,55,"Brgy. Maligaya, Acacia St., Nasugbu, Batangas",3,Charging problem,Brake problem,Battery drains quickly
+NWOW-0079,NWOW,ERVS3,Patricia Castro,35,"Brgy. San Juan, Acacia St., Malvar, Batangas",1,Loose wiring,,
+NWOW-0080,NWOW,ERVS2,Elaine Ocampo,26,"Brgy. Maligaya, Bonifacio St., Cabuyao, Laguna",1,Headlight not working,,
+NWOW-0081,NWOW,ERVS3,Camille Mendoza,64,"Brgy. Maligaya, Rizal St., Tayabas, Quezon",1,Loose wiring,,
+NWOW-0082,NWOW,ERV2,Gabriel Garcia,41,"Brgy. San Juan, National Road, Teresa, Rizal",2,Turn signal not working,Brake sensor error,
+NWOW-0083,NWOW,ERVS3,Joshua Santiago,31,"Brgy. Maligaya, Rizal St., Bacoor, Cavite",3,Display malfunction,Throttle not responding,Loose wiring
+NWOW-0084,NWOW,ERV2,Samantha Santiago,27,"Brgy. San Jose, Del Pilar St., Tayabas, Quezon",2,Unusual motor noise,Battery drains quickly,
+NWOW-0085,NWOW,ERV Mini,Michael Salazar,60,"Brgy. Santo Niño, Kalayaan Ave., General Trias, Cavite",1,Charger not working,,
+NWOW-0086,NWOW,ERVS2,Adrian Villanueva,64,"Brgy. Maligaya, Rizal St., Rosario, Batangas",2,Charging problem,Weak acceleration,
+NWOW-0087,NWOW,ERVS2,Karen Castillo,18,"Brgy. Poblacion, Kalayaan Ave., Ibaan, Batangas",2,Brake problem,Display malfunction,
+NWOW-0088,NWOW,EPED,Jerome Lim,26,"Brgy. San Isidro, Acacia St., Bauan, Batangas",1,Turn signal not working,,
+NWOW-0089,NWOW,EPED,Nadine Mercado,54,"Brgy. Santo Niño, Kalayaan Ave., San Mateo, Rizal",1,Headlight not working,,
+NWOW-0090,NWOW,ERVS3,Hannah Chua,31,"Brgy. San Juan, Kalayaan Ave., Los Baños, Laguna",1,Weak acceleration,,
+NWOW-0091,NWOW,ERV Mini,Leah Villanueva,30,"Brgy. San Isidro, Maharlika St., Lucban, Quezon",1,Motor not running,,
+NWOW-0092,NWOW,ERVS3,Francis Marquez,30,"Brgy. Santo Niño, National Road, Lopez, Quezon",2,Brake sensor error,Charging problem,
+NWOW-0093,NWOW,ERV2,Mark Soriano,30,"Brgy. San Isidro, Acacia St., Santo Tomas, Batangas",1,Flat tire,,
+NWOW-0094,NWOW,EPED,Beatrice Tolentino,22,"Brgy. San Jose, Kalayaan Ave., Rosario, Batangas",3,Charger not working,Battery failure,Display malfunction
+NWOW-0095,NWOW,ERVS2,Diana Navarro,54,"Brgy. San Juan, Bonifacio St., San Mateo, Rizal",1,Tire puncture,,
+NWOW-0096,NWOW,ERV Mini,Jasmine Mendoza,44,"Brgy. San Isidro, Bonifacio St., General Trias, Cavite",2,Throttle not responding,Motor not running,
+NWOW-0097,NWOW,ERV,Jerome Tolentino,61,"Brgy. Poblacion, Bonifacio St., Gumaca, Quezon",3,Brake problem,Battery failure,Display malfunction
+NWOW-0098,NWOW,GC10,Elaine Manalo,53,"Brgy. Santo Niño, Maharlika St., Batangas City, Batangas",3,Horn not working,Battery failure,Tire puncture
+NWOW-0099,NWOW,ERV,Daniel Aguilar,48,"Brgy. San Juan, National Road, Gumaca, Quezon",2,Weak acceleration,Display malfunction,
+NWOW-0100,NWOW,GC10,Gabriel Chua,51,"Brgy. Santo Niño, Kalayaan Ave., Candelaria, Quezon",2,Battery drains quickly,Horn not working,
+NWOW-0101,NWOW,ERV,Daniel Sy,40,"Brgy. San Jose, Acacia St., Ibaan, Batangas",3,Suspension problem,Display malfunction,Battery drains quickly
+NWOW-0102,NWOW,ERV Mini,Hannah Soriano,44,"Brgy. San Isidro, Sampaguita St., Cardona, Rizal",2,Headlight not working,Turn signal not working,
+NWOW-0103,NWOW,ERV,Patricia Torres,60,"Brgy. San Juan, Kalayaan Ave., Rosario, Batangas",3,Charging problem,Motor not running,Charger not working
+NWOW-0104,NWOW,ERVS3,Christian Espiritu,55,"Brgy. Maligaya, Maharlika St., Santo Tomas, Batangas",3,Motor not running,Battery failure,Brake sensor error
+NWOW-0105,NWOW,ERV,Carlo Flores,33,"Brgy. San Jose, Acacia St., Atimonan, Quezon",1,Weak acceleration,,
+NWOW-0106,NWOW,ERV2,Jasmine Soriano,20,"Brgy. San Jose, Kalayaan Ave., Tiaong, Quezon",2,Brake problem,Turn signal not working,
+NWOW-0107,NWOW,EPED,Nadine Valencia,34,"Brgy. San Isidro, National Road, Atimonan, Quezon",2,Loose wiring,Battery drains quickly,
+NWOW-0108,NWOW,ERV2,Anthony Fernandez,45,"Brgy. San Jose, Mabini St., Antipolo, Rizal",1,Motor not running,,
+NWOW-0109,NWOW,ERVS2,Jasmine Gonzales,59,"Brgy. San Jose, National Road, Rodriguez, Rizal",1,Headlight not working,,
+NWOW-0110,NWOW,ERV2,Andrea Mendoza,45,"Brgy. Maligaya, Rizal St., Tanza, Cavite",2,Unusual motor noise,Battery failure,
+NWOW-0111,NWOW,EPED,Grace Manalo,44,"Brgy. Maligaya, National Road, San Mateo, Rizal",2,Throttle not responding,Battery failure,
+NWOW-0112,NWOW,ERVS2,Kevin Bernardo,52,"Brgy. San Jose, Rizal St., Ibaan, Batangas",2,Loose wiring,Charger not working,
+NWOW-0113,NWOW,EPED,Hannah Gonzales,63,"Brgy. San Isidro, Maharlika St., Biñan, Laguna",2,Flat tire,Horn not working,
+NWOW-0114,NWOW,ERV2,Paolo Manalo,22,"Brgy. San Isidro, Kalayaan Ave., San Pedro, Laguna",3,Motor not running,Tire puncture,Loose wiring
+NWOW-0115,NWOW,ERV Mini,Kevin Padilla,61,"Brgy. Santo Niño, Sampaguita St., Bacoor, Cavite",2,Charging problem,Horn not working,
+NWOW-0116,NWOW,ERVS3,Irene Valdez,36,"Brgy. San Isidro, Del Pilar St., Tiaong, Quezon",1,Suspension problem,,
+NWOW-0117,NWOW,ERVS2,Jasmine Domingo,39,"Brgy. Maligaya, National Road, Cardona, Rizal",2,Battery drains quickly,Throttle not responding,
+NWOW-0118,NWOW,ERVS3,Diana Garcia,56,"Brgy. Maligaya, Acacia St., Angono, Rizal",3,Charger not working,Battery drains quickly,Flat tire
+NWOW-0119,NWOW,GC10,Nathan Aquino,64,"Brgy. Maligaya, Bonifacio St., Santa Rosa, Laguna",1,Loose wiring,,
+NWOW-0120,NWOW,EPED,Anthony Garcia,65,"Brgy. Maligaya, Maharlika St., Tagaytay, Cavite",1,Battery drains quickly,,
+NWOW-0121,NWOW,ERVS2,Irene Aquino,62,"Brgy. San Jose, Kalayaan Ave., Rosario, Cavite",1,Weak acceleration,,
+NWOW-0122,NWOW,ERV Mini,Karen Manansala,39,"Brgy. San Juan, Kalayaan Ave., Santa Cruz, Laguna",2,Motor not running,Throttle not responding,
+NWOW-0123,NWOW,GC10,Jerome Mendoza,21,"Brgy. San Jose, Acacia St., Rosario, Cavite",3,Tire puncture,Throttle not responding,Unusual motor noise
+NWOW-0124,NWOW,ERV,Vanessa Salazar,38,"Brgy. San Isidro, Acacia St., Silang, Cavite",2,Brake problem,Suspension problem,
+NWOW-0125,NWOW,ERV,Olivia Lim,32,"Brgy. San Jose, Mabini St., Batangas City, Batangas",3,Throttle not responding,Loose wiring,Turn signal not working
+NWOW-0126,NWOW,ERVS3,James Sy,29,"Brgy. San Jose, Rizal St., Taytay, Rizal",2,Key/ignition problem,Controller malfunction,
+NWOW-0127,NWOW,ERVS2,Angela Bernardo,56,"Brgy. Poblacion, Rizal St., Dasmarinas, Cavite",3,Brake sensor error,Loose wiring,Throttle not responding
+NWOW-0128,NWOW,ERVS2,James David,35,"Brgy. Poblacion, Bonifacio St., Los Baños, Laguna",1,Battery failure,,
+NWOW-0129,NWOW,ERV,Francis Rivera,54,"Brgy. Santo Niño, Maharlika St., Angono, Rizal",3,Loose wiring,Throttle not responding,Suspension problem
+NWOW-0130,NWOW,ERV,Grace Diaz,18,"Brgy. Santo Niño, Maharlika St., Bauan, Batangas",1,Key/ignition problem,,
+NWOW-0131,NWOW,ERVS3,Sarah Cruz,25,"Brgy. Santo Niño, Mabini St., Morong, Rizal",3,Battery drains quickly,Motor not running,Tire puncture
+NWOW-0132,NWOW,ERV Mini,Adrian David,45,"Brgy. San Isidro, Quezon St., Rosario, Batangas",1,Loose wiring,,
+NWOW-0133,NWOW,GC10,Janelle Torres,29,"Brgy. Santo Niño, National Road, Dasmarinas, Cavite",2,Controller malfunction,Display malfunction,
+NWOW-0134,NWOW,ERVS3,Christian Rosales,19,"Brgy. Maligaya, Bonifacio St., Pagsanjan, Laguna",3,Brake sensor error,Turn signal not working,Display malfunction
+NWOW-0135,NWOW,ERVS2,Christine Chua,46,"Brgy. San Jose, Quezon St., Santa Cruz, Laguna",1,Battery drains quickly,,
+NWOW-0136,NWOW,ERV Mini,Joshua Padilla,32,"Brgy. San Juan, Mabini St., Tanza, Cavite",1,Battery drains quickly,,
+NWOW-0137,NWOW,ERV2,Daniel Santos,24,"Brgy. Poblacion, Bonifacio St., Bacoor, Cavite",1,Key/ignition problem,,
+NWOW-0138,NWOW,ERVS3,Camille David,53,"Brgy. San Isidro, Del Pilar St., Antipolo, Rizal",3,Display malfunction,Controller malfunction,Weak acceleration
+NWOW-0139,NWOW,ERV2,Adrian Diaz,46,"Brgy. Poblacion, National Road, Malvar, Batangas",1,Headlight not working,,
+NWOW-0140,NWOW,ERVS2,Zoe Alcantara,63,"Brgy. San Isidro, Kalayaan Ave., Cardona, Rizal",3,Tire puncture,Headlight not working,Motor not running
+NWOW-0141,NWOW,GC10,Gabriel Valdez,64,"Brgy. Poblacion, Quezon St., Rodriguez, Rizal",1,Battery failure,,
+NWOW-0142,NWOW,ERV,Gabriel Villanueva,62,"Brgy. Maligaya, Kalayaan Ave., Teresa, Rizal",3,Brake problem,Charger not working,Suspension problem
+NWOW-0143,NWOW,ERV2,Karen Alcantara,46,"Brgy. San Juan, Mabini St., Santa Cruz, Laguna",3,Headlight not working,Motor not running,Battery failure
+NWOW-0144,NWOW,ERV2,Olivia Gonzales,28,"Brgy. Poblacion, Quezon St., Tagaytay, Cavite",3,Charging problem,Headlight not working,Brake sensor error
+NWOW-0145,NWOW,ERVS3,Joshua Castro,24,"Brgy. San Jose, Maharlika St., Bay, Laguna",2,Turn signal not working,Loose wiring,
+NWOW-0146,NWOW,ERV2,Carlo Ramos,62,"Brgy. San Jose, Acacia St., San Mateo, Rizal",3,Battery failure,Turn signal not working,Horn not working
+NWOW-0147,NWOW,EPED,Camille Alcantara,41,"Brgy. San Juan, Maharlika St., Santo Tomas, Batangas",1,Brake sensor error,,
+NWOW-0148,NWOW,ERV2,Trisha Samson,60,"Brgy. San Isidro, Sampaguita St., Teresa, Rizal",1,Brake problem,,
+NWOW-0149,NWOW,ERVS2,Angela Santos,21,"Brgy. Maligaya, Bonifacio St., Angono, Rizal",1,Controller malfunction,,
+NWOW-0150,NWOW,ERV2,Christian Bautista,33,"Brgy. Maligaya, Del Pilar St., Bauan, Batangas",1,Weak acceleration,,
+NWOW-0151,NWOW,EPED,Nathan Manansala,26,"Brgy. San Juan, National Road, Lopez, Quezon",3,Battery drains quickly,Weak acceleration,Charging problem
+NWOW-0152,NWOW,ERV2,Zoe Padilla,46,"Brgy. San Juan, Maharlika St., Bay, Laguna",2,Unusual motor noise,Controller malfunction,
+NWOW-0153,NWOW,GC10,Elaine Villanueva,42,"Brgy. San Isidro, Sampaguita St., Cainta, Rizal",2,Charging problem,Battery drains quickly,
+NWOW-0154,NWOW,ERV Mini,Irene Lazaro,62,"Brgy. San Juan, Kalayaan Ave., Bauan, Batangas",2,Charging problem,Weak acceleration,
+NWOW-0155,NWOW,ERV,Olivia Chua,62,"Brgy. San Isidro, Rizal St., Los Baños, Laguna",1,Battery failure,,
+NWOW-0156,NWOW,ERVS3,Maria Gonzales,56,"Brgy. Maligaya, Kalayaan Ave., San Mateo, Rizal",2,Tire puncture,Controller malfunction,
+NWOW-0157,NWOW,ERVS2,Francis Aguilar,23,"Brgy. San Juan, Quezon St., Tagaytay, Cavite",3,Brake sensor error,Loose wiring,Tire puncture
+NWOW-0158,NWOW,ERV Mini,Vanessa Garcia,56,"Brgy. Maligaya, Rizal St., Cabuyao, Laguna",1,Battery drains quickly,,
+NWOW-0159,NWOW,ERV2,Christian Rivera,36,"Brgy. San Jose, Acacia St., Tanauan, Batangas",2,Display malfunction,Throttle not responding,
+NWOW-0160,NWOW,ERVS2,Grace Domingo,18,"Brgy. San Jose, Acacia St., Cabuyao, Laguna",2,Charger not working,Suspension problem,
+NWOW-0161,NWOW,ERVS3,James Santiago,35,"Brgy. Maligaya, Rizal St., Santo Tomas, Batangas",1,Horn not working,,
+NWOW-0162,NWOW,ERV2,Mika Aquino,43,"Brgy. San Isidro, Rizal St., Trece Martires, Cavite",2,Charging problem,Brake problem,
+NWOW-0163,NWOW,ERVS3,Diana Flores,63,"Brgy. San Isidro, Bonifacio St., Kawit, Cavite",2,Display malfunction,Tire puncture,
+NWOW-0164,NWOW,ERV,Christine David,64,"Brgy. San Isidro, Kalayaan Ave., San Mateo, Rizal",2,Display malfunction,Horn not working,
+NWOW-0165,NWOW,EPED,Grace Lazaro,37,"Brgy. Santo Niño, Quezon St., Antipolo, Rizal",1,Throttle not responding,,
+NWOW-0166,NWOW,ERV Mini,Rachel Castillo,55,"Brgy. San Juan, Rizal St., Biñan, Laguna",1,Turn signal not working,,
+NWOW-0167,NWOW,GC10,Gabriel Santiago,54,"Brgy. San Isidro, Sampaguita St., Angono, Rizal",1,Battery drains quickly,,
+NWOW-0168,NWOW,ERVS2,Ryan Santos,65,"Brgy. Santo Niño, Del Pilar St., Lucena, Quezon",3,Throttle not responding,Battery failure,Horn not working
+NWOW-0169,NWOW,ERV2,Joshua Lazaro,27,"Brgy. San Juan, Maharlika St., General Trias, Cavite",2,Battery drains quickly,Unusual motor noise,
+NWOW-0170,NWOW,ERVS3,Vanessa Ramos,43,"Brgy. Poblacion, Sampaguita St., Gumaca, Quezon",2,Weak acceleration,Tire puncture,
+NWOW-0171,NWOW,EPED,Adrian Santos,38,"Brgy. San Jose, Del Pilar St., Pagbilao, Quezon",1,Unusual motor noise,,
+NWOW-0172,NWOW,ERV2,Gabriel Hernandez,29,"Brgy. Maligaya, Maharlika St., Pagbilao, Quezon",1,Suspension problem,,
+NWOW-0173,NWOW,ERVS3,Miguel Santos,45,"Brgy. Poblacion, Mabini St., Pagsanjan, Laguna",1,Motor not running,,
+NWOW-0174,NWOW,ERVS3,Kevin Castillo,40,"Brgy. San Isidro, Rizal St., Atimonan, Quezon",2,Tire puncture,Horn not working,
+NWOW-0175,NWOW,ERVS2,Rachel Tan,59,"Brgy. Poblacion, Acacia St., Antipolo, Rizal",3,Unusual motor noise,Suspension problem,Throttle not responding
+NWOW-0176,NWOW,GC10,Clarisse Aquino,62,"Brgy. San Jose, Bonifacio St., Bacoor, Cavite",1,Brake sensor error,,
+NWOW-0177,NWOW,ERVS3,Paolo Torres,65,"Brgy. San Juan, Sampaguita St., San Pedro, Laguna",1,Brake sensor error,,
+NWOW-0178,NWOW,GC10,Elaine Cruz,64,"Brgy. Maligaya, Quezon St., Gumaca, Quezon",2,Horn not working,Battery failure,
+NWOW-0179,NWOW,ERVS3,Samantha Ramos,41,"Brgy. San Isidro, Rizal St., Trece Martires, Cavite",3,Motor not running,Tire puncture,Flat tire
+NWOW-0180,NWOW,EPED,Gabriel Mendoza,56,"Brgy. San Jose, Sampaguita St., Calaca, Batangas",1,Brake problem,,
+NWOW-0181,NWOW,ERV,Adrian Valencia,19,"Brgy. San Jose, Maharlika St., Cainta, Rizal",1,Charging problem,,
+NWOW-0182,NWOW,GC10,Sarah Bernardo,57,"Brgy. San Isidro, Acacia St., San Mateo, Rizal",1,Motor not running,,
+NWOW-0183,NWOW,ERV2,Joshua Marquez,49,"Brgy. San Juan, Maharlika St., Silang, Cavite",2,Brake problem,Charging problem,
+NWOW-0184,NWOW,ERV,Gabriel Dela Cruz,40,"Brgy. Maligaya, Acacia St., Kawit, Cavite",2,Headlight not working,Loose wiring,
+NWOW-0185,NWOW,EPED,Miguel Torres,25,"Brgy. Santo Niño, Sampaguita St., Cabuyao, Laguna",2,Tire puncture,Battery failure,
+NWOW-0186,NWOW,ERVS3,Joshua Manansala,26,"Brgy. San Isidro, Acacia St., Bauan, Batangas",1,Headlight not working,,
+NWOW-0187,NWOW,ERV2,Grace Tolentino,45,"Brgy. Santo Niño, Sampaguita St., San Pedro, Laguna",1,Horn not working,,
+NWOW-0188,NWOW,ERV Mini,Lara Lim,65,"Brgy. Maligaya, Maharlika St., Bay, Laguna",1,Tire puncture,,
+NWOW-0189,NWOW,ERV2,Christine Ramos,26,"Brgy. Santo Niño, Kalayaan Ave., Atimonan, Quezon",3,Throttle not responding,Battery failure,Turn signal not working
+NWOW-0190,NWOW,ERV Mini,Ethan Santiago,43,"Brgy. San Juan, Bonifacio St., Santa Cruz, Laguna",1,Battery drains quickly,,
+NWOW-0191,NWOW,ERVS3,Gabriel Cruz,58,"Brgy. San Isidro, Kalayaan Ave., Rosario, Batangas",1,Charger not working,,
+NWOW-0192,NWOW,EPED,Christine Valencia,50,"Brgy. San Jose, Kalayaan Ave., Sariaya, Quezon",1,Key/ignition problem,,
+NWOW-0193,NWOW,ERV,Elaine Alcantara,27,"Brgy. Santo Niño, Kalayaan Ave., Bauan, Batangas",2,Display malfunction,Unusual motor noise,
+NWOW-0194,NWOW,ERV,Ryan Macapagal,34,"Brgy. Santo Niño, Kalayaan Ave., Tanza, Cavite",2,Weak acceleration,Tire puncture,
+NWOW-0195,NWOW,ERV,Alyssa Navarro,26,"Brgy. San Jose, Mabini St., Atimonan, Quezon",2,Motor not running,Throttle not responding,
+NWOW-0196,NWOW,ERVS2,Jerome De Leon,37,"Brgy. Poblacion, Acacia St., Lipa, Batangas",3,Key/ignition problem,Controller malfunction,Tire puncture
+NWOW-0197,NWOW,ERV2,John Samson,21,"Brgy. San Juan, Rizal St., Tanauan, Batangas",2,Battery failure,Charger not working,
+NWOW-0198,NWOW,GC10,Samantha Espiritu,50,"Brgy. San Isidro, Sampaguita St., Cabuyao, Laguna",2,Horn not working,Battery drains quickly,
+NWOW-0199,NWOW,ERV,Beatrice Hernandez,48,"Brgy. Poblacion, Rizal St., Binangonan, Rizal",3,Unusual motor noise,Controller malfunction,Brake sensor error
+NWOW-0200,NWOW,ERV Mini,Trisha Santiago,47,"Brgy. San Jose, Kalayaan Ave., Bacoor, Cavite",1,Controller malfunction,,
+NWOW-0201,NWOW,ERV,Irene Samson,24,"Brgy. San Isidro, Acacia St., Rodriguez, Rizal",2,Charging problem,Battery failure,
+NWOW-0202,NWOW,ERVS2,Angela Alcantara,64,"Brgy. Maligaya, National Road, Malvar, Batangas",2,Unusual motor noise,Brake sensor error,
+NWOW-0203,NWOW,ERVS3,Kevin Ocampo,26,"Brgy. Poblacion, Sampaguita St., Tanauan, Batangas",3,Weak acceleration,Display malfunction,Tire puncture
+NWOW-0204,NWOW,ERV Mini,Andrea Lim,50,"Brgy. Poblacion, Bonifacio St., Santa Cruz, Laguna",3,Suspension problem,Charger not working,Turn signal not working
+NWOW-0205,NWOW,ERV,Patricia Hernandez,32,"Brgy. San Isidro, Maharlika St., Rosario, Batangas",3,Motor not running,Charging problem,Throttle not responding
+NWOW-0206,NWOW,ERVS2,Elaine Tolentino,49,"Brgy. San Juan, Acacia St., Sariaya, Quezon",1,Charging problem,,
+NWOW-0207,NWOW,EPED,Christian Flores,23,"Brgy. Poblacion, Del Pilar St., Cabuyao, Laguna",2,Display malfunction,Brake problem,
+NWOW-0208,NWOW,ERV2,Ryan Aquino,24,"Brgy. Santo Niño, Quezon St., Santo Tomas, Batangas",2,Unusual motor noise,Tire puncture,
+NWOW-0209,NWOW,EPED,Rachel Aquino,62,"Brgy. San Jose, Del Pilar St., Batangas City, Batangas",1,Weak acceleration,,
+NWOW-0210,NWOW,ERVS2,Christine Torres,29,"Brgy. Santo Niño, Sampaguita St., Bay, Laguna",1,Key/ignition problem,,
+NWOW-0211,NWOW,ERVS2,Ryan Castro,61,"Brgy. Maligaya, Sampaguita St., Lipa, Batangas",1,Display malfunction,,
+NWOW-0212,NWOW,ERV2,James Salazar,28,"Brgy. San Isidro, Kalayaan Ave., Ibaan, Batangas",3,Key/ignition problem,Brake problem,Weak acceleration
+NWOW-0213,NWOW,ERVS3,Miguel Lazaro,43,"Brgy. San Isidro, Maharlika St., General Trias, Cavite",3,Weak acceleration,Charging problem,Brake sensor error
+NWOW-0214,NWOW,ERV2,Miguel Rosales,32,"Brgy. Santo Niño, Del Pilar St., Angono, Rizal",3,Turn signal not working,Brake problem,Brake sensor error
+NWOW-0215,NWOW,ERVS3,Mika Santiago,51,"Brgy. Poblacion, Quezon St., Santa Rosa, Laguna",3,Display malfunction,Brake problem,Turn signal not working
+NWOW-0216,NWOW,ERV Mini,Camille Rivera,27,"Brgy. Santo Niño, National Road, Nasugbu, Batangas",1,Charger not working,,
+NWOW-0217,NWOW,GC10,Angelo Gonzales,41,"Brgy. Maligaya, Bonifacio St., Teresa, Rizal",2,Flat tire,Battery failure,
+NWOW-0218,NWOW,ERVS3,Samantha Gonzales,27,"Brgy. San Juan, Sampaguita St., Los Baños, Laguna",1,Tire puncture,,
+NWOW-0219,NWOW,ERV,Kevin Rivera,38,"Brgy. San Juan, Sampaguita St., Gumaca, Quezon",2,Charging problem,Battery drains quickly,
+NWOW-0220,NWOW,ERV Mini,Daniel Lazaro,31,"Brgy. Maligaya, Rizal St., Tanauan, Batangas",2,Motor not running,Brake sensor error,
+NWOW-0221,NWOW,ERV,Mika Mercado,54,"Brgy. San Juan, Mabini St., San Mateo, Rizal",3,Motor not running,Tire puncture,Controller malfunction
+NWOW-0222,NWOW,ERV Mini,Francis Santos,52,"Brgy. San Isidro, Acacia St., Kawit, Cavite",1,Motor not running,,
+NWOW-0223,NWOW,ERV2,Jerome Cruz,38,"Brgy. Maligaya, Rizal St., Rosario, Cavite",1,Throttle not responding,,
+NWOW-0224,NWOW,GC10,Carlo Diaz,59,"Brgy. San Isidro, Sampaguita St., Cabuyao, Laguna",2,Turn signal not working,Brake problem,
+NWOW-0225,NWOW,ERVS2,Gabriel Tolentino,26,"Brgy. San Jose, Acacia St., Taytay, Rizal",3,Controller malfunction,Loose wiring,Battery drains quickly
+NWOW-0226,NWOW,EPED,Elaine Flores,47,"Brgy. San Isidro, Mabini St., Morong, Rizal",1,Unusual motor noise,,
+NWOW-0227,NWOW,EPED,Ryan Bautista,47,"Brgy. Santo Niño, Del Pilar St., Cainta, Rizal",1,Charging problem,,
+NWOW-0228,NWOW,ERV2,Francis Ocampo,44,"Brgy. San Isidro, Quezon St., Tayabas, Quezon",2,Unusual motor noise,Brake sensor error,
+NWOW-0229,NWOW,ERVS2,Anthony Reyes,45,"Brgy. San Isidro, Rizal St., Cabuyao, Laguna",2,Flat tire,Tire puncture,
+NWOW-0230,NWOW,ERVS2,Christian Morales,53,"Brgy. San Juan, Rizal St., Bay, Laguna",1,Controller malfunction,,
+NWOW-0231,NWOW,ERVS2,Angelo Navarro,20,"Brgy. San Juan, Del Pilar St., Candelaria, Quezon",1,Motor not running,,
+NWOW-0232,NWOW,ERV,Patricia Domingo,42,"Brgy. San Jose, Sampaguita St., Lucena, Quezon",1,Charger not working,,
+NWOW-0233,NWOW,ERVS2,Joshua Salazar,30,"Brgy. San Jose, Sampaguita St., Dasmarinas, Cavite",1,Display malfunction,,
+NWOW-0234,NWOW,ERVS2,Adrian Ramos,20,"Brgy. Maligaya, Acacia St., Calaca, Batangas",2,Unusual motor noise,Controller malfunction,
+NWOW-0235,NWOW,ERV,Olivia Marquez,45,"Brgy. San Jose, Sampaguita St., Batangas City, Batangas",1,Display malfunction,,
+NWOW-0236,NWOW,ERVS2,Lara Flores,34,"Brgy. San Jose, Maharlika St., Tanza, Cavite",1,Key/ignition problem,,
+NWOW-0237,NWOW,GC10,Maria Castro,27,"Brgy. San Jose, Quezon St., Rosario, Cavite",2,Brake sensor error,Motor not running,
+NWOW-0238,NWOW,ERVS3,Zoe Espiritu,42,"Brgy. Maligaya, Rizal St., Rosario, Cavite",1,Tire puncture,,
+NWOW-0239,NWOW,ERV Mini,Irene Gonzales,58,"Brgy. Maligaya, Mabini St., Teresa, Rizal",3,Charger not working,Controller malfunction,Charging problem
+NWOW-0240,NWOW,ERV,Sarah David,21,"Brgy. San Jose, Maharlika St., Taytay, Rizal",1,Display malfunction,,
+NWOW-0241,NWOW,ERV Mini,Samantha Pascual,42,"Brgy. San Isidro, Sampaguita St., Tiaong, Quezon",2,Flat tire,Battery failure,
+NWOW-0242,NWOW,ERV2,Elaine Ramos,51,"Brgy. Poblacion, Del Pilar St., Lucena, Quezon",2,Throttle not responding,Loose wiring,
+NWOW-0243,NWOW,GC10,Karen Lazaro,58,"Brgy. San Jose, Maharlika St., Candelaria, Quezon",2,Brake sensor error,Turn signal not working,
+NWOW-0244,NWOW,ERV2,Nicole Tolentino,57,"Brgy. Maligaya, National Road, Rodriguez, Rizal",2,Motor not running,Key/ignition problem,
+NWOW-0245,NWOW,GC10,Adrian Pascual,26,"Brgy. San Juan, Rizal St., Trece Martires, Cavite",2,Motor not running,Display malfunction,
+NWOW-0246,NWOW,ERV2,Alyssa Valdez,60,"Brgy. Maligaya, Rizal St., Ibaan, Batangas",3,Flat tire,Controller malfunction,Brake problem
+NWOW-0247,NWOW,ERVS2,Jerome Macapagal,26,"Brgy. Maligaya, Del Pilar St., Angono, Rizal",1,Brake problem,,
+NWOW-0248,NWOW,ERVS2,Anthony Domingo,40,"Brgy. Santo Niño, Rizal St., Biñan, Laguna",1,Brake problem,,
+NWOW-0249,NWOW,GC10,John Sy,44,"Brgy. San Jose, Kalayaan Ave., Bay, Laguna",2,Suspension problem,Tire puncture,
+NWOW-0250,NWOW,ERVS2,Nathan Bernardo,64,"Brgy. San Isidro, National Road, Rosario, Batangas",2,Motor not running,Throttle not responding,
+NWOW-0251,NWOW,ERV Mini,Beatrice Flores,33,"Brgy. San Jose, Del Pilar St., Pagsanjan, Laguna",1,Flat tire,,
+NWOW-0252,NWOW,ERVS3,Nathan Padilla,63,"Brgy. Santo Niño, Acacia St., Calamba, Laguna",1,Battery failure,,
+NWOW-0253,NWOW,ERV2,Christine Manansala,45,"Brgy. San Jose, Quezon St., Pagsanjan, Laguna",2,Flat tire,Tire puncture,
+NWOW-0254,NWOW,ERV2,Janelle Chua,47,"Brgy. San Jose, Mabini St., Lucena, Quezon",1,Unusual motor noise,,
+NWOW-0255,NWOW,ERVS2,Ethan Pascual,41,"Brgy. Maligaya, Kalayaan Ave., Kawit, Cavite",1,Motor not running,,
+NWOW-0256,NWOW,ERVS3,Grace Valdez,60,"Brgy. San Juan, Maharlika St., Batangas City, Batangas",1,Battery drains quickly,,
+NWOW-0257,NWOW,EPED,Sarah Lim,50,"Brgy. San Juan, Sampaguita St., Angono, Rizal",3,Controller malfunction,Battery failure,Key/ignition problem
+NWOW-0258,NWOW,ERV Mini,Sarah Santos,59,"Brgy. Maligaya, National Road, Morong, Rizal",1,Horn not working,,
+NWOW-0259,NWOW,ERVS3,Leah Flores,18,"Brgy. Maligaya, National Road, Rosario, Cavite",1,Flat tire,,
+NWOW-0260,NWOW,EPED,Alyssa Santiago,62,"Brgy. Poblacion, Kalayaan Ave., Calamba, Laguna",2,Key/ignition problem,Tire puncture,
+NWOW-0261,NWOW,ERVS2,Karen Castro,44,"Brgy. Maligaya, Del Pilar St., Silang, Cavite",2,Brake sensor error,Charging problem,
+NWOW-0262,NWOW,ERVS3,Christian Soriano,20,"Brgy. Poblacion, Del Pilar St., Trece Martires, Cavite",1,Turn signal not working,,
+NWOW-0263,NWOW,ERV,Camille Marquez,55,"Brgy. Maligaya, Maharlika St., Cabuyao, Laguna",1,Suspension problem,,
+NWOW-0264,NWOW,ERV Mini,Elaine De Leon,25,"Brgy. San Juan, Bonifacio St., Atimonan, Quezon",1,Motor not running,,
+NWOW-0265,NWOW,ERV2,Nicole Domingo,41,"Brgy. Santo Niño, Del Pilar St., Atimonan, Quezon",1,Display malfunction,,
+NWOW-0266,NWOW,ERV Mini,Ryan Mercado,36,"Brgy. San Isidro, Bonifacio St., Lucban, Quezon",3,Turn signal not working,Flat tire,Key/ignition problem
+NWOW-0267,NWOW,ERV Mini,Karen Santiago,64,"Brgy. San Isidro, Maharlika St., Imus, Cavite",2,Turn signal not working,Display malfunction,
+NWOW-0268,NWOW,GC10,Andrea Alcantara,33,"Brgy. Poblacion, Bonifacio St., Rosario, Cavite",2,Key/ignition problem,Display malfunction,
+NWOW-0269,NWOW,ERV,Irene Manalo,55,"Brgy. Maligaya, National Road, Pagsanjan, Laguna",3,Battery drains quickly,Loose wiring,Motor not running
+NWOW-0270,NWOW,ERVS2,Miguel Castro,22,"Brgy. Santo Niño, Bonifacio St., Lucena, Quezon",3,Key/ignition problem,Headlight not working,Battery drains quickly
+NWOW-0271,NWOW,GC10,Grace Ramos,58,"Brgy. San Jose, Mabini St., Bauan, Batangas",1,Charging problem,,
+NWOW-0272,NWOW,ERV Mini,Clarisse Santos,56,"Brgy. San Isidro, Del Pilar St., Bacoor, Cavite",1,Display malfunction,,
+NWOW-0273,NWOW,ERV Mini,Trisha Manansala,21,"Brgy. San Isidro, Mabini St., Trece Martires, Cavite",3,Flat tire,Brake sensor error,Display malfunction
+NWOW-0274,NWOW,EPED,Kevin Del Rosario,41,"Brgy. Santo Niño, Del Pilar St., Imus, Cavite",2,Key/ignition problem,Brake problem,
+NWOW-0275,NWOW,EPED,Lara De Leon,35,"Brgy. Santo Niño, Mabini St., Rodriguez, Rizal",3,Unusual motor noise,Throttle not responding,Battery drains quickly
+NWOW-0276,NWOW,ERVS3,Andrea Valencia,40,"Brgy. San Jose, Sampaguita St., Pagsanjan, Laguna",2,Charging problem,Suspension problem,
+NWOW-0277,NWOW,ERV,Francis Gonzales,34,"Brgy. San Jose, Maharlika St., Gumaca, Quezon",3,Battery drains quickly,Throttle not responding,Headlight not working
+NWOW-0278,NWOW,ERV2,Hannah Samson,59,"Brgy. San Jose, National Road, Kawit, Cavite",1,Throttle not responding,,
+NWOW-0279,NWOW,ERVS2,Nathan Reyes,55,"Brgy. San Isidro, Kalayaan Ave., Cabuyao, Laguna",2,Turn signal not working,Throttle not responding,
+NWOW-0280,NWOW,ERV2,Kevin Aguilar,54,"Brgy. Santo Niño, Kalayaan Ave., Los Baños, Laguna",1,Unusual motor noise,,
+NWOW-0281,NWOW,ERVS2,Christian Cruz,48,"Brgy. Poblacion, Quezon St., Calaca, Batangas",1,Controller malfunction,,
+NWOW-0282,NWOW,ERVS2,Carlo Gonzales,59,"Brgy. San Juan, National Road, Tanauan, Batangas",1,Suspension problem,,
+NWOW-0283,NWOW,ERV,Jasmine Diaz,30,"Brgy. Maligaya, Kalayaan Ave., Rosario, Batangas",3,Throttle not responding,Tire puncture,Headlight not working
+NWOW-0284,NWOW,ERVS3,Janelle Gonzales,58,"Brgy. San Juan, Mabini St., San Pedro, Laguna",3,Brake sensor error,Throttle not responding,Tire puncture
+NWOW-0285,NWOW,ERV,Jasmine Castillo,29,"Brgy. San Juan, Sampaguita St., Trece Martires, Cavite",1,Controller malfunction,,
+NWOW-0286,NWOW,ERVS3,Joshua Manalo,26,"Brgy. Poblacion, Rizal St., Cabuyao, Laguna",3,Weak acceleration,Suspension problem,Battery failure
+NWOW-0287,NWOW,ERVS3,Irene Ocampo,42,"Brgy. San Isidro, Acacia St., Lipa, Batangas",3,Brake sensor error,Charging problem,Horn not working
+NWOW-0288,NWOW,ERVS2,Lara Valencia,57,"Brgy. San Isidro, Sampaguita St., Silang, Cavite",3,Horn not working,Flat tire,Controller malfunction
+NWOW-0289,NWOW,ERVS2,Carlo Macapagal,26,"Brgy. Santo Niño, Acacia St., Bacoor, Cavite",1,Key/ignition problem,,
+NWOW-0290,NWOW,ERV2,Mark Valencia,55,"Brgy. Santo Niño, Acacia St., Taytay, Rizal",1,Throttle not responding,,
+NWOW-0291,NWOW,ERV2,Rachel Soriano,42,"Brgy. Santo Niño, Maharlika St., Tanza, Cavite",3,Brake problem,Turn signal not working,Charger not working
+NWOW-0292,NWOW,ERV,Nadine Manansala,43,"Brgy. Poblacion, National Road, Pagsanjan, Laguna",3,Unusual motor noise,Battery failure,Flat tire
+NWOW-0293,NWOW,ERV,Sarah Torres,26,"Brgy. Poblacion, Rizal St., Candelaria, Quezon",3,Headlight not working,Charger not working,Turn signal not working
+NWOW-0294,NWOW,ERV Mini,Jasmine Del Rosario,58,"Brgy. San Juan, Maharlika St., Cabuyao, Laguna",2,Horn not working,Battery failure,
+NWOW-0295,NWOW,ERVS3,Irene Alcantara,50,"Brgy. Maligaya, Bonifacio St., Morong, Rizal",2,Flat tire,Brake problem,
+NWOW-0296,NWOW,ERV Mini,Mark Villanueva,58,"Brgy. San Jose, Del Pilar St., Binangonan, Rizal",1,Controller malfunction,,
+NWOW-0297,NWOW,ERVS3,Miguel Dela Cruz,19,"Brgy. Maligaya, Rizal St., Santa Rosa, Laguna",3,Throttle not responding,Headlight not working,Unusual motor noise
+NWOW-0298,NWOW,ERV Mini,Camille Flores,60,"Brgy. Poblacion, National Road, Tanauan, Batangas",1,Horn not working,,
+NWOW-0299,NWOW,ERV,Nicole Chua,62,"Brgy. San Jose, Del Pilar St., San Mateo, Rizal",2,Tire puncture,Motor not running,
+NWOW-0300,NWOW,ERV,Andrea Navarro,44,"Brgy. Maligaya, Bonifacio St., Gumaca, Quezon",3,Key/ignition problem,Brake sensor error,Tire puncture
+NWOW-0301,NWOW,EPED,Nathan Castillo,38,"Brgy. Maligaya, Bonifacio St., Santa Cruz, Laguna",3,Battery failure,Unusual motor noise,Loose wiring
+NWOW-0302,NWOW,ERV2,Michael Macapagal,42,"Brgy. Santo Niño, Maharlika St., Gumaca, Quezon",2,Horn not working,Suspension problem,
+NWOW-0303,NWOW,EPED,Daniel Cruz,29,"Brgy. San Isidro, Mabini St., Candelaria, Quezon",1,Brake sensor error,,
+NWOW-0304,NWOW,ERVS2,Elaine Santiago,45,"Brgy. Santo Niño, National Road, Teresa, Rizal",2,Loose wiring,Charger not working,
+NWOW-0305,NWOW,ERV,Sarah Santiago,33,"Brgy. San Juan, National Road, Biñan, Laguna",3,Charging problem,Flat tire,Battery drains quickly
+NWOW-0306,NWOW,ERVS3,Clarisse Fernandez,52,"Brgy. San Jose, Rizal St., Candelaria, Quezon",1,Weak acceleration,,
+NWOW-0307,NWOW,ERVS2,Carlo Castro,47,"Brgy. Santo Niño, Sampaguita St., Rosario, Cavite",1,Brake sensor error,,
+NWOW-0308,NWOW,EPED,James Lazaro,29,"Brgy. Poblacion, Kalayaan Ave., Atimonan, Quezon",2,Controller malfunction,Key/ignition problem,
+NWOW-0309,NWOW,ERV Mini,Andrea Fernandez,22,"Brgy. Poblacion, Kalayaan Ave., Lucban, Quezon",1,Headlight not working,,
+NWOW-0310,NWOW,ERV Mini,Joshua Valdez,22,"Brgy. San Jose, Acacia St., Rosario, Batangas",1,Battery failure,,
+NWOW-0311,NWOW,EPED,Carlo Lazaro,46,"Brgy. Maligaya, Kalayaan Ave., Imus, Cavite",2,Charger not working,Battery failure,
+NWOW-0312,NWOW,ERV,Clarisse Cruz,35,"Brgy. San Juan, Mabini St., Dasmarinas, Cavite",3,Throttle not responding,Headlight not working,Tire puncture
+NWOW-0313,NWOW,ERVS3,John Gonzales,27,"Brgy. San Isidro, Sampaguita St., Malvar, Batangas",1,Brake problem,,
+NWOW-0314,NWOW,GC10,John Fernandez,52,"Brgy. San Juan, Del Pilar St., Gumaca, Quezon",3,Throttle not responding,Controller malfunction,Brake problem
+NWOW-0315,NWOW,ERV,Patricia Mendoza,27,"Brgy. Poblacion, Rizal St., Lopez, Quezon",3,Unusual motor noise,Charging problem,Flat tire
+NWOW-0316,NWOW,ERV Mini,Angelo Hernandez,53,"Brgy. Maligaya, National Road, Los Baños, Laguna",2,Flat tire,Brake sensor error,
+NWOW-0317,NWOW,ERV Mini,Elaine Gonzales,44,"Brgy. San Isidro, Del Pilar St., Cardona, Rizal",2,Turn signal not working,Horn not working,
+NWOW-0318,NWOW,GC10,Trisha Dela Cruz,19,"Brgy. Poblacion, Acacia St., Bay, Laguna",2,Suspension problem,Turn signal not working,
+NWOW-0319,NWOW,ERVS2,Camille De Leon,35,"Brgy. San Jose, Rizal St., Angono, Rizal",3,Flat tire,Tire puncture,Throttle not responding
+NWOW-0320,NWOW,ERVS2,Jerome Valdez,45,"Brgy. Maligaya, Sampaguita St., Sariaya, Quezon",1,Flat tire,,
+NWOW-0321,NWOW,ERV2,Irene David,34,"Brgy. San Juan, Mabini St., General Trias, Cavite",1,Brake sensor error,,
+NWOW-0322,NWOW,EPED,Janelle Sy,60,"Brgy. San Jose, Kalayaan Ave., Cardona, Rizal",1,Horn not working,,
+NWOW-0323,NWOW,GC10,Trisha Garcia,52,"Brgy. San Isidro, Acacia St., Rosario, Batangas",1,Battery drains quickly,,
+NWOW-0324,NWOW,EPED,Camille Valdez,62,"Brgy. Santo Niño, National Road, Pagbilao, Quezon",3,Tire puncture,Brake problem,Flat tire
+NWOW-0325,NWOW,ERV2,Ethan Manansala,33,"Brgy. Poblacion, National Road, Santo Tomas, Batangas",1,Throttle not responding,,
+NWOW-0326,NWOW,ERV2,John Valdez,30,"Brgy. Santo Niño, Del Pilar St., Tanza, Cavite",3,Loose wiring,Battery failure,Tire puncture
+NWOW-0327,NWOW,GC10,Hannah Santos,34,"Brgy. San Jose, Del Pilar St., Lucena, Quezon",2,Throttle not responding,Battery drains quickly,
+NWOW-0328,NWOW,ERV,Leah Tan,21,"Brgy. Santo Niño, Kalayaan Ave., San Pedro, Laguna",1,Charger not working,,
+NWOW-0329,NWOW,ERV Mini,Christine De Leon,26,"Brgy. Santo Niño, National Road, Tanza, Cavite",2,Loose wiring,Battery failure,
+NWOW-0330,NWOW,EPED,Janelle Espiritu,52,"Brgy. Poblacion, Kalayaan Ave., Biñan, Laguna",1,Battery failure,,
+NWOW-0331,NWOW,ERV Mini,Nadine Cruz,62,"Brgy. San Isidro, Rizal St., Trece Martires, Cavite",2,Weak acceleration,Loose wiring,
+NWOW-0332,NWOW,ERV Mini,Olivia Padilla,24,"Brgy. San Jose, Bonifacio St., Cardona, Rizal",1,Battery failure,,
+NWOW-0333,NWOW,ERVS3,Leah Santos,51,"Brgy. San Isidro, Quezon St., Rodriguez, Rizal",1,Charging problem,,
+NWOW-0334,NWOW,ERV,Nicole De Leon,41,"Brgy. Santo Niño, Mabini St., San Mateo, Rizal",1,Throttle not responding,,
+NWOW-0335,NWOW,ERV2,Faith Ramos,22,"Brgy. Poblacion, Kalayaan Ave., Kawit, Cavite",1,Throttle not responding,,
+NWOW-0336,NWOW,GC10,Ethan Torres,27,"Brgy. Maligaya, Bonifacio St., Angono, Rizal",3,Tire puncture,Weak acceleration,Charger not working
+NWOW-0337,NWOW,ERV Mini,Karen Mercado,55,"Brgy. Maligaya, Del Pilar St., Biñan, Laguna",2,Controller malfunction,Weak acceleration,
+NWOW-0338,NWOW,ERVS2,Angela Domingo,20,"Brgy. San Juan, Bonifacio St., Teresa, Rizal",2,Weak acceleration,Throttle not responding,
+NWOW-0339,NWOW,GC10,Daniel Ramos,43,"Brgy. San Isidro, Rizal St., Tagaytay, Cavite",2,Charging problem,Key/ignition problem,
+NWOW-0340,NWOW,ERV,Patricia Villanueva,21,"Brgy. Santo Niño, National Road, Antipolo, Rizal",1,Battery drains quickly,,
+NWOW-0341,NWOW,ERVS3,John Marquez,28,"Brgy. San Jose, Del Pilar St., Taytay, Rizal",2,Charger not working,Key/ignition problem,
+NWOW-0342,NWOW,GC10,Zoe Sy,47,"Brgy. San Juan, Kalayaan Ave., Rosario, Batangas",2,Throttle not responding,Loose wiring,
+NWOW-0343,NWOW,ERV Mini,Ryan Espiritu,55,"Brgy. San Jose, Kalayaan Ave., Cardona, Rizal",1,Suspension problem,,
+NWOW-0344,NWOW,ERV Mini,Andrea Domingo,53,"Brgy. San Juan, Rizal St., Cabuyao, Laguna",2,Horn not working,Flat tire,
+NWOW-0345,NWOW,ERVS2,Anthony Diaz,55,"Brgy. Maligaya, Quezon St., General Trias, Cavite",1,Battery drains quickly,,
+NWOW-0346,NWOW,ERVS3,Hannah De Leon,32,"Brgy. Poblacion, Mabini St., Silang, Cavite",2,Battery drains quickly,Weak acceleration,
+NWOW-0347,NWOW,ERVS2,Miguel Samson,60,"Brgy. Poblacion, Del Pilar St., Rosario, Cavite",1,Controller malfunction,,
+NWOW-0348,NWOW,GC10,Camille Domingo,39,"Brgy. Maligaya, Del Pilar St., San Mateo, Rizal",2,Battery drains quickly,Flat tire,
+NWOW-0349,NWOW,ERV2,Irene Santiago,35,"Brgy. San Isidro, Del Pilar St., Silang, Cavite",1,Charger not working,,
+NWOW-0350,NWOW,EPED,Diana Lazaro,58,"Brgy. San Isidro, Maharlika St., Cardona, Rizal",2,Key/ignition problem,Motor not running,
+NWOW-0351,NWOW,ERVS2,Jasmine Tolentino,61,"Brgy. Santo Niño, Quezon St., Trece Martires, Cavite",2,Charger not working,Tire puncture,
+NWOW-0352,NWOW,ERV Mini,Elaine Torres,58,"Brgy. San Isidro, Mabini St., Santo Tomas, Batangas",1,Key/ignition problem,,
+NWOW-0353,NWOW,ERV,Ethan Chua,45,"Brgy. San Isidro, Sampaguita St., Calamba, Laguna",1,Tire puncture,,
+NWOW-0354,NWOW,ERVS3,Daniel Tolentino,57,"Brgy. Maligaya, Maharlika St., Morong, Rizal",3,Flat tire,Key/ignition problem,Suspension problem
+NWOW-0355,NWOW,ERVS2,Jasmine David,44,"Brgy. Santo Niño, Bonifacio St., Calaca, Batangas",1,Charger not working,,
+NWOW-0356,NWOW,ERVS3,Alyssa Ramos,35,"Brgy. San Isidro, Quezon St., Morong, Rizal",2,Brake problem,Turn signal not working,
+NWOW-0357,NWOW,EPED,Adrian Manansala,54,"Brgy. Santo Niño, Del Pilar St., Lipa, Batangas",2,Flat tire,Turn signal not working,
+NWOW-0358,NWOW,ERV Mini,Trisha Lazaro,39,"Brgy. Santo Niño, Mabini St., Cabuyao, Laguna",2,Controller malfunction,Brake sensor error,
+NWOW-0359,NWOW,ERV Mini,Mika Castro,37,"Brgy. San Isidro, Rizal St., Rodriguez, Rizal",1,Flat tire,,
+NWOW-0360,NWOW,ERV2,Angelo Dela Cruz,52,"Brgy. San Jose, Quezon St., Candelaria, Quezon",1,Display malfunction,,
+NWOW-0361,NWOW,ERV2,Michael Valencia,32,"Brgy. San Jose, Del Pilar St., Tagaytay, Cavite",2,Motor not running,Charger not working,
+NWOW-0362,NWOW,ERVS3,Gabriel Espiritu,31,"Brgy. Santo Niño, Rizal St., Atimonan, Quezon",1,Throttle not responding,,
+NWOW-0363,NWOW,GC10,Nadine Rivera,22,"Brgy. Maligaya, Rizal St., Biñan, Laguna",3,Tire puncture,Throttle not responding,Turn signal not working
+NWOW-0364,NWOW,GC10,James Tan,35,"Brgy. San Juan, Del Pilar St., Lucban, Quezon",3,Turn signal not working,Brake problem,Charging problem
+NWOW-0365,NWOW,ERV2,Ryan Gonzales,56,"Brgy. San Juan, Del Pilar St., Binangonan, Rizal",2,Weak acceleration,Suspension problem,
+NWOW-0366,NWOW,ERV Mini,Nadine Tan,23,"Brgy. San Juan, Quezon St., Bauan, Batangas",3,Display malfunction,Flat tire,Weak acceleration
+NWOW-0367,NWOW,GC10,Mark Castillo,44,"Brgy. Santo Niño, Quezon St., Cabuyao, Laguna",3,Tire puncture,Throttle not responding,Brake sensor error
+NWOW-0368,NWOW,ERVS2,Ethan Aquino,53,"Brgy. Maligaya, Mabini St., Tiaong, Quezon",3,Charging problem,Tire puncture,Charger not working
+NWOW-0369,NWOW,ERV Mini,Maria Hernandez,43,"Brgy. San Juan, Kalayaan Ave., Trece Martires, Cavite",2,Flat tire,Unusual motor noise,
+NWOW-0370,NWOW,ERVS3,Leah Rivera,34,"Brgy. San Isidro, Mabini St., Pagbilao, Quezon",1,Charger not working,,
+NWOW-0371,NWOW,ERV2,Nathan Santos,34,"Brgy. San Juan, Sampaguita St., Binangonan, Rizal",2,Suspension problem,Loose wiring,
+NWOW-0372,NWOW,ERV Mini,Ethan Fernandez,59,"Brgy. Poblacion, Kalayaan Ave., Tagaytay, Cavite",2,Flat tire,Battery drains quickly,
+NWOW-0373,NWOW,ERVS3,Elaine Rosales,35,"Brgy. San Juan, Rizal St., Santo Tomas, Batangas",2,Motor not running,Brake sensor error,
+NWOW-0374,NWOW,ERV Mini,Angelo Torres,47,"Brgy. San Isidro, Bonifacio St., Biñan, Laguna",1,Brake sensor error,,
+NWOW-0375,NWOW,ERV,Miguel Valencia,51,"Brgy. Maligaya, Rizal St., Bauan, Batangas",1,Controller malfunction,,
+NWOW-0376,NWOW,ERVS3,Nathan Cruz,46,"Brgy. San Juan, Bonifacio St., Kawit, Cavite",2,Flat tire,Battery drains quickly,
+NWOW-0377,NWOW,ERVS3,Andrea Tolentino,34,"Brgy. San Isidro, Maharlika St., Angono, Rizal",1,Brake problem,,
+NWOW-0378,NWOW,GC10,Angelo Tolentino,44,"Brgy. Santo Niño, Bonifacio St., Calaca, Batangas",3,Weak acceleration,Brake problem,Charger not working
+NWOW-0379,NWOW,ERV,Patricia Bautista,50,"Brgy. San Isidro, Del Pilar St., Tayabas, Quezon",2,Flat tire,Brake sensor error,
+NWOW-0380,NWOW,ERVS2,Samantha Tan,20,"Brgy. San Isidro, Rizal St., Rodriguez, Rizal",1,Battery failure,,
+NWOW-0381,NWOW,ERVS2,John Villanueva,30,"Brgy. Poblacion, Rizal St., Rosario, Cavite",2,Brake sensor error,Horn not working,
+NWOW-0382,NWOW,ERV Mini,Karen Torres,60,"Brgy. Poblacion, Maharlika St., Trece Martires, Cavite",2,Brake sensor error,Weak acceleration,
+NWOW-0383,NWOW,EPED,Kevin Lazaro,49,"Brgy. Santo Niño, Acacia St., Ibaan, Batangas",1,Brake problem,,
+NWOW-0384,NWOW,GC10,Daniel De Leon,55,"Brgy. Santo Niño, Quezon St., Cardona, Rizal",1,Battery drains quickly,,
+NWOW-0385,NWOW,ERVS3,Carlo Marquez,21,"Brgy. Poblacion, Sampaguita St., Biñan, Laguna",2,Weak acceleration,Brake problem,
+NWOW-0386,NWOW,ERV2,James Bernardo,63,"Brgy. Poblacion, Mabini St., Ibaan, Batangas",1,Battery failure,,
+NWOW-0387,NWOW,EPED,Trisha Ocampo,65,"Brgy. Maligaya, Acacia St., Los Baños, Laguna",1,Turn signal not working,,
+NWOW-0388,NWOW,ERV2,Mika Hernandez,44,"Brgy. Santo Niño, Del Pilar St., Cardona, Rizal",2,Motor not running,Charging problem,
+NWOW-0389,NWOW,ERVS3,Sarah Manalo,19,"Brgy. Santo Niño, National Road, Santo Tomas, Batangas",2,Battery drains quickly,Brake problem,
+NWOW-0390,NWOW,ERV Mini,Christine Bernardo,32,"Brgy. Maligaya, Quezon St., Imus, Cavite",1,Motor not running,,
+NWOW-0391,NWOW,ERV2,Alyssa Chua,51,"Brgy. Maligaya, Del Pilar St., Atimonan, Quezon",1,Unusual motor noise,,
+NWOW-0392,NWOW,ERVS3,Angelo Valencia,32,"Brgy. San Jose, Maharlika St., Taytay, Rizal",2,Charger not working,Brake problem,
+NWOW-0393,NWOW,EPED,Paolo Mercado,42,"Brgy. Santo Niño, Del Pilar St., Imus, Cavite",1,Suspension problem,,
+NWOW-0394,NWOW,ERVS2,Angela Manansala,51,"Brgy. San Jose, Mabini St., Lopez, Quezon",1,Tire puncture,,
+NWOW-0395,NWOW,ERVS2,Nadine Ocampo,40,"Brgy. San Isidro, Mabini St., Ibaan, Batangas",1,Tire puncture,,
+NWOW-0396,NWOW,ERV2,Adrian Padilla,42,"Brgy. Santo Niño, Maharlika St., Santo Tomas, Batangas",1,Unusual motor noise,,
+NWOW-0397,NWOW,ERVS2,Anthony Rosales,27,"Brgy. San Jose, National Road, Antipolo, Rizal",2,Tire puncture,Display malfunction,
+NWOW-0398,NWOW,GC10,Zoe Del Rosario,27,"Brgy. Santo Niño, Bonifacio St., Sariaya, Quezon",2,Charging problem,Flat tire,
+NWOW-0399,NWOW,ERVS3,Irene Espiritu,20,"Brgy. San Juan, Mabini St., Gumaca, Quezon",2,Charging problem,Throttle not responding,
+NWOW-0400,NWOW,ERV Mini,Mark Marquez,34,"Brgy. San Isidro, Del Pilar St., Cabuyao, Laguna",3,Battery failure,Key/ignition problem,Weak acceleration
+NWOW-0401,NWOW,ERVS3,Olivia Cruz,40,"Brgy. San Isidro, Quezon St., Tagaytay, Cavite",1,Horn not working,,
+NWOW-0402,NWOW,GC10,Vanessa Valencia,19,"Brgy. Maligaya, Bonifacio St., Tanauan, Batangas",2,Brake problem,Unusual motor noise,
+NWOW-0403,NWOW,ERV Mini,Zoe Mendoza,19,"Brgy. Santo Niño, Acacia St., Santo Tomas, Batangas",3,Throttle not responding,Motor not running,Battery failure
+NWOW-0404,NWOW,ERV2,Irene De Leon,41,"Brgy. San Isidro, Bonifacio St., Rodriguez, Rizal",1,Key/ignition problem,,
+NWOW-0405,NWOW,ERV,Clarisse Del Rosario,26,"Brgy. San Juan, National Road, Candelaria, Quezon",2,Horn not working,Tire puncture,
+NWOW-0406,NWOW,ERV,Ethan Del Rosario,33,"Brgy. Poblacion, Kalayaan Ave., Santo Tomas, Batangas",3,Flat tire,Brake sensor error,Charging problem
+NWOW-0407,NWOW,ERVS2,Leah Navarro,56,"Brgy. Maligaya, Sampaguita St., Santo Tomas, Batangas",1,Horn not working,,
+NWOW-0408,NWOW,ERV,Jasmine Lazaro,25,"Brgy. San Isidro, Bonifacio St., Cardona, Rizal",2,Controller malfunction,Suspension problem,
+NWOW-0409,NWOW,ERV Mini,Ethan Garcia,53,"Brgy. Maligaya, Quezon St., Tagaytay, Cavite",1,Brake sensor error,,
+NWOW-0410,NWOW,ERVS2,Francis Cruz,56,"Brgy. Santo Niño, Kalayaan Ave., Los Baños, Laguna",3,Loose wiring,Battery drains quickly,Display malfunction
+NWOW-0411,NWOW,ERVS3,Vanessa Santos,60,"Brgy. San Isidro, Mabini St., Santa Cruz, Laguna",3,Motor not running,Display malfunction,Weak acceleration
+NWOW-0412,NWOW,ERV,Janelle Reyes,31,"Brgy. Maligaya, National Road, Santa Cruz, Laguna",3,Turn signal not working,Brake problem,Motor not running
+NWOW-0413,NWOW,ERVS3,Janelle Ramos,38,"Brgy. San Jose, Kalayaan Ave., Bay, Laguna",2,Key/ignition problem,Weak acceleration,
+NWOW-0414,NWOW,GC10,Camille Castro,19,"Brgy. Poblacion, Rizal St., Rosario, Batangas",2,Motor not running,Headlight not working,
+NWOW-0415,NWOW,ERV2,Michael Del Rosario,57,"Brgy. Maligaya, Acacia St., Tagaytay, Cavite",3,Flat tire,Brake problem,Motor not running
+NWOW-0416,NWOW,ERVS2,Carlo Aguilar,57,"Brgy. San Jose, Bonifacio St., General Trias, Cavite",1,Charging problem,,
+NWOW-0417,NWOW,ERV Mini,Andrea Aguilar,19,"Brgy. Santo Niño, Kalayaan Ave., Morong, Rizal",1,Loose wiring,,
+NWOW-0418,NWOW,ERV2,Paolo Gonzales,28,"Brgy. San Isidro, Maharlika St., Tanauan, Batangas",3,Brake problem,Weak acceleration,Display malfunction
+NWOW-0419,NWOW,GC10,Olivia De Leon,65,"Brgy. Poblacion, Acacia St., Lopez, Quezon",1,Turn signal not working,,
+NWOW-0420,NWOW,EPED,James Villanueva,22,"Brgy. San Jose, Sampaguita St., Candelaria, Quezon",1,Charger not working,,
+NWOW-0421,NWOW,ERV,Leah Castillo,63,"Brgy. San Jose, Acacia St., General Trias, Cavite",1,Battery drains quickly,,
+NWOW-0422,NWOW,EPED,Diana Villanueva,31,"Brgy. Maligaya, Maharlika St., Santa Rosa, Laguna",2,Turn signal not working,Headlight not working,
+NWOW-0423,NWOW,ERV,Ethan Ramos,25,"Brgy. Poblacion, Kalayaan Ave., Tagaytay, Cavite",2,Tire puncture,Headlight not working,
+NWOW-0424,NWOW,ERVS2,Trisha Mercado,28,"Brgy. Maligaya, Mabini St., Rosario, Batangas",3,Throttle not responding,Charging problem,Brake problem
+NWOW-0425,NWOW,EPED,Leah David,32,"Brgy. San Jose, Kalayaan Ave., Nasugbu, Batangas",2,Throttle not responding,Brake problem,
+NWOW-0426,NWOW,ERVS3,Samantha De Leon,44,"Brgy. Santo Niño, Rizal St., Lucban, Quezon",2,Turn signal not working,Motor not running,
+NWOW-0427,NWOW,ERV2,Jasmine Torres,57,"Brgy. San Isidro, Bonifacio St., Santa Cruz, Laguna",2,Turn signal not working,Charger not working,
+NWOW-0428,NWOW,ERV2,Grace Villanueva,36,"Brgy. San Jose, Acacia St., Lopez, Quezon",1,Throttle not responding,,
+NWOW-0429,NWOW,GC10,Nadine Flores,43,"Brgy. Santo Niño, Acacia St., Calamba, Laguna",1,Throttle not responding,,
+NWOW-0430,NWOW,GC10,Carlo Santos,43,"Brgy. San Juan, Maharlika St., Calaca, Batangas",1,Flat tire,,
+NWOW-0431,NWOW,ERVS2,Lara Aguilar,23,"Brgy. Santo Niño, Rizal St., Cainta, Rizal",1,Motor not running,,
+NWOW-0432,NWOW,EPED,Mark Bautista,56,"Brgy. San Isidro, Sampaguita St., Tayabas, Quezon",2,Motor not running,Brake sensor error,
+NWOW-0433,NWOW,ERVS2,John Bernardo,64,"Brgy. Poblacion, Mabini St., Lipa, Batangas",3,Controller malfunction,Motor not running,Brake problem
+NWOW-0434,NWOW,ERV Mini,Christine Cruz,29,"Brgy. Santo Niño, Acacia St., Lucena, Quezon",3,Flat tire,Loose wiring,Display malfunction
+NWOW-0435,NWOW,ERV2,Lara Sy,23,"Brgy. Poblacion, Bonifacio St., Santo Tomas, Batangas",1,Charging problem,,
+NWOW-0436,NWOW,EPED,Mika De Leon,58,"Brgy. Maligaya, Bonifacio St., Rosario, Batangas",2,Unusual motor noise,Weak acceleration,
+NWOW-0437,NWOW,GC10,Olivia Hernandez,48,"Brgy. Poblacion, Del Pilar St., Pagsanjan, Laguna",2,Flat tire,Charger not working,
+NWOW-0438,NWOW,ERVS2,Angela Morales,50,"Brgy. Santo Niño, Kalayaan Ave., Rosario, Cavite",1,Weak acceleration,,
+NWOW-0439,NWOW,EPED,Nadine David,43,"Brgy. Poblacion, Maharlika St., Cabuyao, Laguna",1,Charger not working,,
+NWOW-0440,NWOW,EPED,Nadine Castillo,18,"Brgy. San Jose, Maharlika St., Calamba, Laguna",1,Loose wiring,,
+NWOW-0441,NWOW,ERV Mini,Diana Santiago,37,"Brgy. San Juan, Quezon St., Pagsanjan, Laguna",1,Headlight not working,,
+NWOW-0442,NWOW,ERV2,Sarah Ocampo,52,"Brgy. San Jose, Bonifacio St., Tanza, Cavite",2,Throttle not responding,Suspension problem,
+NWOW-0443,NWOW,ERVS3,Alyssa Reyes,39,"Brgy. San Juan, Quezon St., Pagbilao, Quezon",1,Motor not running,,
+NWOW-0444,NWOW,ERV Mini,Angela Espiritu,44,"Brgy. Poblacion, Sampaguita St., Taytay, Rizal",2,Controller malfunction,Battery failure,
+NWOW-0445,NWOW,GC10,Christine Del Rosario,45,"Brgy. Poblacion, Rizal St., Santo Tomas, Batangas",1,Controller malfunction,,
+NWOW-0446,NWOW,ERVS2,Diana Soriano,48,"Brgy. Santo Niño, Acacia St., Bauan, Batangas",2,Tire puncture,Throttle not responding,
+NWOW-0447,NWOW,ERV,Leah Lim,54,"Brgy. Santo Niño, Bonifacio St., San Mateo, Rizal",1,Tire puncture,,
+NWOW-0448,NWOW,ERV2,Alyssa Domingo,62,"Brgy. San Isidro, Mabini St., Candelaria, Quezon",1,Headlight not working,,
+NWOW-0449,NWOW,ERV2,Leah Aquino,31,"Brgy. Santo Niño, Acacia St., Tanza, Cavite",1,Headlight not working,,
+NWOW-0450,NWOW,ERV2,Patricia Santos,58,"Brgy. San Juan, Del Pilar St., Lucena, Quezon",1,Charger not working,,
+NWOW-0451,NWOW,EPED,Irene Macapagal,47,"Brgy. Maligaya, Acacia St., Candelaria, Quezon",2,Throttle not responding,Display malfunction,
+NWOW-0452,NWOW,ERVS3,Vanessa Aguilar,63,"Brgy. Maligaya, Rizal St., Morong, Rizal",3,Brake problem,Charging problem,Horn not working
+NWOW-0453,NWOW,ERVS2,Olivia Morales,24,"Brgy. San Jose, National Road, Santa Rosa, Laguna",3,Key/ignition problem,Tire puncture,Suspension problem
+NWOW-0454,NWOW,GC10,Patricia David,54,"Brgy. Santo Niño, Quezon St., Lopez, Quezon",1,Key/ignition problem,,
+NWOW-0455,NWOW,ERV,Sarah Salazar,55,"Brgy. San Isidro, Del Pilar St., Tayabas, Quezon",2,Loose wiring,Brake sensor error,
+NWOW-0456,NWOW,ERV Mini,Francis Samson,54,"Brgy. San Jose, Sampaguita St., Bay, Laguna",2,Turn signal not working,Unusual motor noise,
+NWOW-0457,NWOW,ERV2,Diana Bautista,56,"Brgy. San Juan, Del Pilar St., Tayabas, Quezon",3,Suspension problem,Battery failure,Brake problem
+NWOW-0458,NWOW,EPED,Zoe Tan,57,"Brgy. Santo Niño, Del Pilar St., Santa Cruz, Laguna",2,Unusual motor noise,Turn signal not working,
+NWOW-0459,NWOW,ERVS3,Grace Valencia,39,"Brgy. San Juan, Mabini St., Bacoor, Cavite",1,Charger not working,,
+NWOW-0460,NWOW,ERV2,Clarisse Manansala,58,"Brgy. Poblacion, Kalayaan Ave., Rodriguez, Rizal",2,Flat tire,Charger not working,
+NWOW-0461,NWOW,ERV2,Ryan De Leon,50,"Brgy. Poblacion, Del Pilar St., Pagsanjan, Laguna",2,Tire puncture,Weak acceleration,
+NWOW-0462,NWOW,ERVS2,Hannah Diaz,51,"Brgy. San Juan, National Road, San Mateo, Rizal",2,Horn not working,Suspension problem,
+NWOW-0463,NWOW,ERVS3,Karen Hernandez,37,"Brgy. Maligaya, Acacia St., Pagsanjan, Laguna",1,Charging problem,,
+NWOW-0464,NWOW,ERV Mini,Joshua Gonzales,20,"Brgy. San Juan, Sampaguita St., Lucban, Quezon",2,Brake problem,Flat tire,
+NWOW-0465,NWOW,GC10,Zoe David,57,"Brgy. San Isidro, Del Pilar St., Rosario, Batangas",2,Suspension problem,Brake sensor error,
+NWOW-0466,NWOW,ERVS2,Hannah Rivera,22,"Brgy. San Jose, Del Pilar St., Rodriguez, Rizal",1,Battery drains quickly,,
+NWOW-0467,NWOW,ERVS2,Michael Gonzales,40,"Brgy. Poblacion, Mabini St., Bacoor, Cavite",3,Suspension problem,Turn signal not working,Headlight not working
+NWOW-0468,NWOW,ERVS2,Maria Tolentino,33,"Brgy. San Juan, Del Pilar St., Lopez, Quezon",2,Motor not running,Brake problem,
+NWOW-0469,NWOW,ERV2,Hannah Valdez,60,"Brgy. Maligaya, Bonifacio St., Rodriguez, Rizal",2,Loose wiring,Throttle not responding,
+NWOW-0470,NWOW,ERVS3,Jasmine Dela Cruz,35,"Brgy. San Jose, Acacia St., Ibaan, Batangas",2,Charger not working,Controller malfunction,
+NWOW-0471,NWOW,EPED,Daniel David,51,"Brgy. San Jose, Mabini St., Gumaca, Quezon",3,Controller malfunction,Display malfunction,Motor not running
+NWOW-0472,NWOW,ERV Mini,Mark Flores,34,"Brgy. San Juan, Del Pilar St., Binangonan, Rizal",2,Charger not working,Battery drains quickly,
+NWOW-0473,NWOW,EPED,Michael Tolentino,54,"Brgy. San Juan, Acacia St., Tayabas, Quezon",1,Flat tire,,
+NWOW-0474,NWOW,EPED,Andrea Aquino,42,"Brgy. Santo Niño, Maharlika St., Tagaytay, Cavite",1,Loose wiring,,
+NWOW-0475,NWOW,ERVS2,Lara Marquez,50,"Brgy. Poblacion, Del Pilar St., Binangonan, Rizal",1,Weak acceleration,,
+NWOW-0476,NWOW,ERV Mini,Christine Lim,20,"Brgy. Poblacion, Bonifacio St., Lipa, Batangas",1,Charger not working,,
+NWOW-0477,NWOW,ERVS3,Nathan Chua,36,"Brgy. San Juan, Del Pilar St., Antipolo, Rizal",1,Tire puncture,,
+NWOW-0478,NWOW,ERV,Diana David,35,"Brgy. San Isidro, Sampaguita St., Candelaria, Quezon",2,Suspension problem,Motor not running,
+NWOW-0479,NWOW,ERV Mini,Janelle Domingo,46,"Brgy. Poblacion, Del Pilar St., Pagbilao, Quezon",2,Brake problem,Battery drains quickly,
+NWOW-0480,NWOW,ERV2,Mark Mendoza,26,"Brgy. Poblacion, Rizal St., Cabuyao, Laguna",1,Battery drains quickly,,
+NWOW-0481,NWOW,ERV,Christian Santiago,48,"Brgy. Poblacion, Rizal St., Rodriguez, Rizal",3,Tire puncture,Battery drains quickly,Headlight not working
+NWOW-0482,NWOW,GC10,Angela Valencia,53,"Brgy. San Juan, Maharlika St., Gumaca, Quezon",2,Headlight not working,Brake sensor error,
+NWOW-0483,NWOW,ERVS2,Adrian Rivera,20,"Brgy. Santo Niño, Kalayaan Ave., Bauan, Batangas",3,Headlight not working,Suspension problem,Horn not working
+NWOW-0484,NWOW,ERVS2,Francis Macapagal,59,"Brgy. San Juan, Del Pilar St., Lipa, Batangas",1,Charger not working,,
+NWOW-0485,NWOW,ERV,Christine Santos,60,"Brgy. Santo Niño, Rizal St., Tanza, Cavite",2,Brake problem,Display malfunction,
+NWOW-0486,NWOW,ERV2,Michael Flores,57,"Brgy. San Juan, Sampaguita St., Rosario, Cavite",2,Flat tire,Display malfunction,
+NWOW-0487,NWOW,ERV2,Faith Morales,22,"Brgy. Maligaya, Mabini St., Pagsanjan, Laguna",1,Horn not working,,
+NWOW-0488,NWOW,ERVS2,Irene Tan,52,"Brgy. Poblacion, Rizal St., Atimonan, Quezon",3,Throttle not responding,Motor not running,Key/ignition problem
+NWOW-0489,NWOW,EPED,Kevin Marquez,21,"Brgy. San Isidro, Mabini St., Bay, Laguna",2,Turn signal not working,Display malfunction,
+NWOW-0490,NWOW,EPED,Lara Dela Cruz,39,"Brgy. Santo Niño, Kalayaan Ave., Calamba, Laguna",2,Motor not running,Weak acceleration,
+NWOW-0491,NWOW,ERV Mini,Beatrice Valdez,44,"Brgy. Maligaya, Del Pilar St., Santa Cruz, Laguna",1,Tire puncture,,
+NWOW-0492,NWOW,GC10,Ethan Santos,51,"Brgy. San Isidro, Kalayaan Ave., Morong, Rizal",1,Weak acceleration,,
+NWOW-0493,NWOW,EPED,Angelo Del Rosario,36,"Brgy. San Isidro, Acacia St., Bay, Laguna",2,Controller malfunction,Headlight not working,
+NWOW-0494,NWOW,GC10,Christine Aguilar,31,"Brgy. Poblacion, Kalayaan Ave., Candelaria, Quezon",2,Key/ignition problem,Charging problem,
+NWOW-0495,NWOW,ERV Mini,Anthony Bautista,50,"Brgy. Maligaya, Del Pilar St., Lipa, Batangas",2,Battery drains quickly,Brake problem,
+NWOW-0496,NWOW,ERV Mini,Francis Villanueva,41,"Brgy. Maligaya, Kalayaan Ave., Imus, Cavite",2,Charging problem,Charger not working,
+NWOW-0497,NWOW,GC10,Alyssa Mercado,46,"Brgy. San Juan, Bonifacio St., Nasugbu, Batangas",1,Flat tire,,
+NWOW-0498,NWOW,ERV2,Ryan Reyes,53,"Brgy. Poblacion, Bonifacio St., Kawit, Cavite",1,Controller malfunction,,
+NWOW-0499,NWOW,ERVS3,Janelle Ocampo,46,"Brgy. San Jose, Kalayaan Ave., Tanauan, Batangas",2,Flat tire,Brake problem,
+NWOW-0500,NWOW,ERV Mini,Ethan Lim,51,"Brgy. San Isidro, Del Pilar St., Angono, Rizal",1,Brake problem,,
+KUDA-0001,KUDA,Lion,Joshua Tan,51,"Brgy. San Isidro, Sampaguita St., Bay, Laguna",1,Charging problem,,
+KUDA-0002,KUDA,Rhino,Beatrice Ramos,46,"Brgy. Poblacion, Kalayaan Ave., Calamba, Laguna",1,Turn signal not working,,
+KUDA-0003,KUDA,New Wolf Plus,Francis Manalo,55,"Brgy. San Juan, Quezon St., Tanza, Cavite",1,Display malfunction,,
+KUDA-0004,KUDA,Kuda E-Trike,Mika Villanueva,49,"Brgy. San Jose, Maharlika St., Cabuyao, Laguna",1,Controller malfunction,,
+KUDA-0005,KUDA,Rhino,Nadine Diaz,60,"Brgy. San Isidro, Del Pilar St., Rosario, Batangas",2,Battery drains quickly,Key/ignition problem,
+KUDA-0006,KUDA,Lion,Francis Valdez,61,"Brgy. San Isidro, National Road, Tagaytay, Cavite",1,Motor not running,,
+KUDA-0007,KUDA,Rhino,Camille Mercado,36,"Brgy. San Juan, Maharlika St., Calamba, Laguna",1,Turn signal not working,,
+KUDA-0008,KUDA,Rhino,James Rosales,61,"Brgy. San Juan, Maharlika St., Biñan, Laguna",2,Throttle not responding,Battery failure,
+KUDA-0009,KUDA,Lion,Hannah Aquino,49,"Brgy. San Isidro, Bonifacio St., Santa Cruz, Laguna",3,Key/ignition problem,Flat tire,Throttle not responding
+KUDA-0010,KUDA,Lion,Alyssa Del Rosario,59,"Brgy. Santo Niño, National Road, Taytay, Rizal",3,Throttle not responding,Turn signal not working,Flat tire
+KUDA-0011,KUDA,Lion,Jasmine Manalo,44,"Brgy. San Juan, Del Pilar St., Batangas City, Batangas",3,Brake sensor error,Turn signal not working,Flat tire
+KUDA-0012,KUDA,Kuda E-Trike,Beatrice Villanueva,24,"Brgy. San Juan, Quezon St., Silang, Cavite",2,Motor not running,Headlight not working,
+KUDA-0013,KUDA,Kuda E-Trike,Andrea Cruz,25,"Brgy. Poblacion, Bonifacio St., Trece Martires, Cavite",3,Battery drains quickly,Brake problem,Flat tire
+KUDA-0014,KUDA,Lion,John Manalo,48,"Brgy. San Isidro, Sampaguita St., Sariaya, Quezon",2,Charger not working,Brake problem,
+KUDA-0015,KUDA,Lion,Grace Macapagal,43,"Brgy. Maligaya, Acacia St., Biñan, Laguna",2,Motor not running,Headlight not working,
+KUDA-0016,KUDA,Rhino,Mark Dela Cruz,23,"Brgy. San Juan, Acacia St., Biñan, Laguna",1,Suspension problem,,
+KUDA-0017,KUDA,New Wolf Plus,Lara Castillo,60,"Brgy. San Juan, Kalayaan Ave., Cainta, Rizal",3,Turn signal not working,Charger not working,Display malfunction
+KUDA-0018,KUDA,New Wolf Plus,Maria Bernardo,59,"Brgy. San Isidro, Maharlika St., Santo Tomas, Batangas",1,Throttle not responding,,
+KUDA-0019,KUDA,New Wolf Plus,Paolo Soriano,50,"Brgy. Santo Niño, Bonifacio St., Biñan, Laguna",2,Charger not working,Brake sensor error,
+KUDA-0020,KUDA,Kuda E-Trike,Anthony Macapagal,33,"Brgy. Maligaya, National Road, Batangas City, Batangas",1,Loose wiring,,
+KUDA-0021,KUDA,New Wolf Plus,Gabriel Bautista,43,"Brgy. Maligaya, Acacia St., Lipa, Batangas",2,Flat tire,Tire puncture,
+KUDA-0022,KUDA,Rhino,Angelo Bautista,63,"Brgy. Santo Niño, Mabini St., Taytay, Rizal",3,Throttle not responding,Tire puncture,Turn signal not working
+KUDA-0023,KUDA,Rhino,Zoe Bernardo,56,"Brgy. Santo Niño, Mabini St., Bay, Laguna",1,Tire puncture,,
+KUDA-0024,KUDA,New Wolf Plus,Lara Macapagal,22,"Brgy. San Isidro, Mabini St., Tiaong, Quezon",1,Charging problem,,
+KUDA-0025,KUDA,New Wolf Plus,Zoe Macapagal,56,"Brgy. San Jose, Del Pilar St., Silang, Cavite",2,Weak acceleration,Suspension problem,
+KUDA-0026,KUDA,Rhino,Christine Villanueva,29,"Brgy. Maligaya, Rizal St., Rodriguez, Rizal",1,Flat tire,,
+KUDA-0027,KUDA,Kuda E-Trike,Angelo Domingo,64,"Brgy. San Jose, National Road, Cardona, Rizal",2,Key/ignition problem,Controller malfunction,
+KUDA-0028,KUDA,New Wolf Plus,Vanessa Villanueva,19,"Brgy. Santo Niño, Sampaguita St., Biñan, Laguna",1,Horn not working,,
+KUDA-0029,KUDA,New Wolf Plus,Gabriel Salazar,32,"Brgy. San Jose, Quezon St., Calaca, Batangas",1,Flat tire,,
+KUDA-0030,KUDA,Rhino,Janelle Mendoza,50,"Brgy. San Isidro, Acacia St., Pagsanjan, Laguna",2,Headlight not working,Battery failure,
+KUDA-0031,KUDA,Lion,Samantha Alcantara,38,"Brgy. Santo Niño, Acacia St., Morong, Rizal",1,Brake sensor error,,
+KUDA-0032,KUDA,Kuda E-Trike,Maria Soriano,45,"Brgy. San Jose, Del Pilar St., Kawit, Cavite",1,Tire puncture,,
+KUDA-0033,KUDA,Lion,Angela Castillo,44,"Brgy. San Isidro, Rizal St., Imus, Cavite",3,Display malfunction,Charging problem,Throttle not responding
+KUDA-0034,KUDA,New Wolf Plus,Michael Reyes,20,"Brgy. Poblacion, Sampaguita St., Candelaria, Quezon",2,Loose wiring,Flat tire,
+KUDA-0035,KUDA,Rhino,Christine Lazaro,18,"Brgy. San Juan, Quezon St., Silang, Cavite",1,Charging problem,,
+KUDA-0036,KUDA,Rhino,Nathan Ramos,43,"Brgy. Maligaya, Sampaguita St., Bacoor, Cavite",3,Horn not working,Headlight not working,Flat tire
+KUDA-0037,KUDA,New Wolf Plus,Nadine Marquez,62,"Brgy. San Juan, Del Pilar St., San Mateo, Rizal",1,Display malfunction,,
+KUDA-0038,KUDA,New Wolf Plus,Jasmine Salazar,28,"Brgy. San Jose, Quezon St., San Mateo, Rizal",1,Horn not working,,
+KUDA-0039,KUDA,Lion,Olivia Manalo,37,"Brgy. Poblacion, Maharlika St., Santo Tomas, Batangas",3,Headlight not working,Brake problem,Weak acceleration
+KUDA-0040,KUDA,Kuda E-Trike,Hannah Hernandez,23,"Brgy. Santo Niño, Bonifacio St., Lucena, Quezon",1,Key/ignition problem,,
+KUDA-0041,KUDA,Lion,Paolo Marquez,35,"Brgy. San Juan, Quezon St., Bay, Laguna",1,Turn signal not working,,
+KUDA-0042,KUDA,Lion,Camille Reyes,25,"Brgy. Maligaya, National Road, Trece Martires, Cavite",2,Brake problem,Flat tire,
+KUDA-0043,KUDA,Lion,James Reyes,63,"Brgy. San Jose, Quezon St., Antipolo, Rizal",1,Suspension problem,,
+KUDA-0044,KUDA,Kuda E-Trike,Carlo Fernandez,29,"Brgy. San Juan, Del Pilar St., Calamba, Laguna",2,Weak acceleration,Headlight not working,
+KUDA-0045,KUDA,New Wolf Plus,John De Leon,40,"Brgy. Santo Niño, Maharlika St., Biñan, Laguna",2,Motor not running,Turn signal not working,
+KUDA-0046,KUDA,Kuda E-Trike,Grace Bernardo,40,"Brgy. Santo Niño, National Road, Los Baños, Laguna",2,Motor not running,Flat tire,
+KUDA-0047,KUDA,Lion,Faith Bautista,42,"Brgy. Poblacion, Bonifacio St., Pagbilao, Quezon",3,Display malfunction,Controller malfunction,Key/ignition problem
+KUDA-0048,KUDA,Lion,Samantha Hernandez,20,"Brgy. San Jose, Acacia St., Taytay, Rizal",1,Charger not working,,
+KUDA-0049,KUDA,Rhino,Sarah Valencia,50,"Brgy. San Jose, Mabini St., Lopez, Quezon",1,Tire puncture,,
+KUDA-0050,KUDA,New Wolf Plus,Zoe Garcia,29,"Brgy. San Isidro, Rizal St., Binangonan, Rizal",1,Brake sensor error,,
+KUDA-0051,KUDA,Rhino,Michael Diaz,51,"Brgy. Santo Niño, Rizal St., Santa Rosa, Laguna",1,Headlight not working,,
+KUDA-0052,KUDA,New Wolf Plus,Lara Ocampo,61,"Brgy. San Jose, Rizal St., Tayabas, Quezon",2,Brake sensor error,Tire puncture,
+KUDA-0053,KUDA,Lion,Sarah Del Rosario,45,"Brgy. San Juan, National Road, Pagsanjan, Laguna",3,Turn signal not working,Key/ignition problem,Suspension problem
+KUDA-0054,KUDA,Rhino,Ryan Soriano,36,"Brgy. San Juan, Rizal St., Morong, Rizal",3,Display malfunction,Brake problem,Turn signal not working
+KUDA-0055,KUDA,New Wolf Plus,John Castro,23,"Brgy. San Jose, Maharlika St., Tanza, Cavite",2,Throttle not responding,Loose wiring,
+KUDA-0056,KUDA,Rhino,Ethan Morales,52,"Brgy. Santo Niño, Rizal St., Bay, Laguna",1,Charger not working,,
+KUDA-0057,KUDA,Rhino,Sarah Alcantara,38,"Brgy. Poblacion, Kalayaan Ave., Taytay, Rizal",1,Loose wiring,,
+KUDA-0058,KUDA,Lion,Carlo Hernandez,55,"Brgy. San Juan, Mabini St., Calaca, Batangas",3,Controller malfunction,Tire puncture,Turn signal not working
+KUDA-0059,KUDA,Kuda E-Trike,Patricia Del Rosario,33,"Brgy. San Isidro, Sampaguita St., Lipa, Batangas",1,Display malfunction,,
+KUDA-0060,KUDA,Lion,Mika Manansala,23,"Brgy. Maligaya, Sampaguita St., Nasugbu, Batangas",1,Battery drains quickly,,
+KUDA-0061,KUDA,New Wolf Plus,Joshua Bernardo,20,"Brgy. San Jose, Bonifacio St., Candelaria, Quezon",2,Horn not working,Display malfunction,
+KUDA-0062,KUDA,Kuda E-Trike,Beatrice Domingo,27,"Brgy. Santo Niño, Sampaguita St., Bay, Laguna",1,Weak acceleration,,
+KUDA-0063,KUDA,New Wolf Plus,Grace Salazar,57,"Brgy. San Isidro, Rizal St., Angono, Rizal",3,Suspension problem,Charging problem,Controller malfunction
+KUDA-0064,KUDA,Kuda E-Trike,Leah Mercado,51,"Brgy. San Jose, Sampaguita St., San Pedro, Laguna",2,Motor not running,Charging problem,
+KUDA-0065,KUDA,Kuda E-Trike,Nicole Navarro,32,"Brgy. San Isidro, Quezon St., Tanauan, Batangas",2,Loose wiring,Motor not running,
+KUDA-0066,KUDA,Kuda E-Trike,Francis Aquino,37,"Brgy. Maligaya, Kalayaan Ave., Rosario, Cavite",2,Flat tire,Horn not working,
+KUDA-0067,KUDA,New Wolf Plus,Andrea Rivera,51,"Brgy. San Jose, Rizal St., Gumaca, Quezon",2,Controller malfunction,Loose wiring,
+KUDA-0068,KUDA,Lion,Clarisse Diaz,42,"Brgy. San Jose, Del Pilar St., Cabuyao, Laguna",1,Throttle not responding,,
+KUDA-0069,KUDA,Kuda E-Trike,Nicole Torres,35,"Brgy. Santo Niño, Sampaguita St., Tiaong, Quezon",3,Brake problem,Headlight not working,Throttle not responding
+KUDA-0070,KUDA,Lion,James Tolentino,38,"Brgy. San Jose, Mabini St., Candelaria, Quezon",2,Battery failure,Suspension problem,
+KUDA-0071,KUDA,Rhino,Jasmine Ramos,41,"Brgy. Maligaya, Sampaguita St., Pagbilao, Quezon",2,Brake problem,Motor not running,
+KUDA-0072,KUDA,New Wolf Plus,Jerome Torres,47,"Brgy. San Jose, Del Pilar St., Atimonan, Quezon",2,Horn not working,Brake sensor error,
+KUDA-0073,KUDA,Kuda E-Trike,Ethan Castillo,33,"Brgy. San Juan, Sampaguita St., Bay, Laguna",2,Key/ignition problem,Unusual motor noise,
+KUDA-0074,KUDA,Rhino,Faith Garcia,60,"Brgy. San Isidro, Acacia St., Bay, Laguna",2,Suspension problem,Horn not working,
+KUDA-0075,KUDA,Rhino,Michael Pascual,54,"Brgy. Santo Niño, Del Pilar St., Rodriguez, Rizal",2,Key/ignition problem,Charger not working,
+KUDA-0076,KUDA,Kuda E-Trike,Karen Soriano,41,"Brgy. Poblacion, Mabini St., Bay, Laguna",1,Suspension problem,,
+KUDA-0077,KUDA,Rhino,John Manansala,38,"Brgy. San Isidro, Acacia St., Santa Cruz, Laguna",1,Turn signal not working,,
+KUDA-0078,KUDA,Kuda E-Trike,Carlo Salazar,19,"Brgy. Maligaya, Mabini St., Tagaytay, Cavite",3,Horn not working,Motor not running,Weak acceleration
+KUDA-0079,KUDA,Lion,Zoe Lazaro,55,"Brgy. Santo Niño, Quezon St., Santa Rosa, Laguna",1,Charging problem,,
+KUDA-0080,KUDA,Lion,Vanessa Rivera,22,"Brgy. San Juan, Del Pilar St., Biñan, Laguna",3,Weak acceleration,Brake sensor error,Turn signal not working
+KUDA-0081,KUDA,New Wolf Plus,Adrian Soriano,45,"Brgy. Poblacion, Del Pilar St., San Mateo, Rizal",2,Turn signal not working,Charger not working,
+KUDA-0082,KUDA,Rhino,Alyssa Manansala,36,"Brgy. San Juan, Bonifacio St., General Trias, Cavite",3,Brake sensor error,Headlight not working,Key/ignition problem
+KUDA-0083,KUDA,Lion,Rachel Pascual,61,"Brgy. Poblacion, Maharlika St., General Trias, Cavite",2,Horn not working,Tire puncture,
+KUDA-0084,KUDA,New Wolf Plus,Elaine Reyes,24,"Brgy. San Juan, Mabini St., Pagbilao, Quezon",1,Motor not running,,
+KUDA-0085,KUDA,New Wolf Plus,Vanessa Valdez,54,"Brgy. Poblacion, Kalayaan Ave., Sariaya, Quezon",2,Charging problem,Motor not running,
+KUDA-0086,KUDA,Rhino,Mark Mercado,50,"Brgy. Poblacion, Sampaguita St., San Pedro, Laguna",2,Horn not working,Brake sensor error,
+KUDA-0087,KUDA,New Wolf Plus,James Marquez,59,"Brgy. Maligaya, Sampaguita St., Rodriguez, Rizal",2,Weak acceleration,Charging problem,
+KUDA-0088,KUDA,Lion,Janelle Tolentino,41,"Brgy. Maligaya, National Road, Rosario, Batangas",1,Unusual motor noise,,
+KUDA-0089,KUDA,Kuda E-Trike,James Gonzales,54,"Brgy. San Juan, Acacia St., Santa Cruz, Laguna",2,Brake problem,Display malfunction,
+KUDA-0090,KUDA,Kuda E-Trike,Trisha Valdez,35,"Brgy. Santo Niño, Kalayaan Ave., Bauan, Batangas",3,Loose wiring,Key/ignition problem,Motor not running
+KUDA-0091,KUDA,Kuda E-Trike,Beatrice Lim,55,"Brgy. Maligaya, Quezon St., Biñan, Laguna",1,Brake problem,,
+KUDA-0092,KUDA,Rhino,Ethan Reyes,28,"Brgy. Santo Niño, Rizal St., Los Baños, Laguna",2,Horn not working,Brake problem,
+KUDA-0093,KUDA,Rhino,Angelo Macapagal,55,"Brgy. San Isidro, Mabini St., Antipolo, Rizal",2,Motor not running,Controller malfunction,
+KUDA-0094,KUDA,Rhino,James Navarro,40,"Brgy. San Isidro, Acacia St., Candelaria, Quezon",1,Flat tire,,
+KUDA-0095,KUDA,Kuda E-Trike,Jerome Aguilar,53,"Brgy. Poblacion, Maharlika St., Tagaytay, Cavite",2,Key/ignition problem,Weak acceleration,
+KUDA-0096,KUDA,New Wolf Plus,Mika Bernardo,52,"Brgy. San Jose, Acacia St., Antipolo, Rizal",1,Charging problem,,
+KUDA-0097,KUDA,Lion,Patricia Manansala,31,"Brgy. Maligaya, Mabini St., Cabuyao, Laguna",3,Brake problem,Loose wiring,Charger not working
+KUDA-0098,KUDA,Rhino,Beatrice Aguilar,55,"Brgy. San Juan, National Road, Kawit, Cavite",1,Loose wiring,,
+KUDA-0099,KUDA,Lion,Adrian Santiago,57,"Brgy. San Juan, Acacia St., Calaca, Batangas",2,Unusual motor noise,Tire puncture,
+KUDA-0100,KUDA,Rhino,Paolo Bautista,32,"Brgy. San Isidro, National Road, Rosario, Batangas",3,Battery failure,Brake sensor error,Weak acceleration
+KUDA-0101,KUDA,Kuda E-Trike,Anthony Manalo,65,"Brgy. Santo Niño, Del Pilar St., Ibaan, Batangas",2,Unusual motor noise,Brake sensor error,
+KUDA-0102,KUDA,New Wolf Plus,Mika Ramos,41,"Brgy. Maligaya, Rizal St., Trece Martires, Cavite",3,Motor not running,Charger not working,Key/ignition problem
+KUDA-0103,KUDA,Kuda E-Trike,Mika Bautista,37,"Brgy. San Isidro, Quezon St., Cabuyao, Laguna",1,Display malfunction,,
+KUDA-0104,KUDA,Rhino,Faith Flores,20,"Brgy. San Jose, Acacia St., Santa Cruz, Laguna",1,Unusual motor noise,,
+KUDA-0105,KUDA,Lion,Leah Lazaro,33,"Brgy. Poblacion, Quezon St., Rosario, Cavite",2,Suspension problem,Horn not working,
+KUDA-0106,KUDA,New Wolf Plus,James Rivera,43,"Brgy. San Juan, Bonifacio St., Trece Martires, Cavite",2,Key/ignition problem,Display malfunction,
+KUDA-0107,KUDA,Kuda E-Trike,Nicole Marquez,54,"Brgy. Santo Niño, Del Pilar St., Lucban, Quezon",3,Weak acceleration,Turn signal not working,Key/ignition problem
+KUDA-0108,KUDA,Rhino,Angela Padilla,30,"Brgy. San Isidro, Del Pilar St., General Trias, Cavite",3,Suspension problem,Headlight not working,Key/ignition problem
+KUDA-0109,KUDA,Kuda E-Trike,James Flores,42,"Brgy. Santo Niño, Maharlika St., Pagbilao, Quezon",2,Loose wiring,Brake sensor error,
+KUDA-0110,KUDA,Rhino,Francis Diaz,22,"Brgy. San Juan, Kalayaan Ave., Tanza, Cavite",1,Weak acceleration,,
+KUDA-0111,KUDA,Kuda E-Trike,Leah Mendoza,59,"Brgy. San Jose, Quezon St., Biñan, Laguna",1,Charger not working,,
+KUDA-0112,KUDA,Rhino,Paolo Chua,40,"Brgy. San Jose, Rizal St., Calamba, Laguna",2,Battery drains quickly,Brake sensor error,
+KUDA-0113,KUDA,Kuda E-Trike,Andrea Bautista,27,"Brgy. Maligaya, Bonifacio St., Binangonan, Rizal",2,Unusual motor noise,Weak acceleration,
+KUDA-0114,KUDA,Rhino,Nicole Del Rosario,33,"Brgy. San Jose, Quezon St., Dasmarinas, Cavite",3,Motor not running,Headlight not working,Key/ignition problem
+KUDA-0115,KUDA,Lion,Leah Bautista,19,"Brgy. Santo Niño, Mabini St., Lipa, Batangas",2,Unusual motor noise,Motor not running,
+KUDA-0116,KUDA,Kuda E-Trike,Angela Flores,57,"Brgy. San Juan, Acacia St., Pagsanjan, Laguna",2,Controller malfunction,Unusual motor noise,
+KUDA-0117,KUDA,New Wolf Plus,Sarah Chua,51,"Brgy. Santo Niño, Sampaguita St., Lucena, Quezon",2,Brake sensor error,Battery failure,
+KUDA-0118,KUDA,Kuda E-Trike,Michael Padilla,57,"Brgy. San Jose, Sampaguita St., Calamba, Laguna",3,Loose wiring,Controller malfunction,Throttle not responding
+KUDA-0119,KUDA,Rhino,Vanessa Samson,24,"Brgy. San Isidro, Maharlika St., Lipa, Batangas",1,Charging problem,,
+KUDA-0120,KUDA,New Wolf Plus,Ryan Samson,64,"Brgy. San Isidro, Del Pilar St., Bay, Laguna",3,Tire puncture,Weak acceleration,Headlight not working
+KUDA-0121,KUDA,New Wolf Plus,Rachel Marquez,48,"Brgy. Poblacion, Kalayaan Ave., Batangas City, Batangas",1,Display malfunction,,
+KUDA-0122,KUDA,Rhino,Mark Hernandez,31,"Brgy. Santo Niño, Rizal St., Binangonan, Rizal",2,Loose wiring,Charging problem,
+KUDA-0123,KUDA,New Wolf Plus,Irene Mendoza,19,"Brgy. San Isidro, National Road, Trece Martires, Cavite",1,Unusual motor noise,,
+KUDA-0124,KUDA,New Wolf Plus,Nadine Garcia,59,"Brgy. Santo Niño, Bonifacio St., Imus, Cavite",2,Battery drains quickly,Motor not running,
+KUDA-0125,KUDA,Rhino,Christian Hernandez,48,"Brgy. Poblacion, Del Pilar St., Bacoor, Cavite",2,Unusual motor noise,Display malfunction,
+KUDA-0126,KUDA,New Wolf Plus,Paolo Reyes,51,"Brgy. San Jose, National Road, Teresa, Rizal",1,Battery failure,,
+KUDA-0127,KUDA,Rhino,Rachel Espiritu,64,"Brgy. San Juan, National Road, Malvar, Batangas",1,Headlight not working,,
+KUDA-0128,KUDA,Lion,John David,56,"Brgy. San Juan, National Road, Bay, Laguna",1,Display malfunction,,
+KUDA-0129,KUDA,New Wolf Plus,Miguel Ramos,59,"Brgy. Maligaya, Kalayaan Ave., Lucena, Quezon",2,Controller malfunction,Brake sensor error,
+KUDA-0130,KUDA,Rhino,Karen Dela Cruz,41,"Brgy. San Isidro, Del Pilar St., Los Baños, Laguna",2,Display malfunction,Horn not working,
+KUDA-0131,KUDA,Rhino,Christian Del Rosario,21,"Brgy. San Jose, Bonifacio St., Dasmarinas, Cavite",2,Battery drains quickly,Motor not running,
+KUDA-0132,KUDA,Kuda E-Trike,Angela Aquino,19,"Brgy. Poblacion, Acacia St., Santa Cruz, Laguna",1,Tire puncture,,
+KUDA-0133,KUDA,New Wolf Plus,John Diaz,53,"Brgy. Maligaya, Rizal St., Tayabas, Quezon",2,Key/ignition problem,Controller malfunction,
+KUDA-0134,KUDA,New Wolf Plus,Jasmine Reyes,48,"Brgy. San Jose, Quezon St., Silang, Cavite",1,Battery drains quickly,,
+KUDA-0135,KUDA,Rhino,Angelo Mercado,23,"Brgy. San Isidro, National Road, Cabuyao, Laguna",1,Brake problem,,
+KUDA-0136,KUDA,Kuda E-Trike,Gabriel Gonzales,18,"Brgy. San Isidro, Del Pilar St., Pagbilao, Quezon",1,Throttle not responding,,
+KUDA-0137,KUDA,Lion,Patricia Sy,20,"Brgy. Maligaya, Sampaguita St., Pagbilao, Quezon",1,Headlight not working,,
+KUDA-0138,KUDA,Rhino,Alyssa Tan,59,"Brgy. San Jose, Del Pilar St., Tanauan, Batangas",2,Tire puncture,Charger not working,
+KUDA-0139,KUDA,Lion,Angelo Morales,53,"Brgy. San Isidro, Rizal St., Rodriguez, Rizal",1,Tire puncture,,
+KUDA-0140,KUDA,Kuda E-Trike,Alyssa Mendoza,48,"Brgy. Maligaya, Maharlika St., Ibaan, Batangas",3,Throttle not responding,Brake problem,Flat tire
+KUDA-0141,KUDA,Rhino,Lara Ramos,34,"Brgy. Poblacion, Del Pilar St., Tagaytay, Cavite",2,Tire puncture,Display malfunction,
+KUDA-0142,KUDA,Kuda E-Trike,Clarisse Dela Cruz,19,"Brgy. Santo Niño, Kalayaan Ave., Gumaca, Quezon",1,Display malfunction,,
+KUDA-0143,KUDA,Lion,Karen Padilla,64,"Brgy. Santo Niño, National Road, Imus, Cavite",2,Turn signal not working,Controller malfunction,
+KUDA-0144,KUDA,Lion,Adrian Hernandez,56,"Brgy. San Jose, Mabini St., Pagbilao, Quezon",1,Charging problem,,
+KUDA-0145,KUDA,Rhino,Kevin Cruz,60,"Brgy. San Juan, Quezon St., Batangas City, Batangas",1,Motor not running,,
+KUDA-0146,KUDA,Kuda E-Trike,Rachel Rivera,57,"Brgy. Santo Niño, Rizal St., Bacoor, Cavite",3,Charger not working,Throttle not responding,Horn not working
+KUDA-0147,KUDA,Kuda E-Trike,Nadine Hernandez,39,"Brgy. Santo Niño, Bonifacio St., Biñan, Laguna",2,Charger not working,Charging problem,
+KUDA-0148,KUDA,Lion,Elaine Sy,46,"Brgy. Maligaya, Kalayaan Ave., Biñan, Laguna",1,Horn not working,,
+KUDA-0149,KUDA,Rhino,Adrian Dela Cruz,32,"Brgy. Santo Niño, Rizal St., Bay, Laguna",3,Motor not running,Unusual motor noise,Key/ignition problem
+KUDA-0150,KUDA,Lion,Alyssa Torres,49,"Brgy. San Jose, Del Pilar St., Trece Martires, Cavite",2,Horn not working,Brake sensor error,
+KUDA-0151,KUDA,New Wolf Plus,Nicole Reyes,42,"Brgy. Santo Niño, Del Pilar St., Batangas City, Batangas",1,Charger not working,,
+KUDA-0152,KUDA,Kuda E-Trike,Jerome Manalo,55,"Brgy. Poblacion, National Road, Los Baños, Laguna",2,Suspension problem,Battery failure,
+KUDA-0153,KUDA,Lion,Trisha De Leon,34,"Brgy. San Jose, Quezon St., Lopez, Quezon",1,Suspension problem,,
+KUDA-0154,KUDA,Rhino,Ryan Bernardo,19,"Brgy. San Isidro, Kalayaan Ave., Calamba, Laguna",1,Throttle not responding,,
+KUDA-0155,KUDA,Kuda E-Trike,Christine Ocampo,20,"Brgy. Poblacion, Del Pilar St., General Trias, Cavite",1,Flat tire,,
+KUDA-0156,KUDA,New Wolf Plus,Miguel Valdez,65,"Brgy. Poblacion, Maharlika St., Dasmarinas, Cavite",1,Battery failure,,
+KUDA-0157,KUDA,New Wolf Plus,Miguel Manansala,51,"Brgy. Poblacion, Acacia St., Santa Cruz, Laguna",1,Throttle not responding,,
+KUDA-0158,KUDA,Lion,Sarah Navarro,59,"Brgy. Santo Niño, Mabini St., Lucena, Quezon",1,Horn not working,,
+KUDA-0159,KUDA,Rhino,Ryan Torres,33,"Brgy. Santo Niño, National Road, Tayabas, Quezon",3,Brake problem,Brake sensor error,Horn not working
+KUDA-0160,KUDA,New Wolf Plus,John Garcia,21,"Brgy. San Isidro, Bonifacio St., Santa Cruz, Laguna",1,Throttle not responding,,
+KUDA-0161,KUDA,New Wolf Plus,Kevin Manansala,21,"Brgy. San Jose, Quezon St., Binangonan, Rizal",3,Battery failure,Brake sensor error,Turn signal not working
+KUDA-0162,KUDA,New Wolf Plus,Elaine Aquino,51,"Brgy. San Isidro, Rizal St., Atimonan, Quezon",1,Horn not working,,
+KUDA-0163,KUDA,New Wolf Plus,Michael Santos,62,"Brgy. San Juan, Rizal St., Lucban, Quezon",2,Suspension problem,Battery drains quickly,
+KUDA-0164,KUDA,Rhino,Mark Rivera,61,"Brgy. Maligaya, Maharlika St., Cardona, Rizal",1,Loose wiring,,
+KUDA-0165,KUDA,New Wolf Plus,Karen Aquino,40,"Brgy. Santo Niño, Sampaguita St., Biñan, Laguna",2,Horn not working,Battery drains quickly,
+KUDA-0166,KUDA,Kuda E-Trike,Grace De Leon,51,"Brgy. Poblacion, Del Pilar St., Antipolo, Rizal",1,Loose wiring,,
+KUDA-0167,KUDA,New Wolf Plus,Angela David,65,"Brgy. Poblacion, Mabini St., Pagbilao, Quezon",2,Charger not working,Horn not working,
+KUDA-0168,KUDA,Kuda E-Trike,Hannah Castillo,26,"Brgy. Santo Niño, Del Pilar St., Ibaan, Batangas",3,Motor not running,Tire puncture,Brake sensor error
+KUDA-0169,KUDA,Kuda E-Trike,Camille Soriano,25,"Brgy. Maligaya, Maharlika St., Santa Cruz, Laguna",2,Tire puncture,Horn not working,
+KUDA-0170,KUDA,New Wolf Plus,Beatrice Lazaro,43,"Brgy. Poblacion, Bonifacio St., Binangonan, Rizal",3,Charging problem,Turn signal not working,Display malfunction
+KUDA-0171,KUDA,Kuda E-Trike,Christine Domingo,59,"Brgy. Maligaya, Mabini St., Santa Rosa, Laguna",2,Battery drains quickly,Charger not working,
+KUDA-0172,KUDA,Lion,Carlo Domingo,43,"Brgy. Poblacion, Kalayaan Ave., Candelaria, Quezon",1,Loose wiring,,
+KUDA-0173,KUDA,Rhino,Christine Aquino,39,"Brgy. San Juan, Rizal St., Sariaya, Quezon",2,Headlight not working,Battery drains quickly,
+KUDA-0174,KUDA,Kuda E-Trike,Diana Manansala,23,"Brgy. San Isidro, Sampaguita St., Santa Cruz, Laguna",1,Display malfunction,,
+KUDA-0175,KUDA,Kuda E-Trike,Anthony Tan,52,"Brgy. San Juan, Sampaguita St., Imus, Cavite",2,Battery failure,Key/ignition problem,
+KUDA-0176,KUDA,Rhino,Olivia Domingo,64,"Brgy. Poblacion, Del Pilar St., Santa Rosa, Laguna",1,Motor not running,,
+KUDA-0177,KUDA,Kuda E-Trike,Adrian Samson,29,"Brgy. San Isidro, Rizal St., Ibaan, Batangas",1,Charger not working,,
+KUDA-0178,KUDA,New Wolf Plus,Faith Marquez,38,"Brgy. San Jose, Acacia St., General Trias, Cavite",1,Unusual motor noise,,
+KUDA-0179,KUDA,Rhino,Andrea Sy,36,"Brgy. San Isidro, Rizal St., Pagbilao, Quezon",1,Loose wiring,,
+KUDA-0180,KUDA,Lion,Rachel Ramos,46,"Brgy. San Isidro, Quezon St., San Mateo, Rizal",3,Motor not running,Key/ignition problem,Weak acceleration
+KUDA-0181,KUDA,Lion,Mark Pascual,43,"Brgy. San Jose, Acacia St., San Pedro, Laguna",2,Display malfunction,Flat tire,
+KUDA-0182,KUDA,Kuda E-Trike,Mark Cruz,47,"Brgy. San Isidro, Mabini St., Bauan, Batangas",3,Brake sensor error,Tire puncture,Flat tire
+KUDA-0183,KUDA,Lion,Ryan Alcantara,59,"Brgy. Santo Niño, Del Pilar St., Calamba, Laguna",2,Weak acceleration,Battery failure,
+KUDA-0184,KUDA,Lion,Anthony Lazaro,65,"Brgy. Santo Niño, Acacia St., Malvar, Batangas",1,Suspension problem,,
+KUDA-0185,KUDA,Rhino,Nadine Bautista,56,"Brgy. San Jose, Sampaguita St., Lucban, Quezon",1,Battery drains quickly,,
+KUDA-0186,KUDA,New Wolf Plus,Faith Santos,42,"Brgy. Maligaya, Maharlika St., Santo Tomas, Batangas",3,Flat tire,Battery drains quickly,Loose wiring
+KUDA-0187,KUDA,Kuda E-Trike,Maria Santos,28,"Brgy. Santo Niño, Del Pilar St., Binangonan, Rizal",1,Flat tire,,
+KUDA-0188,KUDA,Kuda E-Trike,Carlo Reyes,63,"Brgy. Maligaya, Rizal St., General Trias, Cavite",2,Horn not working,Brake sensor error,
+KUDA-0189,KUDA,Lion,Maria Domingo,57,"Brgy. San Jose, Quezon St., Los Baños, Laguna",3,Brake sensor error,Loose wiring,Battery failure
+KUDA-0190,KUDA,New Wolf Plus,Daniel Castro,58,"Brgy. Santo Niño, Mabini St., Cardona, Rizal",2,Throttle not responding,Suspension problem,
+KUDA-0191,KUDA,New Wolf Plus,Elaine Chua,23,"Brgy. San Juan, Bonifacio St., Cainta, Rizal",2,Loose wiring,Battery failure,
+KUDA-0192,KUDA,Rhino,Angela Dela Cruz,24,"Brgy. San Juan, Acacia St., Bauan, Batangas",1,Unusual motor noise,,
+KUDA-0193,KUDA,Rhino,Elaine Bautista,52,"Brgy. San Isidro, Sampaguita St., Rosario, Batangas",1,Battery failure,,
+KUDA-0194,KUDA,Lion,Hannah Tolentino,26,"Brgy. Santo Niño, Kalayaan Ave., Nasugbu, Batangas",3,Brake problem,Brake sensor error,Horn not working
+KUDA-0195,KUDA,Kuda E-Trike,Mika Soriano,22,"Brgy. San Jose, National Road, Ibaan, Batangas",2,Display malfunction,Turn signal not working,
+KUDA-0196,KUDA,Rhino,Karen Chua,57,"Brgy. Poblacion, Bonifacio St., Tiaong, Quezon",2,Headlight not working,Key/ignition problem,
+KUDA-0197,KUDA,New Wolf Plus,Olivia Rosales,48,"Brgy. Santo Niño, Kalayaan Ave., Binangonan, Rizal",2,Brake sensor error,Controller malfunction,
+KUDA-0198,KUDA,Kuda E-Trike,Beatrice Mendoza,19,"Brgy. Maligaya, Rizal St., Bay, Laguna",2,Battery failure,Charging problem,
+KUDA-0199,KUDA,Lion,Nadine Del Rosario,53,"Brgy. Maligaya, Del Pilar St., Santo Tomas, Batangas",1,Key/ignition problem,,
+KUDA-0200,KUDA,Lion,John Lazaro,39,"Brgy. San Isidro, Rizal St., Lopez, Quezon",1,Charger not working,,
+KUDA-0201,KUDA,Rhino,Camille Navarro,50,"Brgy. San Jose, National Road, Lucban, Quezon",2,Weak acceleration,Controller malfunction,
+KUDA-0202,KUDA,Kuda E-Trike,Nathan Gonzales,31,"Brgy. Maligaya, Rizal St., Candelaria, Quezon",2,Charger not working,Brake problem,
+KUDA-0203,KUDA,Lion,Patricia Pascual,18,"Brgy. Santo Niño, National Road, San Mateo, Rizal",1,Brake problem,,
+KUDA-0204,KUDA,Kuda E-Trike,Hannah Ocampo,48,"Brgy. San Jose, Mabini St., Morong, Rizal",1,Unusual motor noise,,
+KUDA-0205,KUDA,Lion,Angela Ramos,49,"Brgy. San Jose, Sampaguita St., San Pedro, Laguna",1,Horn not working,,
+KUDA-0206,KUDA,Kuda E-Trike,Beatrice Reyes,60,"Brgy. San Juan, National Road, San Mateo, Rizal",1,Brake problem,,
+KUDA-0207,KUDA,Lion,Olivia Torres,23,"Brgy. Maligaya, Sampaguita St., Lopez, Quezon",1,Controller malfunction,,
+KUDA-0208,KUDA,New Wolf Plus,Beatrice Alcantara,58,"Brgy. Maligaya, National Road, Ibaan, Batangas",2,Charger not working,Brake problem,
+KUDA-0209,KUDA,Kuda E-Trike,Francis Salazar,25,"Brgy. Santo Niño, Kalayaan Ave., Gumaca, Quezon",1,Key/ignition problem,,
+KUDA-0210,KUDA,New Wolf Plus,Mark Fernandez,30,"Brgy. Maligaya, Maharlika St., Bacoor, Cavite",1,Turn signal not working,,
+KUDA-0211,KUDA,Lion,Mark David,19,"Brgy. San Isidro, Sampaguita St., Batangas City, Batangas",2,Weak acceleration,Tire puncture,
+KUDA-0212,KUDA,Lion,Carlo Pascual,52,"Brgy. San Isidro, Rizal St., Sariaya, Quezon",1,Weak acceleration,,
+KUDA-0213,KUDA,Kuda E-Trike,Angela Rosales,34,"Brgy. Santo Niño, Maharlika St., Tanauan, Batangas",1,Flat tire,,
+KUDA-0214,KUDA,Lion,Anthony Castro,23,"Brgy. Maligaya, Maharlika St., Santa Cruz, Laguna",1,Flat tire,,
+KUDA-0215,KUDA,New Wolf Plus,Joshua Domingo,19,"Brgy. San Isidro, Sampaguita St., Cardona, Rizal",1,Controller malfunction,,
+KUDA-0216,KUDA,New Wolf Plus,Zoe Rosales,21,"Brgy. Santo Niño, Quezon St., Tagaytay, Cavite",3,Motor not running,Turn signal not working,Headlight not working
+KUDA-0217,KUDA,New Wolf Plus,Alyssa Dela Cruz,47,"Brgy. San Isidro, Acacia St., Bacoor, Cavite",2,Charging problem,Display malfunction,
+KUDA-0218,KUDA,New Wolf Plus,Jerome Lazaro,62,"Brgy. Maligaya, Mabini St., Rodriguez, Rizal",1,Headlight not working,,
+KUDA-0219,KUDA,Kuda E-Trike,Camille Manansala,60,"Brgy. Maligaya, Bonifacio St., Santa Rosa, Laguna",3,Tire puncture,Flat tire,Unusual motor noise
+KUDA-0220,KUDA,New Wolf Plus,Rachel Gonzales,63,"Brgy. Maligaya, Bonifacio St., Lipa, Batangas",2,Headlight not working,Throttle not responding,
+KUDA-0221,KUDA,Rhino,Nathan Dela Cruz,61,"Brgy. San Jose, National Road, Bauan, Batangas",2,Battery failure,Display malfunction,
+KUDA-0222,KUDA,Kuda E-Trike,Nathan Valencia,29,"Brgy. Poblacion, Bonifacio St., Silang, Cavite",1,Tire puncture,,
+KUDA-0223,KUDA,New Wolf Plus,Mika Navarro,55,"Brgy. Santo Niño, Del Pilar St., Candelaria, Quezon",1,Weak acceleration,,
+KUDA-0224,KUDA,New Wolf Plus,Vanessa Tan,21,"Brgy. Maligaya, Maharlika St., Imus, Cavite",2,Battery failure,Throttle not responding,
+KUDA-0225,KUDA,Rhino,Paolo Ramos,37,"Brgy. Poblacion, Bonifacio St., Tayabas, Quezon",2,Turn signal not working,Charger not working,
+KUDA-0226,KUDA,New Wolf Plus,Mika Valencia,21,"Brgy. San Jose, Acacia St., Taytay, Rizal",2,Brake sensor error,Turn signal not working,
+KUDA-0227,KUDA,Kuda E-Trike,Faith Villanueva,45,"Brgy. San Jose, Sampaguita St., Santo Tomas, Batangas",2,Key/ignition problem,Battery drains quickly,
+KUDA-0228,KUDA,Rhino,Diana Rivera,38,"Brgy. San Juan, Quezon St., Binangonan, Rizal",3,Headlight not working,Charging problem,Suspension problem
+KUDA-0229,KUDA,Kuda E-Trike,Carlo Cruz,57,"Brgy. Santo Niño, Del Pilar St., Cainta, Rizal",1,Battery failure,,
+KUDA-0230,KUDA,Rhino,Jasmine Marquez,39,"Brgy. Poblacion, Acacia St., Dasmarinas, Cavite",1,Controller malfunction,,
+KUDA-0231,KUDA,Lion,Francis Lim,64,"Brgy. San Isidro, Mabini St., Binangonan, Rizal",2,Horn not working,Charger not working,
+KUDA-0232,KUDA,New Wolf Plus,Angela Sy,50,"Brgy. Santo Niño, Maharlika St., Cabuyao, Laguna",2,Battery failure,Headlight not working,
+KUDA-0233,KUDA,New Wolf Plus,Trisha Sy,63,"Brgy. Maligaya, Del Pilar St., Santo Tomas, Batangas",2,Turn signal not working,Charging problem,
+KUDA-0234,KUDA,Kuda E-Trike,Janelle Garcia,46,"Brgy. San Jose, Mabini St., Tayabas, Quezon",2,Display malfunction,Headlight not working,
+KUDA-0235,KUDA,Kuda E-Trike,Michael David,24,"Brgy. Poblacion, Bonifacio St., Cardona, Rizal",1,Flat tire,,
+KUDA-0236,KUDA,Lion,Beatrice Fernandez,40,"Brgy. Santo Niño, Mabini St., Calamba, Laguna",1,Motor not running,,
+KUDA-0237,KUDA,Lion,Daniel Fernandez,59,"Brgy. San Juan, Maharlika St., General Trias, Cavite",1,Headlight not working,,
+KUDA-0238,KUDA,Lion,Kevin Sy,40,"Brgy. Poblacion, Quezon St., Pagsanjan, Laguna",1,Brake sensor error,,
+KUDA-0239,KUDA,Lion,Beatrice Santos,43,"Brgy. Santo Niño, Kalayaan Ave., Binangonan, Rizal",1,Loose wiring,,
+KUDA-0240,KUDA,New Wolf Plus,Miguel Diaz,42,"Brgy. San Jose, Rizal St., Gumaca, Quezon",2,Battery drains quickly,Brake problem,
+KUDA-0241,KUDA,Lion,Daniel Dela Cruz,54,"Brgy. San Juan, National Road, Cardona, Rizal",1,Battery failure,,
+KUDA-0242,KUDA,Lion,Janelle Marquez,56,"Brgy. San Isidro, Del Pilar St., Bay, Laguna",3,Battery drains quickly,Charging problem,Horn not working
+KUDA-0243,KUDA,New Wolf Plus,Alyssa Villanueva,56,"Brgy. Poblacion, Acacia St., Candelaria, Quezon",3,Battery failure,Charging problem,Battery drains quickly
+KUDA-0244,KUDA,Kuda E-Trike,Carlo Manalo,59,"Brgy. San Jose, Mabini St., Lopez, Quezon",2,Charger not working,Throttle not responding,
+KUDA-0245,KUDA,New Wolf Plus,Beatrice Soriano,57,"Brgy. Maligaya, Del Pilar St., Santa Rosa, Laguna",1,Turn signal not working,,
+KUDA-0246,KUDA,New Wolf Plus,Angela Mercado,50,"Brgy. Maligaya, Bonifacio St., Malvar, Batangas",1,Horn not working,,
+KUDA-0247,KUDA,New Wolf Plus,Irene Marquez,58,"Brgy. San Juan, Kalayaan Ave., Gumaca, Quezon",2,Throttle not responding,Flat tire,
+KUDA-0248,KUDA,Kuda E-Trike,Rachel Flores,37,"Brgy. Santo Niño, Mabini St., Pagbilao, Quezon",2,Unusual motor noise,Display malfunction,
+KUDA-0249,KUDA,Lion,Vanessa Cruz,37,"Brgy. San Jose, Mabini St., San Pedro, Laguna",2,Battery drains quickly,Unusual motor noise,
+KUDA-0250,KUDA,New Wolf Plus,Christian Samson,36,"Brgy. Maligaya, Del Pilar St., Tiaong, Quezon",1,Charger not working,,
+KUDA-0251,KUDA,Lion,Miguel Salazar,24,"Brgy. San Isidro, Kalayaan Ave., Binangonan, Rizal",2,Unusual motor noise,Turn signal not working,
+KUDA-0252,KUDA,New Wolf Plus,Alyssa Samson,54,"Brgy. Poblacion, Quezon St., Cabuyao, Laguna",3,Turn signal not working,Headlight not working,Charger not working
+KUDA-0253,KUDA,Kuda E-Trike,Maria Navarro,26,"Brgy. San Isidro, Kalayaan Ave., Bay, Laguna",1,Throttle not responding,,
+KUDA-0254,KUDA,Lion,Daniel Del Rosario,58,"Brgy. Santo Niño, Acacia St., Santo Tomas, Batangas",2,Key/ignition problem,Turn signal not working,
+KUDA-0255,KUDA,New Wolf Plus,Samantha Villanueva,19,"Brgy. San Isidro, Rizal St., Lipa, Batangas",1,Suspension problem,,
+KUDA-0256,KUDA,Kuda E-Trike,Nathan Mercado,59,"Brgy. Santo Niño, Bonifacio St., Malvar, Batangas",3,Controller malfunction,Unusual motor noise,Tire puncture
+KUDA-0257,KUDA,Lion,Paolo Aguilar,57,"Brgy. San Isidro, Mabini St., San Pedro, Laguna",2,Charger not working,Headlight not working,
+KUDA-0258,KUDA,New Wolf Plus,Paolo Cruz,27,"Brgy. San Jose, Del Pilar St., Santa Rosa, Laguna",1,Flat tire,,
+KUDA-0259,KUDA,Rhino,Gabriel Alcantara,25,"Brgy. San Isidro, Del Pilar St., Pagsanjan, Laguna",3,Battery drains quickly,Headlight not working,Tire puncture
+KUDA-0260,KUDA,New Wolf Plus,Zoe Dela Cruz,62,"Brgy. Poblacion, Maharlika St., Cardona, Rizal",3,Charging problem,Key/ignition problem,Horn not working
+KUDA-0261,KUDA,New Wolf Plus,Alyssa Sy,56,"Brgy. San Jose, Acacia St., Kawit, Cavite",1,Charger not working,,
+KUDA-0262,KUDA,New Wolf Plus,Samantha Ocampo,41,"Brgy. San Isidro, Mabini St., Cabuyao, Laguna",3,Loose wiring,Throttle not responding,Controller malfunction
+KUDA-0263,KUDA,Rhino,Olivia Sy,42,"Brgy. San Jose, Mabini St., Calaca, Batangas",1,Weak acceleration,,
+KUDA-0264,KUDA,New Wolf Plus,Hannah Morales,51,"Brgy. San Jose, Kalayaan Ave., Imus, Cavite",2,Suspension problem,Battery drains quickly,
+KUDA-0265,KUDA,Lion,Andrea Santiago,58,"Brgy. Santo Niño, National Road, Batangas City, Batangas",3,Charger not working,Suspension problem,Throttle not responding
+KUDA-0266,KUDA,New Wolf Plus,Nathan Bautista,62,"Brgy. San Jose, National Road, Malvar, Batangas",1,Unusual motor noise,,
+KUDA-0267,KUDA,New Wolf Plus,Vanessa Manalo,51,"Brgy. San Juan, Kalayaan Ave., Bacoor, Cavite",1,Turn signal not working,,
+KUDA-0268,KUDA,Lion,Olivia Samson,39,"Brgy. Poblacion, Quezon St., Biñan, Laguna",1,Controller malfunction,,
+KUDA-0269,KUDA,Lion,Leah Salazar,55,"Brgy. San Jose, Sampaguita St., San Pedro, Laguna",1,Flat tire,,
+KUDA-0270,KUDA,Lion,Anthony Aguilar,24,"Brgy. San Juan, Kalayaan Ave., Tiaong, Quezon",2,Battery drains quickly,Turn signal not working,
+KUDA-0271,KUDA,Rhino,Andrea Tan,57,"Brgy. San Jose, Acacia St., Sariaya, Quezon",2,Loose wiring,Tire puncture,
+KUDA-0272,KUDA,New Wolf Plus,Gabriel Flores,65,"Brgy. Santo Niño, Acacia St., Dasmarinas, Cavite",2,Motor not running,Tire puncture,
+KUDA-0273,KUDA,New Wolf Plus,Alyssa Marquez,24,"Brgy. San Juan, Rizal St., Santa Cruz, Laguna",2,Controller malfunction,Battery failure,
+KUDA-0274,KUDA,New Wolf Plus,Faith Mercado,20,"Brgy. San Isidro, Del Pilar St., Calaca, Batangas",1,Controller malfunction,,
+KUDA-0275,KUDA,Lion,Diana Bernardo,38,"Brgy. San Jose, National Road, Taytay, Rizal",1,Brake sensor error,,
+KUDA-0276,KUDA,Kuda E-Trike,Olivia Soriano,22,"Brgy. San Isidro, Quezon St., Binangonan, Rizal",1,Motor not running,,
+KUDA-0277,KUDA,Rhino,Miguel Alcantara,59,"Brgy. San Jose, Kalayaan Ave., Biñan, Laguna",1,Unusual motor noise,,
+KUDA-0278,KUDA,New Wolf Plus,Ryan Sy,39,"Brgy. Maligaya, Mabini St., Imus, Cavite",1,Tire puncture,,
+KUDA-0279,KUDA,Lion,Christian Valencia,51,"Brgy. Poblacion, Bonifacio St., Santa Cruz, Laguna",3,Brake sensor error,Tire puncture,Display malfunction
+KUDA-0280,KUDA,Kuda E-Trike,Lara Castro,64,"Brgy. Poblacion, Del Pilar St., Rodriguez, Rizal",2,Charger not working,Battery failure,
+KUDA-0281,KUDA,Rhino,Grace Santiago,38,"Brgy. San Isidro, Maharlika St., Santa Cruz, Laguna",2,Battery failure,Turn signal not working,
+KUDA-0282,KUDA,Lion,Janelle Valencia,56,"Brgy. San Jose, Rizal St., Santa Rosa, Laguna",1,Unusual motor noise,,
+KUDA-0283,KUDA,Kuda E-Trike,Diana Espiritu,21,"Brgy. San Isidro, Maharlika St., Trece Martires, Cavite",1,Unusual motor noise,,
+KUDA-0284,KUDA,Rhino,Trisha Rivera,41,"Brgy. San Jose, Bonifacio St., Tanza, Cavite",1,Battery failure,,
+KUDA-0285,KUDA,Kuda E-Trike,John Hernandez,53,"Brgy. San Juan, Maharlika St., Santa Cruz, Laguna",2,Throttle not responding,Brake sensor error,
+KUDA-0286,KUDA,Rhino,Miguel De Leon,55,"Brgy. San Isidro, Sampaguita St., Taytay, Rizal",1,Brake problem,,
+KUDA-0287,KUDA,Rhino,Lara Santiago,49,"Brgy. San Jose, Mabini St., Lopez, Quezon",2,Display malfunction,Suspension problem,
+KUDA-0288,KUDA,New Wolf Plus,Samantha Rosales,24,"Brgy. San Jose, Rizal St., Tayabas, Quezon",1,Controller malfunction,,
+KUDA-0289,KUDA,Rhino,Nadine Padilla,64,"Brgy. San Juan, Sampaguita St., Pagbilao, Quezon",1,Battery drains quickly,,
+KUDA-0290,KUDA,Rhino,John Tan,49,"Brgy. San Isidro, Maharlika St., Teresa, Rizal",1,Charger not working,,
+KUDA-0291,KUDA,Kuda E-Trike,Alyssa Gonzales,32,"Brgy. Santo Niño, Acacia St., Cardona, Rizal",1,Throttle not responding,,
+KUDA-0292,KUDA,New Wolf Plus,Patricia Gonzales,21,"Brgy. San Juan, Del Pilar St., Bauan, Batangas",1,Throttle not responding,,
+KUDA-0293,KUDA,New Wolf Plus,Joshua Aquino,63,"Brgy. San Juan, Bonifacio St., Antipolo, Rizal",2,Loose wiring,Display malfunction,
+KUDA-0294,KUDA,Lion,Adrian Rosales,27,"Brgy. San Isidro, Rizal St., Antipolo, Rizal",2,Unusual motor noise,Throttle not responding,
+KUDA-0295,KUDA,Kuda E-Trike,Paolo Ocampo,53,"Brgy. San Juan, Acacia St., Cabuyao, Laguna",1,Turn signal not working,,
+KUDA-0296,KUDA,Rhino,Miguel Del Rosario,65,"Brgy. Maligaya, Sampaguita St., Cainta, Rizal",2,Battery failure,Turn signal not working,
+KUDA-0297,KUDA,New Wolf Plus,Maria Valdez,37,"Brgy. San Juan, National Road, Rosario, Cavite",1,Display malfunction,,
+KUDA-0298,KUDA,Kuda E-Trike,James Mendoza,52,"Brgy. Santo Niño, Rizal St., San Pedro, Laguna",1,Motor not running,,
+KUDA-0299,KUDA,Kuda E-Trike,Olivia Espiritu,19,"Brgy. San Isidro, Bonifacio St., Tayabas, Quezon",1,Flat tire,,
+KUDA-0300,KUDA,Lion,James Manansala,53,"Brgy. San Juan, Mabini St., Nasugbu, Batangas",2,Suspension problem,Flat tire,
+KUDA-0301,KUDA,Kuda E-Trike,Leah Del Rosario,18,"Brgy. San Isidro, National Road, Lipa, Batangas",2,Loose wiring,Horn not working,
+KUDA-0302,KUDA,Kuda E-Trike,Grace Sy,33,"Brgy. San Jose, National Road, Lipa, Batangas",3,Charging problem,Turn signal not working,Horn not working
+KUDA-0303,KUDA,Kuda E-Trike,Angelo Padilla,57,"Brgy. Maligaya, Acacia St., Malvar, Batangas",2,Throttle not responding,Loose wiring,
+KUDA-0304,KUDA,New Wolf Plus,Sarah Fernandez,40,"Brgy. San Isidro, Bonifacio St., Candelaria, Quezon",1,Loose wiring,,
+KUDA-0305,KUDA,Lion,Leah Castro,57,"Brgy. Maligaya, Sampaguita St., Trece Martires, Cavite",2,Headlight not working,Controller malfunction,
+KUDA-0306,KUDA,Kuda E-Trike,Angelo Rosales,58,"Brgy. San Juan, National Road, Bauan, Batangas",1,Battery drains quickly,,
+KUDA-0307,KUDA,Rhino,Ryan Salazar,61,"Brgy. San Isidro, Quezon St., Candelaria, Quezon",1,Loose wiring,,
+KUDA-0308,KUDA,Rhino,Hannah Tan,18,"Brgy. San Juan, Rizal St., Lipa, Batangas",3,Charger not working,Unusual motor noise,Flat tire
+KUDA-0309,KUDA,Lion,Hannah Ramos,46,"Brgy. Poblacion, Rizal St., Trece Martires, Cavite",3,Loose wiring,Throttle not responding,Suspension problem
+KUDA-0310,KUDA,Lion,Nadine Morales,45,"Brgy. San Juan, Bonifacio St., Biñan, Laguna",1,Turn signal not working,,
+KUDA-0311,KUDA,Kuda E-Trike,Angela Rivera,31,"Brgy. San Isidro, Del Pilar St., Morong, Rizal",3,Display malfunction,Flat tire,Charger not working
+KUDA-0312,KUDA,Rhino,Hannah Dela Cruz,46,"Brgy. San Juan, Quezon St., Rosario, Cavite",1,Motor not running,,
+KUDA-0313,KUDA,New Wolf Plus,Clarisse Castillo,20,"Brgy. San Isidro, Acacia St., Rosario, Cavite",2,Unusual motor noise,Display malfunction,
+KUDA-0314,KUDA,Kuda E-Trike,Nathan Castro,48,"Brgy. Santo Niño, Del Pilar St., Cabuyao, Laguna",3,Unusual motor noise,Controller malfunction,Charger not working
+KUDA-0315,KUDA,Lion,Kevin Macapagal,24,"Brgy. San Juan, Bonifacio St., Kawit, Cavite",1,Turn signal not working,,
+KUDA-0316,KUDA,New Wolf Plus,Michael Lazaro,20,"Brgy. San Juan, Quezon St., Tagaytay, Cavite",3,Battery failure,Horn not working,Flat tire
+KUDA-0317,KUDA,New Wolf Plus,Diana Fernandez,24,"Brgy. Poblacion, Del Pilar St., Santa Rosa, Laguna",1,Key/ignition problem,,
+KUDA-0318,KUDA,Kuda E-Trike,Leah Padilla,36,"Brgy. Poblacion, Mabini St., Biñan, Laguna",1,Charging problem,,
+KUDA-0319,KUDA,Lion,Christian Gonzales,59,"Brgy. San Isidro, Mabini St., Los Baños, Laguna",3,Battery drains quickly,Battery failure,Motor not running
+KUDA-0320,KUDA,Rhino,Mika Manalo,45,"Brgy. Santo Niño, Bonifacio St., Tanza, Cavite",1,Loose wiring,,
+KUDA-0321,KUDA,Rhino,Rachel Bautista,60,"Brgy. San Isidro, Quezon St., Rodriguez, Rizal",1,Brake problem,,
+KUDA-0322,KUDA,New Wolf Plus,Samantha Valencia,24,"Brgy. Poblacion, Quezon St., Calamba, Laguna",2,Charging problem,Charger not working,
+KUDA-0323,KUDA,Rhino,Christine Fernandez,41,"Brgy. San Juan, Sampaguita St., Santa Rosa, Laguna",3,Weak acceleration,Controller malfunction,Loose wiring
+KUDA-0324,KUDA,Kuda E-Trike,Miguel Hernandez,49,"Brgy. San Jose, Maharlika St., Bay, Laguna",3,Motor not running,Horn not working,Display malfunction
+KUDA-0325,KUDA,Kuda E-Trike,Carlo Valdez,51,"Brgy. San Jose, Del Pilar St., Binangonan, Rizal",2,Horn not working,Flat tire,
+KUDA-0326,KUDA,New Wolf Plus,Mika Ocampo,36,"Brgy. Poblacion, Bonifacio St., Sariaya, Quezon",1,Turn signal not working,,
+KUDA-0327,KUDA,New Wolf Plus,Sarah Lazaro,24,"Brgy. Poblacion, Bonifacio St., Cardona, Rizal",1,Brake problem,,
+KUDA-0328,KUDA,Rhino,Lara David,30,"Brgy. San Isidro, Mabini St., Gumaca, Quezon",2,Key/ignition problem,Brake problem,
+KUDA-0329,KUDA,Kuda E-Trike,Leah Espiritu,35,"Brgy. San Isidro, Del Pilar St., Antipolo, Rizal",1,Suspension problem,,
+KUDA-0330,KUDA,New Wolf Plus,Faith Bernardo,34,"Brgy. San Isidro, Kalayaan Ave., Santo Tomas, Batangas",1,Brake sensor error,,
+KUDA-0331,KUDA,Rhino,Anthony Alcantara,46,"Brgy. Poblacion, Sampaguita St., Rodriguez, Rizal",1,Charging problem,,
+KUDA-0332,KUDA,Rhino,Nicole Santos,18,"Brgy. Maligaya, Acacia St., Morong, Rizal",2,Charging problem,Throttle not responding,
+KUDA-0333,KUDA,Rhino,Ryan Tolentino,20,"Brgy. Maligaya, Rizal St., Tagaytay, Cavite",2,Suspension problem,Weak acceleration,
+KUDA-0334,KUDA,Rhino,Mark Navarro,29,"Brgy. San Juan, Mabini St., Taytay, Rizal",2,Charger not working,Brake problem,
+KUDA-0335,KUDA,Rhino,Joshua David,51,"Brgy. Maligaya, Rizal St., Batangas City, Batangas",1,Headlight not working,,
+KUDA-0336,KUDA,New Wolf Plus,Hannah Navarro,35,"Brgy. Santo Niño, Kalayaan Ave., Taytay, Rizal",2,Charger not working,Display malfunction,
+KUDA-0337,KUDA,Lion,Christian Castro,20,"Brgy. San Isidro, Kalayaan Ave., San Mateo, Rizal",1,Controller malfunction,,
+KUDA-0338,KUDA,Kuda E-Trike,Clarisse Marquez,52,"Brgy. Poblacion, Kalayaan Ave., Lopez, Quezon",1,Battery drains quickly,,
+KUDA-0339,KUDA,Kuda E-Trike,Carlo Padilla,56,"Brgy. San Isidro, Sampaguita St., Cabuyao, Laguna",2,Headlight not working,Key/ignition problem,
+KUDA-0340,KUDA,New Wolf Plus,Beatrice Rosales,41,"Brgy. San Isidro, Sampaguita St., Los Baños, Laguna",2,Flat tire,Unusual motor noise,
+KUDA-0341,KUDA,Kuda E-Trike,Zoe Salazar,41,"Brgy. Poblacion, Kalayaan Ave., Cainta, Rizal",2,Controller malfunction,Suspension problem,
+KUDA-0342,KUDA,Kuda E-Trike,Rachel Mendoza,22,"Brgy. Santo Niño, Del Pilar St., Rodriguez, Rizal",3,Brake problem,Battery drains quickly,Brake sensor error
+KUDA-0343,KUDA,New Wolf Plus,Daniel Espiritu,52,"Brgy. San Isidro, Del Pilar St., Calaca, Batangas",3,Throttle not responding,Tire puncture,Horn not working
+KUDA-0344,KUDA,Rhino,Samantha Aquino,50,"Brgy. San Isidro, Quezon St., Lopez, Quezon",3,Motor not running,Turn signal not working,Key/ignition problem
+KUDA-0345,KUDA,Rhino,Faith Samson,62,"Brgy. Maligaya, Acacia St., Rodriguez, Rizal",2,Horn not working,Battery failure,
+KUDA-0346,KUDA,Lion,Leah Marquez,50,"Brgy. Poblacion, Mabini St., Malvar, Batangas",1,Display malfunction,,
+KUDA-0347,KUDA,New Wolf Plus,Nadine Valdez,47,"Brgy. Maligaya, Kalayaan Ave., Calaca, Batangas",2,Motor not running,Suspension problem,
+KUDA-0348,KUDA,New Wolf Plus,Trisha David,45,"Brgy. Santo Niño, Maharlika St., Tanza, Cavite",2,Battery drains quickly,Charging problem,
+KUDA-0349,KUDA,Rhino,Miguel Aquino,22,"Brgy. Maligaya, National Road, Trece Martires, Cavite",1,Controller malfunction,,
+KUDA-0350,KUDA,New Wolf Plus,Vanessa Tolentino,19,"Brgy. San Isidro, Acacia St., Bay, Laguna",1,Throttle not responding,,
+KUDA-0351,KUDA,New Wolf Plus,Ryan Lim,54,"Brgy. San Jose, Quezon St., San Pedro, Laguna",2,Flat tire,Motor not running,
+KUDA-0352,KUDA,Kuda E-Trike,Paolo Espiritu,43,"Brgy. San Isidro, Sampaguita St., Pagbilao, Quezon",2,Brake sensor error,Throttle not responding,
+KUDA-0353,KUDA,Kuda E-Trike,Nicole Bautista,46,"Brgy. Poblacion, Rizal St., Tanza, Cavite",2,Throttle not responding,Unusual motor noise,
+KUDA-0354,KUDA,Rhino,Gabriel Ramos,48,"Brgy. San Juan, Del Pilar St., Kawit, Cavite",1,Loose wiring,,
+KUDA-0355,KUDA,Rhino,Maria Aguilar,28,"Brgy. San Isidro, Kalayaan Ave., Santa Cruz, Laguna",1,Flat tire,,
+KUDA-0356,KUDA,Lion,Anthony Pascual,26,"Brgy. San Jose, Kalayaan Ave., Candelaria, Quezon",1,Brake sensor error,,
+KUDA-0357,KUDA,Kuda E-Trike,Andrea Marquez,21,"Brgy. San Isidro, Maharlika St., Kawit, Cavite",2,Loose wiring,Turn signal not working,
+KUDA-0358,KUDA,Kuda E-Trike,Zoe Castro,52,"Brgy. Poblacion, Mabini St., Santa Cruz, Laguna",1,Tire puncture,,
+KUDA-0359,KUDA,New Wolf Plus,Leah Tolentino,31,"Brgy. Santo Niño, Maharlika St., Nasugbu, Batangas",1,Charger not working,,
+KUDA-0360,KUDA,Rhino,Gabriel Pascual,63,"Brgy. San Jose, Mabini St., Gumaca, Quezon",1,Display malfunction,,
+KUDA-0361,KUDA,Rhino,Clarisse Chua,35,"Brgy. Maligaya, Mabini St., Rosario, Batangas",2,Headlight not working,Weak acceleration,
+KUDA-0362,KUDA,Kuda E-Trike,John Aguilar,59,"Brgy. San Isidro, Quezon St., Trece Martires, Cavite",1,Controller malfunction,,
+KUDA-0363,KUDA,Rhino,Samantha Mendoza,52,"Brgy. Poblacion, Quezon St., Sariaya, Quezon",2,Battery failure,Battery drains quickly,
+KUDA-0364,KUDA,New Wolf Plus,Leah Chua,63,"Brgy. San Jose, Acacia St., Rosario, Batangas",3,Battery drains quickly,Motor not running,Suspension problem
+KUDA-0365,KUDA,Kuda E-Trike,Camille Manalo,62,"Brgy. San Juan, National Road, Antipolo, Rizal",1,Horn not working,,
+KUDA-0366,KUDA,Rhino,Patricia Aquino,46,"Brgy. Maligaya, National Road, Angono, Rizal",2,Weak acceleration,Turn signal not working,
+KUDA-0367,KUDA,New Wolf Plus,Vanessa Sy,39,"Brgy. San Juan, Del Pilar St., Binangonan, Rizal",1,Battery failure,,
+KUDA-0368,KUDA,Rhino,Miguel Rivera,29,"Brgy. Santo Niño, Del Pilar St., San Mateo, Rizal",3,Unusual motor noise,Display malfunction,Horn not working
+KUDA-0369,KUDA,Kuda E-Trike,Leah Macapagal,64,"Brgy. Santo Niño, Rizal St., Rosario, Batangas",2,Horn not working,Headlight not working,
+KUDA-0370,KUDA,Rhino,Elaine Diaz,43,"Brgy. San Juan, Rizal St., Ibaan, Batangas",1,Tire puncture,,
+KUDA-0371,KUDA,Kuda E-Trike,Grace Espiritu,41,"Brgy. Poblacion, Bonifacio St., Ibaan, Batangas",2,Brake problem,Unusual motor noise,
+KUDA-0372,KUDA,New Wolf Plus,Angela Hernandez,61,"Brgy. San Jose, National Road, San Pedro, Laguna",3,Battery failure,Charger not working,Motor not running
+KUDA-0373,KUDA,Kuda E-Trike,Karen Espiritu,26,"Brgy. Maligaya, Acacia St., Imus, Cavite",1,Key/ignition problem,,
+KUDA-0374,KUDA,Lion,Patricia Espiritu,42,"Brgy. San Juan, National Road, Los Baños, Laguna",2,Brake sensor error,Turn signal not working,
+KUDA-0375,KUDA,Rhino,Elaine Dela Cruz,23,"Brgy. Poblacion, Maharlika St., Ibaan, Batangas",1,Brake problem,,
+KUDA-0376,KUDA,Lion,Vanessa Macapagal,54,"Brgy. Poblacion, Del Pilar St., San Mateo, Rizal",2,Tire puncture,Loose wiring,
+KUDA-0377,KUDA,New Wolf Plus,Nicole Manalo,41,"Brgy. San Isidro, Kalayaan Ave., Cainta, Rizal",2,Throttle not responding,Charging problem,
+KUDA-0378,KUDA,Lion,Grace Gonzales,40,"Brgy. San Jose, Rizal St., Binangonan, Rizal",2,Charging problem,Headlight not working,
+KUDA-0379,KUDA,New Wolf Plus,Camille Bautista,38,"Brgy. San Jose, Sampaguita St., Tayabas, Quezon",1,Horn not working,,
+KUDA-0380,KUDA,Lion,Ethan Dela Cruz,37,"Brgy. San Isidro, Sampaguita St., Calaca, Batangas",1,Charger not working,,
+KUDA-0381,KUDA,Rhino,Angela Chua,18,"Brgy. San Juan, Mabini St., Rodriguez, Rizal",1,Controller malfunction,,
+KUDA-0382,KUDA,Rhino,Elaine Morales,46,"Brgy. Poblacion, Rizal St., Taytay, Rizal",1,Charging problem,,
+KUDA-0383,KUDA,New Wolf Plus,Lara Gonzales,52,"Brgy. Santo Niño, Mabini St., Los Baños, Laguna",2,Flat tire,Horn not working,
+KUDA-0384,KUDA,Kuda E-Trike,Christine Castro,38,"Brgy. San Jose, Sampaguita St., Bauan, Batangas",2,Loose wiring,Charging problem,
+KUDA-0385,KUDA,Kuda E-Trike,Joshua Espiritu,48,"Brgy. San Isidro, Acacia St., Bauan, Batangas",2,Display malfunction,Turn signal not working,
+KUDA-0386,KUDA,Kuda E-Trike,Samantha Mercado,30,"Brgy. San Jose, Quezon St., Santa Rosa, Laguna",2,Battery failure,Throttle not responding,
+KUDA-0387,KUDA,New Wolf Plus,Olivia Macapagal,22,"Brgy. San Jose, Acacia St., General Trias, Cavite",1,Unusual motor noise,,
+KUDA-0388,KUDA,Rhino,Maria Fernandez,54,"Brgy. San Juan, Del Pilar St., Lopez, Quezon",1,Charger not working,,
+KUDA-0389,KUDA,Kuda E-Trike,Olivia Salazar,53,"Brgy. San Jose, Del Pilar St., Lucban, Quezon",3,Horn not working,Charger not working,Controller malfunction
+KUDA-0390,KUDA,Lion,Francis Del Rosario,32,"Brgy. San Juan, National Road, Bay, Laguna",1,Turn signal not working,,
+KUDA-0391,KUDA,Lion,Faith Navarro,62,"Brgy. Poblacion, Rizal St., Teresa, Rizal",2,Controller malfunction,Headlight not working,
+KUDA-0392,KUDA,New Wolf Plus,Paolo Macapagal,36,"Brgy. San Isidro, Acacia St., Tanza, Cavite",1,Horn not working,,
+KUDA-0393,KUDA,New Wolf Plus,Gabriel Reyes,37,"Brgy. Santo Niño, Del Pilar St., Teresa, Rizal",1,Battery drains quickly,,
+KUDA-0394,KUDA,New Wolf Plus,Beatrice Marquez,45,"Brgy. Maligaya, National Road, Lucban, Quezon",2,Controller malfunction,Weak acceleration,
+KUDA-0395,KUDA,New Wolf Plus,Daniel Hernandez,28,"Brgy. San Isidro, Quezon St., Bacoor, Cavite",1,Battery drains quickly,,
+KUDA-0396,KUDA,Lion,Ethan Padilla,61,"Brgy. Maligaya, Bonifacio St., Rosario, Cavite",2,Flat tire,Tire puncture,
+KUDA-0397,KUDA,Rhino,Miguel Bautista,27,"Brgy. Santo Niño, National Road, Angono, Rizal",3,Unusual motor noise,Horn not working,Turn signal not working
+KUDA-0398,KUDA,Rhino,Nadine Navarro,46,"Brgy. San Juan, Acacia St., Cardona, Rizal",1,Motor not running,,
+KUDA-0399,KUDA,Rhino,Adrian Reyes,54,"Brgy. San Jose, Kalayaan Ave., Cainta, Rizal",1,Controller malfunction,,
+KUDA-0400,KUDA,New Wolf Plus,Faith Fernandez,48,"Brgy. Maligaya, Mabini St., Tanza, Cavite",2,Horn not working,Brake problem,
+KUDA-0401,KUDA,Rhino,Mark Espiritu,18,"Brgy. San Jose, Kalayaan Ave., Morong, Rizal",2,Flat tire,Turn signal not working,
+KUDA-0402,KUDA,Rhino,Sarah Mendoza,38,"Brgy. San Isidro, Rizal St., Bauan, Batangas",2,Charger not working,Suspension problem,
+KUDA-0403,KUDA,New Wolf Plus,Patricia Bernardo,47,"Brgy. San Juan, Rizal St., Gumaca, Quezon",3,Tire puncture,Charging problem,Unusual motor noise
+KUDA-0404,KUDA,Kuda E-Trike,Anthony Marquez,34,"Brgy. San Juan, Rizal St., Teresa, Rizal",2,Suspension problem,Display malfunction,
+KUDA-0405,KUDA,Kuda E-Trike,Patricia Flores,37,"Brgy. Maligaya, Sampaguita St., Angono, Rizal",2,Battery drains quickly,Unusual motor noise,
+KUDA-0406,KUDA,Rhino,Nathan Ocampo,34,"Brgy. San Juan, National Road, Bauan, Batangas",2,Charger not working,Display malfunction,
+KUDA-0407,KUDA,Kuda E-Trike,Elaine Mendoza,25,"Brgy. San Jose, Rizal St., Binangonan, Rizal",2,Display malfunction,Battery failure,
+KUDA-0408,KUDA,Kuda E-Trike,Adrian Ocampo,43,"Brgy. Poblacion, Kalayaan Ave., Teresa, Rizal",1,Battery failure,,
+KUDA-0409,KUDA,Rhino,Faith Valencia,40,"Brgy. Maligaya, Maharlika St., Malvar, Batangas",2,Weak acceleration,Brake sensor error,
+KUDA-0410,KUDA,Kuda E-Trike,Trisha Valencia,36,"Brgy. San Isidro, Quezon St., Taytay, Rizal",1,Charging problem,,
+KUDA-0411,KUDA,Kuda E-Trike,Mark Bernardo,32,"Brgy. Maligaya, National Road, Lopez, Quezon",1,Display malfunction,,
+KUDA-0412,KUDA,Kuda E-Trike,Angelo Aquino,41,"Brgy. San Isidro, Acacia St., Cardona, Rizal",2,Unusual motor noise,Brake problem,
+KUDA-0413,KUDA,Kuda E-Trike,Mark Padilla,65,"Brgy. San Jose, Rizal St., Calaca, Batangas",2,Key/ignition problem,Brake problem,
+KUDA-0414,KUDA,Lion,Carlo Aquino,63,"Brgy. Poblacion, Bonifacio St., Kawit, Cavite",3,Motor not running,Brake sensor error,Key/ignition problem
+KUDA-0415,KUDA,Rhino,Camille Hernandez,32,"Brgy. Santo Niño, Sampaguita St., Lucban, Quezon",2,Loose wiring,Charging problem,
+KUDA-0416,KUDA,Lion,Camille Castillo,62,"Brgy. Maligaya, Bonifacio St., San Mateo, Rizal",1,Display malfunction,,
+KUDA-0417,KUDA,Lion,Janelle Navarro,24,"Brgy. Santo Niño, National Road, Tanauan, Batangas",3,Motor not running,Battery drains quickly,Display malfunction
+KUDA-0418,KUDA,Rhino,Miguel Fernandez,22,"Brgy. San Juan, Bonifacio St., Calamba, Laguna",2,Motor not running,Key/ignition problem,
+KUDA-0419,KUDA,Rhino,Jerome Domingo,36,"Brgy. Santo Niño, Mabini St., Rosario, Batangas",1,Charging problem,,
+KUDA-0420,KUDA,Kuda E-Trike,Jasmine Sy,59,"Brgy. San Juan, Acacia St., Kawit, Cavite",1,Horn not working,,
+KUDA-0421,KUDA,Lion,Lara Espiritu,25,"Brgy. Maligaya, Del Pilar St., Antipolo, Rizal",3,Suspension problem,Battery drains quickly,Brake problem
+KUDA-0422,KUDA,Rhino,Adrian Valdez,19,"Brgy. San Jose, Sampaguita St., Cabuyao, Laguna",2,Charger not working,Display malfunction,
+KUDA-0423,KUDA,New Wolf Plus,Anthony Chua,58,"Brgy. San Juan, Mabini St., Santa Cruz, Laguna",1,Brake problem,,
+KUDA-0424,KUDA,New Wolf Plus,Patricia Garcia,52,"Brgy. Poblacion, Bonifacio St., Rosario, Batangas",3,Turn signal not working,Display malfunction,Brake problem
+KUDA-0425,KUDA,New Wolf Plus,Christian Manalo,26,"Brgy. San Juan, Bonifacio St., Pagbilao, Quezon",3,Headlight not working,Brake problem,Flat tire
+KUDA-0426,KUDA,Kuda E-Trike,Carlo Mercado,23,"Brgy. San Isidro, Bonifacio St., Santa Rosa, Laguna",1,Throttle not responding,,
+KUDA-0427,KUDA,Kuda E-Trike,Nadine Reyes,56,"Brgy. Poblacion, Kalayaan Ave., Ibaan, Batangas",3,Turn signal not working,Battery drains quickly,Loose wiring
+KUDA-0428,KUDA,Kuda E-Trike,Leah Aguilar,54,"Brgy. San Jose, Maharlika St., Sariaya, Quezon",1,Key/ignition problem,,
+KUDA-0429,KUDA,Lion,Clarisse Alcantara,18,"Brgy. San Jose, National Road, Cainta, Rizal",2,Turn signal not working,Motor not running,
+KUDA-0430,KUDA,Lion,Nicole Valencia,29,"Brgy. San Juan, Del Pilar St., Trece Martires, Cavite",1,Battery drains quickly,,
+KUDA-0431,KUDA,Lion,Daniel Manalo,38,"Brgy. San Juan, Rizal St., Calaca, Batangas",2,Brake sensor error,Horn not working,
+KUDA-0432,KUDA,Lion,Ethan Cruz,55,"Brgy. San Isidro, Rizal St., General Trias, Cavite",2,Battery drains quickly,Controller malfunction,
+KUDA-0433,KUDA,New Wolf Plus,Francis Bernardo,26,"Brgy. San Jose, Kalayaan Ave., Candelaria, Quezon",2,Weak acceleration,Turn signal not working,
+KUDA-0434,KUDA,New Wolf Plus,Lara Padilla,47,"Brgy. Santo Niño, Rizal St., Santa Cruz, Laguna",2,Brake problem,Throttle not responding,
+KUDA-0435,KUDA,Rhino,Kevin Santos,46,"Brgy. Santo Niño, Rizal St., Tiaong, Quezon",2,Unusual motor noise,Loose wiring,
+KUDA-0436,KUDA,Kuda E-Trike,Christine Padilla,26,"Brgy. San Juan, Del Pilar St., Rosario, Cavite",3,Battery drains quickly,Weak acceleration,Loose wiring
+KUDA-0437,KUDA,Kuda E-Trike,Zoe Cruz,56,"Brgy. Maligaya, Del Pilar St., Kawit, Cavite",3,Battery drains quickly,Unusual motor noise,Horn not working
+KUDA-0438,KUDA,Lion,Christian Dela Cruz,26,"Brgy. San Juan, Rizal St., Cabuyao, Laguna",3,Battery drains quickly,Tire puncture,Horn not working
+KUDA-0439,KUDA,New Wolf Plus,Beatrice Macapagal,26,"Brgy. Maligaya, Mabini St., Ibaan, Batangas",2,Display malfunction,Loose wiring,
+KUDA-0440,KUDA,Rhino,Mika Pascual,46,"Brgy. San Isidro, Maharlika St., Cabuyao, Laguna",2,Display malfunction,Suspension problem,
+KUDA-0441,KUDA,New Wolf Plus,Angela Torres,53,"Brgy. Poblacion, Rizal St., Biñan, Laguna",1,Battery drains quickly,,
+KUDA-0442,KUDA,Kuda E-Trike,Mika Lazaro,31,"Brgy. Santo Niño, Mabini St., Atimonan, Quezon",3,Throttle not responding,Loose wiring,Weak acceleration
+KUDA-0443,KUDA,New Wolf Plus,Nicole Ramos,64,"Brgy. San Isidro, Sampaguita St., Bay, Laguna",3,Tire puncture,Battery drains quickly,Suspension problem
+KUDA-0444,KUDA,Kuda E-Trike,Michael Bernardo,36,"Brgy. San Jose, Rizal St., Los Baños, Laguna",2,Suspension problem,Motor not running,
+KUDA-0445,KUDA,New Wolf Plus,Andrea Villanueva,43,"Brgy. San Juan, Sampaguita St., Kawit, Cavite",3,Charging problem,Flat tire,Tire puncture
+KUDA-0446,KUDA,Rhino,Nadine Torres,25,"Brgy. Maligaya, Bonifacio St., Lipa, Batangas",1,Horn not working,,
+KUDA-0447,KUDA,New Wolf Plus,James Del Rosario,58,"Brgy. San Isidro, Kalayaan Ave., Teresa, Rizal",3,Weak acceleration,Controller malfunction,Headlight not working
+KUDA-0448,KUDA,Rhino,Andrea Torres,53,"Brgy. Poblacion, Maharlika St., Cainta, Rizal",3,Brake sensor error,Horn not working,Suspension problem
+KUDA-0449,KUDA,Kuda E-Trike,Irene Santos,37,"Brgy. Poblacion, Sampaguita St., Imus, Cavite",1,Controller malfunction,,
+KUDA-0450,KUDA,Lion,Nicole Dela Cruz,42,"Brgy. Maligaya, Quezon St., Cainta, Rizal",3,Battery drains quickly,Turn signal not working,Flat tire
+KUDA-0451,KUDA,New Wolf Plus,James Domingo,59,"Brgy. San Isidro, Quezon St., Gumaca, Quezon",2,Loose wiring,Suspension problem,
+KUDA-0452,KUDA,Rhino,Joshua Rivera,63,"Brgy. Santo Niño, Acacia St., Lucena, Quezon",2,Battery failure,Weak acceleration,
+KUDA-0453,KUDA,Kuda E-Trike,Elaine Valencia,54,"Brgy. San Jose, Kalayaan Ave., Los Baños, Laguna",2,Throttle not responding,Battery drains quickly,
+KUDA-0454,KUDA,New Wolf Plus,Jerome Soriano,55,"Brgy. Santo Niño, Kalayaan Ave., Pagbilao, Quezon",1,Brake sensor error,,
+KUDA-0455,KUDA,New Wolf Plus,Christian Alcantara,39,"Brgy. Poblacion, Acacia St., Kawit, Cavite",1,Display malfunction,,
+KUDA-0456,KUDA,New Wolf Plus,Christian Villanueva,32,"Brgy. Santo Niño, Del Pilar St., Bauan, Batangas",2,Headlight not working,Brake sensor error,
+KUDA-0457,KUDA,Kuda E-Trike,Jasmine Mercado,22,"Brgy. Santo Niño, Mabini St., Taytay, Rizal",3,Battery failure,Motor not running,Key/ignition problem
+KUDA-0458,KUDA,Lion,Mark Chua,20,"Brgy. Maligaya, Rizal St., Santo Tomas, Batangas",1,Weak acceleration,,
+KUDA-0459,KUDA,Lion,Maria Manansala,65,"Brgy. Santo Niño, National Road, Kawit, Cavite",1,Weak acceleration,,
+KUDA-0460,KUDA,Rhino,Rachel Salazar,43,"Brgy. San Isidro, Quezon St., Tagaytay, Cavite",2,Brake problem,Brake sensor error,
+KUDA-0461,KUDA,Kuda E-Trike,Carlo Soriano,46,"Brgy. San Isidro, Mabini St., Batangas City, Batangas",1,Brake sensor error,,
+KUDA-0462,KUDA,Kuda E-Trike,Vanessa Marquez,45,"Brgy. San Isidro, Maharlika St., Lucban, Quezon",1,Headlight not working,,
+KUDA-0463,KUDA,Lion,Nadine Macapagal,60,"Brgy. San Juan, Del Pilar St., Tayabas, Quezon",2,Key/ignition problem,Loose wiring,
+KUDA-0464,KUDA,Lion,Zoe Castillo,65,"Brgy. Maligaya, Sampaguita St., Kawit, Cavite",2,Charger not working,Battery drains quickly,
+KUDA-0465,KUDA,Rhino,Elaine Tan,65,"Brgy. San Jose, National Road, Ibaan, Batangas",3,Battery failure,Display malfunction,Headlight not working
+KUDA-0466,KUDA,Rhino,James Castro,38,"Brgy. San Juan, Rizal St., Tanza, Cavite",1,Controller malfunction,,
+KUDA-0467,KUDA,New Wolf Plus,Adrian Tolentino,55,"Brgy. San Juan, Mabini St., Atimonan, Quezon",2,Turn signal not working,Headlight not working,
+KUDA-0468,KUDA,Lion,Irene Villanueva,54,"Brgy. San Jose, National Road, Binangonan, Rizal",3,Key/ignition problem,Battery failure,Flat tire
+KUDA-0469,KUDA,Lion,Daniel Lim,51,"Brgy. Poblacion, Maharlika St., Lucena, Quezon",1,Charging problem,,
+KUDA-0470,KUDA,New Wolf Plus,Elaine Domingo,46,"Brgy. San Juan, Bonifacio St., Tayabas, Quezon",2,Unusual motor noise,Horn not working,
+KUDA-0471,KUDA,Kuda E-Trike,Anthony Morales,65,"Brgy. San Juan, Maharlika St., Silang, Cavite",1,Display malfunction,,
+KUDA-0472,KUDA,Rhino,Clarisse Manalo,20,"Brgy. Poblacion, Del Pilar St., Atimonan, Quezon",2,Brake sensor error,Display malfunction,
+KUDA-0473,KUDA,Kuda E-Trike,Angela Villanueva,53,"Brgy. San Jose, Sampaguita St., Lucban, Quezon",1,Charger not working,,
+KUDA-0474,KUDA,Kuda E-Trike,Ryan Valencia,56,"Brgy. Maligaya, Maharlika St., Santa Rosa, Laguna",1,Motor not running,,
+KUDA-0475,KUDA,Rhino,Andrea Bernardo,58,"Brgy. Maligaya, Kalayaan Ave., Los Baños, Laguna",3,Loose wiring,Suspension problem,Display malfunction
+KUDA-0476,KUDA,Kuda E-Trike,Paolo Alcantara,26,"Brgy. San Juan, Maharlika St., Pagsanjan, Laguna",2,Battery drains quickly,Brake sensor error,
+KUDA-0477,KUDA,Lion,Joshua Mendoza,60,"Brgy. San Juan, Bonifacio St., Calaca, Batangas",1,Controller malfunction,,
+KUDA-0478,KUDA,Rhino,Anthony Soriano,18,"Brgy. Santo Niño, Maharlika St., Tagaytay, Cavite",1,Flat tire,,
+KUDA-0479,KUDA,Kuda E-Trike,Mark Gonzales,47,"Brgy. San Jose, Acacia St., Binangonan, Rizal",1,Turn signal not working,,
+KUDA-0480,KUDA,Lion,Camille Samson,32,"Brgy. Maligaya, Kalayaan Ave., Angono, Rizal",2,Battery failure,Turn signal not working,
+KUDA-0481,KUDA,Kuda E-Trike,Carlo Rosales,39,"Brgy. Maligaya, Mabini St., Batangas City, Batangas",2,Motor not running,Charger not working,
+KUDA-0482,KUDA,Rhino,Michael Cruz,36,"Brgy. Maligaya, Kalayaan Ave., Dasmarinas, Cavite",1,Tire puncture,,
+KUDA-0483,KUDA,Lion,Paolo Del Rosario,19,"Brgy. San Isidro, Mabini St., Trece Martires, Cavite",1,Loose wiring,,
+KUDA-0484,KUDA,Lion,Angelo Santiago,61,"Brgy. San Jose, Bonifacio St., Santa Cruz, Laguna",2,Charging problem,Motor not running,
+KUDA-0485,KUDA,Kuda E-Trike,Christine Dela Cruz,20,"Brgy. Maligaya, Mabini St., Kawit, Cavite",2,Brake problem,Headlight not working,
+KUDA-0486,KUDA,New Wolf Plus,Nicole Mercado,38,"Brgy. Maligaya, Maharlika St., Rosario, Batangas",2,Horn not working,Flat tire,
+KUDA-0487,KUDA,Kuda E-Trike,Clarisse Tolentino,44,"Brgy. San Jose, Bonifacio St., Kawit, Cavite",1,Headlight not working,,
+KUDA-0488,KUDA,Rhino,Camille Pascual,43,"Brgy. Santo Niño, Sampaguita St., Candelaria, Quezon",1,Brake problem,,
+KUDA-0489,KUDA,Lion,Camille Morales,52,"Brgy. San Jose, Bonifacio St., Calaca, Batangas",3,Battery failure,Unusual motor noise,Charger not working
+KUDA-0490,KUDA,Rhino,Olivia David,65,"Brgy. Poblacion, Rizal St., Santo Tomas, Batangas",1,Throttle not responding,,
+KUDA-0491,KUDA,Rhino,Olivia Santos,59,"Brgy. San Jose, Sampaguita St., Rosario, Cavite",1,Battery failure,,
+KUDA-0492,KUDA,Rhino,Alyssa Lazaro,52,"Brgy. San Juan, Maharlika St., San Pedro, Laguna",3,Brake problem,Battery drains quickly,Charger not working
+KUDA-0493,KUDA,New Wolf Plus,Christine Reyes,55,"Brgy. Santo Niño, Acacia St., Tagaytay, Cavite",3,Brake problem,Turn signal not working,Key/ignition problem
+KUDA-0494,KUDA,Kuda E-Trike,Grace Chua,61,"Brgy. Poblacion, Del Pilar St., Malvar, Batangas",1,Turn signal not working,,
+KUDA-0495,KUDA,Kuda E-Trike,Daniel Rivera,21,"Brgy. Maligaya, Kalayaan Ave., Cainta, Rizal",1,Tire puncture,,
+KUDA-0496,KUDA,Rhino,Mika Castillo,20,"Brgy. Maligaya, Maharlika St., Santa Rosa, Laguna",2,Brake sensor error,Battery drains quickly,
+KUDA-0497,KUDA,Rhino,Jerome Mercado,20,"Brgy. San Isidro, National Road, San Pedro, Laguna",1,Turn signal not working,,
+KUDA-0498,KUDA,Lion,Mika David,65,"Brgy. San Juan, Bonifacio St., Gumaca, Quezon",2,Key/ignition problem,Turn signal not working,
+KUDA-0499,KUDA,Rhino,Irene Sy,54,"Brgy. San Jose, Mabini St., Silang, Cavite",1,Weak acceleration,,
+KUDA-0500,KUDA,Kuda E-Trike,Christian Macapagal,35,"Brgy. Poblacion, Acacia St., Rosario, Cavite",2,Weak acceleration,Loose wiring,
