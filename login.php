@@ -362,16 +362,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <section class="auth-panel">
       <div class="row g-0">
         <div class="col-lg-6 brand-side">
-          <div>
-            <div class="brand-mark"><i class="bi bi-lightning-charge-fill"></i></div>
-            <h1 class="brand-title">FixTrack</h1>
-            <p class="brand-copy">A simpler way to manage e-bike repairs, warranties, and service updates from one trusted portal.</p>
-          </div>
-          <div class="feature-row">
-            <div class="feature-pill"><i class="bi bi-tools"></i><span>Book and monitor repair service</span></div>
-            <div class="feature-pill"><i class="bi bi-shield-check"></i><span>Keep warranty coverage visible</span></div>
-            <div class="feature-pill"><i class="bi bi-chat-dots"></i><span>Stay connected with the service team</span></div>
-          </div>
         </div>
 
         <div class="col-lg-6 login-side">

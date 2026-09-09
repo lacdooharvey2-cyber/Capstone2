@@ -197,16 +197,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <section class="register-panel">
       <div class="row g-0">
         <div class="col-lg-4 register-brand">
-          <div>
-            <div class="brand-mark"><i class="bi bi-lightning-charge-fill"></i></div>
-            <h1 class="brand-title">FixTrack</h1>
-            <p class="brand-copy">Create your customer account to book repairs, monitor service progress, and keep your e-bike warranty details in one place.</p>
-          </div>
-          <div class="register-points">
-            <div class="register-point"><i class="bi bi-person-check"></i><span>Simple customer registration</span></div>
-            <div class="register-point"><i class="bi bi-tools"></i><span>Book and track repairs easily</span></div>
-            <div class="register-point"><i class="bi bi-shield-check"></i><span>Keep warranty coverage visible</span></div>
-          </div>
         </div>
         <div class="col-lg-8 register-form">
           <div>
