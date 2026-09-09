@@ -20,7 +20,7 @@ $rows = $conn->query("
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>E-Bike Dataset - Red Star Admin</title>
+  <title>E-Bike Dataset - FixTrack Admin</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">

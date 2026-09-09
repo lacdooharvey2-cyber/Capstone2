@@ -14,6 +14,7 @@ class ComposerStaticInitc7f138cc986ebd39a976519e67ecb890
         '1f87db08236948d07391152dccb70f04' => __DIR__ . '/..' . '/google/apiclient-services/autoload.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         'a8d3953fd9959404dd22d3dfcd0a79f0' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
+        'd92f49fe138fde4e7a3ec6f988960524' => __DIR__ . '/..' . '/stripe/stripe-php/lib/version_check.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -24,6 +25,7 @@ class ComposerStaticInitc7f138cc986ebd39a976519e67ecb890
         'S' =>
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
+            'Stripe\\' => 7,
         ),
         'P' =>
         array (
@@ -32,6 +34,7 @@ class ComposerStaticInitc7f138cc986ebd39a976519e67ecb890
             'Psr\\Http\\Client\\' => 16,
             'Psr\\Cache\\' => 10,
             'ParagonIE\\ConstantTime\\' => 23,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' =>
         array (
@@ -61,6 +64,10 @@ class ComposerStaticInitc7f138cc986ebd39a976519e67ecb890
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
+        'Stripe\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
+        ),
         'Psr\\Log\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
@@ -81,6 +88,10 @@ class ComposerStaticInitc7f138cc986ebd39a976519e67ecb890
         'ParagonIE\\ConstantTime\\' =>
         array (
             0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
+        ),
+        'PHPMailer\\PHPMailer\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Monolog\\' =>
         array (

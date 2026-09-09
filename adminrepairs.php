@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("db.php");
+include_once("schema_helpers.php");
 
 // Guard: only allow Admins
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
@@ -8,31 +9,45 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
     exit();
 }
 
+ensureRepairAutomationSchema($conn);
+
 // Fetch all repair bookings
-$sql = "SELECT repair_id, customer_id, ebike_model, issue_description, repair_status, created_at 
-        FROM repairs ORDER BY created_at DESC";
+$sql = "SELECT r.repair_id, r.customer_id, u.name AS customer_name, r.ebike_model,
+               r.issue_description, r.warranty_status, r.amount, r.repair_status, r.created_at
+        FROM repairs r
+        LEFT JOIN users u ON u.user_id = r.customer_id
+        ORDER BY r.created_at DESC";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Manage Repairs - Red Star Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manage Repairs - FixTrack Admin</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
   <?php include("navbaradmin.php"); ?> <!-- make sure file exists -->
 
   <div class="container mt-4">
-    <h3 class="mb-4">Manage Repair Bookings</h3>
+    <div class="page-hero">
+      <h3 class="mb-1">Manage Repair Bookings</h3>
+      <p>Review repair issues, automatic warranty result, and technician-set costing.</p>
+    </div>
 
-    <table class="table table-hover table-bordered bg-white shadow-sm">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="table-responsive">
+    <table class="table table-hover table-bordered mb-0">
       <thead class="table-danger">
         <tr>
           <th>Repair ID</th>
-          <th>Customer ID</th>
+          <th>Customer</th>
           <th>E-Bike Model</th>
           <th>Issue</th>
+          <th>Warranty</th>
+          <th>Cost</th>
           <th>Status</th>
           <th>Date Created</th>
           <th style="width:150px;">Actions</th>
@@ -43,9 +58,15 @@ $result = $conn->query($sql);
           <?php while($row = $result->fetch_assoc()): ?>
             <tr>
               <td><?= htmlspecialchars($row['repair_id']) ?></td>
-              <td><?= htmlspecialchars($row['customer_id']) ?></td>
+              <td><?= htmlspecialchars($row['customer_name'] ?? 'Customer #'.$row['customer_id']) ?></td>
               <td><?= htmlspecialchars($row['ebike_model']) ?></td>
               <td><?= htmlspecialchars($row['issue_description']) ?></td>
+              <td>
+                <span class="badge bg-<?= $row['warranty_status'] === 'Valid' ? 'success' : 'secondary' ?>">
+                  <?= htmlspecialchars($row['warranty_status']) ?>
+                </span>
+              </td>
+              <td><?= (float)$row['amount'] > 0 ? 'PHP ' . number_format((float)$row['amount'], 2) : 'Pending' ?></td>
               <td>
                 <?php if ($row['repair_status'] === 'Pending'): ?>
                   <span class="badge bg-warning">Pending</span>
@@ -68,11 +89,14 @@ $result = $conn->query($sql);
           <?php endwhile; ?>
         <?php else: ?>
           <tr>
-            <td colspan="7" class="text-center text-muted">No repair bookings found.</td>
+            <td colspan="9" class="text-center text-muted">No repair bookings found.</td>
           </tr>
         <?php endif; ?>
       </tbody>
     </table>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>

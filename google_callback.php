@@ -4,6 +4,11 @@ session_start();
 
 require_once __DIR__ . '/googleconfig.php';
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/schema_helpers.php';
+
+if (!columnExists($conn, 'users', 'google_id')) {
+    $conn->query("ALTER TABLE users ADD COLUMN google_id VARCHAR(255) NULL AFTER email");
+}
 
 // =====================================================
 // CHECK FOR GOOGLE ERROR

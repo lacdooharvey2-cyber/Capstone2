@@ -137,7 +137,7 @@ try {
         $issueDescription = firstIssue($data);
         $ebikeModel = $brand . ' ' . $model;
         $number = '09' . str_pad((string)(100000000 + $importedUsers), 9, '0', STR_PAD_LEFT);
-        $email = strtolower(str_replace('-', '', $customId)) . '@redstar.test';
+        $email = strtolower(str_replace('-', '', $customId)) . '@fixtrack.test';
         $gender = detectGenderFromName($name);
         $birthYear = date('Y') - $age;
         $dob = $birthYear . '-' . str_pad((string)(($importedUsers % 12) + 1), 2, '0', STR_PAD_LEFT) . '-' . str_pad((string)(($importedUsers % 28) + 1), 2, '0', STR_PAD_LEFT);

@@ -11,6 +11,8 @@ $todayRevenue = $conn->query("SELECT COALESCE(SUM(amount),0) AS total FROM repai
 $totalRevenue = $conn->query("SELECT COALESCE(SUM(amount),0) AS total FROM repairs WHERE repair_status='Completed'")->fetch_assoc()['total'];
 $pendingPayments = $conn->query("SELECT COUNT(*) AS total FROM repair_bookings WHERE payment_status='Pending'")->fetch_assoc()['total'];
 $paidBookings = $conn->query("SELECT COUNT(*) AS total FROM repair_bookings WHERE payment_status='Paid'")->fetch_assoc()['total'];
+$overdueDays = 7;
+$overdueUnpaid = $conn->query("SELECT COUNT(*) AS total FROM repair_bookings WHERE payment_status='Pending' AND created_at < DATE_SUB(NOW(), INTERVAL $overdueDays DAY)")->fetch_assoc()['total'];
 $recentRepairs = $conn->query("
   SELECT r.repair_id, u.name AS customer_name, r.ebike_model, r.amount, r.repair_status, r.updated_at
   FROM repairs r
@@ -23,18 +25,48 @@ $recentRepairs = $conn->query("
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cashier Dashboard - Red Star</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cashier Dashboard - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    .kpi-card { min-height: 128px; }
+    .kpi-body { align-items: flex-start; height: 100%; padding: 18px; position: relative; }
+    .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
+    .kpi-value { font-size: clamp(1.05rem, 1.8vw, 1.8rem); font-weight: 800; line-height: 1; margin-bottom: .55rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
+    .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
+  </style>
 </head>
 <body class="bg-light">
   <?php include("navbarcashier.php"); ?>
   <div class="container mt-4">
-    <h3 class="mb-4">Cashier Dashboard</h3>
+    <div class="page-hero">
+      <h3 class="mb-1">Cashier Dashboard</h3>
+      <p>Track paid repairs, pending balances, and daily service revenue.</p>
+    </div>
     <div class="row g-3 mb-4">
-      <div class="col-md-3"><div class="card shadow-sm"><div class="card-body text-center"><h6>Today Revenue</h6><p class="display-6 text-success">PHP <?= number_format((float)$todayRevenue, 2) ?></p></div></div></div>
-      <div class="col-md-3"><div class="card shadow-sm"><div class="card-body text-center"><h6>Total Revenue</h6><p class="display-6 text-danger">PHP <?= number_format((float)$totalRevenue, 2) ?></p></div></div></div>
-      <div class="col-md-3"><div class="card shadow-sm"><div class="card-body text-center"><h6>Pending Payments</h6><p class="display-6 text-warning"><?= $pendingPayments ?></p></div></div></div>
-      <div class="col-md-3"><div class="card shadow-sm"><div class="card-body text-center"><h6>Paid Bookings</h6><p class="display-6 text-primary"><?= $paidBookings ?></p></div></div></div>
+      <?php
+      $cards = [
+        ["Today's Revenue", 'PHP ' . number_format((float)$todayRevenue, 2), 'Collected today', 'text-success', 'bi-cash-stack'],
+        ['Total Revenue', 'PHP ' . number_format((float)$totalRevenue, 2), 'Completed repairs', 'text-danger', 'bi-graph-up'],
+        ['Pending Payments', $pendingPayments, 'Awaiting collection', 'text-warning', 'bi-clock-history'],
+        ['Paid Bookings', $paidBookings, 'Marked as paid', 'text-primary', 'bi-check-circle'],
+        ['Overdue/Unpaid', $overdueUnpaid, 'Pending > ' . $overdueDays . ' days', 'text-secondary', 'bi-exclamation-circle'],
+      ];
+      foreach ($cards as $card):
+      ?>
+        <div class="col-md">
+          <div class="card kpi-card <?= $card[3] ?> shadow-sm h-100"><div class="card-body kpi-body">
+            <div>
+              <p class="kpi-label"><?= htmlspecialchars($card[0]) ?></p>
+              <p class="kpi-value <?= $card[3] ?>"><?= htmlspecialchars((string)$card[1]) ?></p>
+              <p class="kpi-note"><?= htmlspecialchars($card[2]) ?></p>
+            </div>
+            <div class="kpi-icon <?= $card[3] ?>"><i class="bi <?= $card[4] ?>"></i></div>
+          </div></div>
+        </div>
+      <?php endforeach; ?>
     </div>
     <div class="card shadow-sm">
       <div class="card-body">
@@ -42,6 +74,7 @@ $recentRepairs = $conn->query("
           <h5 class="mb-0">Recent Repair Payments</h5>
           <a href="cashiertransactions.php" class="btn btn-danger btn-sm">View Payments</a>
         </div>
+        <div class="table-responsive">
         <table class="table table-hover table-bordered">
           <thead class="table-danger"><tr><th>Repair ID</th><th>Customer</th><th>E-Bike</th><th>Amount</th><th>Status</th><th>Updated</th></tr></thead>
           <tbody>
@@ -59,6 +92,7 @@ $recentRepairs = $conn->query("
             <?php endif; ?>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   </div>

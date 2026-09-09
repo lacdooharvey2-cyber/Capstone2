@@ -1,16 +1,19 @@
 <?php
 session_start();
 include("db.php");
+include_once("schema_helpers.php");
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Technician') {
     header("Location: login.php");
     exit();
 }
 
+ensureRepairAutomationSchema($conn);
+
 $user_id = intval($_SESSION['user_id']);
 $repairs = $conn->query("
   SELECT r.repair_id, r.created_at, r.customer_id, u.name AS customer_name, u.contact_number,
-         r.ebike_model, r.issue_description, r.amount, r.repair_status
+         r.ebike_model, r.issue_description, r.warranty_status, r.amount, r.repair_status
   FROM repairs r
   LEFT JOIN users u ON u.user_id = r.customer_id
   WHERE r.technician_id = $user_id OR r.technician_id IS NULL
@@ -29,7 +32,8 @@ $warranties = $conn->query("
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Manage Repair & Warranty - Red Star</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manage Repair & Warranty - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
@@ -43,8 +47,10 @@ $warranties = $conn->query("
   <?php include("navbartechnician.php"); ?>
 
   <div class="container">
-    <h3 class="mb-2">Repair & Warranty Management</h3>
-    <p class="text-muted">Manage assigned repair tickets and warranty records.</p>
+    <div class="page-hero">
+      <h3 class="mb-1">Repair & Warranty Management</h3>
+      <p>Manage assigned repair tickets, set repair costs, and update warranty records.</p>
+    </div>
 
     <?php if (isset($_GET['updated'])): ?>
       <div class="alert alert-success">Repair status updated.</div>
@@ -63,10 +69,11 @@ $warranties = $conn->query("
 
     <div class="tab-content">
       <div class="tab-pane fade show active" id="repairs" role="tabpanel">
-        <table class="table table-hover table-bordered bg-white shadow-sm">
+        <div class="card shadow-sm"><div class="card-body"><div class="table-responsive">
+        <table class="table table-hover table-bordered mb-0">
           <thead class="table-danger">
             <tr>
-              <th>ID</th><th>Date</th><th>Customer</th><th>Contact</th><th>E-Bike</th><th>Issue</th><th>Cost</th><th>Status</th><th style="width:260px;">Action</th>
+              <th>ID</th><th>Date</th><th>Customer</th><th>Contact</th><th>E-Bike</th><th>Issue</th><th>Warranty</th><th>Cost</th><th>Status</th><th style="width:360px;">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -79,11 +86,13 @@ $warranties = $conn->query("
                   <td><?= htmlspecialchars($r['contact_number'] ?? '') ?></td>
                   <td><?= htmlspecialchars($r['ebike_model']) ?></td>
                   <td><?= htmlspecialchars($r['issue_description']) ?></td>
-                  <td>PHP <?= number_format((float)$r['amount'], 2) ?></td>
+                  <td><span class="badge bg-<?= $r['warranty_status'] === 'Valid' ? 'success' : 'secondary' ?>"><?= htmlspecialchars($r['warranty_status']) ?></span></td>
+                  <td><?= (float)$r['amount'] > 0 ? 'PHP ' . number_format((float)$r['amount'], 2) : 'Pending' ?></td>
                   <td><span class="badge bg-<?php echo $r['repair_status']=='Completed'?'success':($r['repair_status']=='In Progress'?'primary':'warning'); ?>"><?= htmlspecialchars($r['repair_status']) ?></span></td>
                   <td>
                     <form method="post" action="technicianupdaterepair.php" class="d-flex gap-2">
                       <input type="hidden" name="repair_id" value="<?= htmlspecialchars($r['repair_id']) ?>">
+                      <input type="number" class="form-control form-control-sm" name="amount" min="0" step="0.01" value="<?= htmlspecialchars($r['amount']) ?>" aria-label="Repair cost">
                       <select name="status" class="form-select form-select-sm">
                         <option <?= $r['repair_status'] === 'Pending' ? 'selected' : '' ?>>Pending</option>
                         <option <?= $r['repair_status'] === 'In Progress' ? 'selected' : '' ?>>In Progress</option>
@@ -96,14 +105,16 @@ $warranties = $conn->query("
                 </tr>
               <?php endwhile; ?>
             <?php else: ?>
-              <tr><td colspan="9" class="text-center text-muted">No repair tickets found.</td></tr>
+              <tr><td colspan="10" class="text-center text-muted">No repair tickets found.</td></tr>
             <?php endif; ?>
           </tbody>
         </table>
+        </div></div></div>
       </div>
 
       <div class="tab-pane fade" id="warranty" role="tabpanel">
-        <table class="table table-hover table-bordered bg-white shadow-sm">
+        <div class="card shadow-sm"><div class="card-body"><div class="table-responsive">
+        <table class="table table-hover table-bordered mb-0">
           <thead class="table-danger">
             <tr>
               <th>ID</th><th>Customer</th><th>E-Bike</th><th>Coverage</th><th>Status</th><th>Claim Date</th><th>Action</th>
@@ -127,6 +138,7 @@ $warranties = $conn->query("
             <?php endif; ?>
           </tbody>
         </table>
+        </div></div></div>
       </div>
     </div>
   </div>

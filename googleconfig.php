@@ -8,14 +8,14 @@ $client = new Google\Client();
 // GOOGLE OAUTH CREDENTIALS
 // =====================================================
 
-$client->setClientId('255687396164-uv80hsj0812ujka6dmv70staj1ulnslr.apps.googleusercontent.com');
+$client->setClientId(getenv('GOOGLE_CLIENT_ID') ?: '255687396164-9ag3a2n8phjnj1a9sla9i1ohaqquk5m8.apps.googleusercontent.com');
 
-$client->setClientSecret('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');
+$client->setClientSecret(getenv('GOOGLE_CLIENT_SECRET') ?: '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');
 
 // IMPORTANT:
 // This must exactly match the URI in Google Cloud Console.
 $client->setRedirectUri(
-    'http://localhost/redstar/google-callback.php'
+    getenv('GOOGLE_REDIRECT_URI') ?: 'http://localhost/RedStar/google_callback.php'
 );
 
 // =====================================================

@@ -1,38 +1,125 @@
 <?php
 session_start();
 include("db.php");
+include_once("schema_helpers.php");
+include_once("mail_helper.php");
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Customer') {
     header("Location: login.php");
     exit();
 }
 
+ensureRepairAutomationSchema($conn);
+ensureStripeSchema($conn);
+
+function getAutomaticWarrantyStatus(array $bike): string
+{
+    if ($bike['warranty_status'] !== 'Active') {
+        return 'Invalid';
+    }
+
+    $expiresAt = strtotime($bike['purchase_date'] . ' +' . intval($bike['warranty_period']) . ' months');
+    return $expiresAt !== false && $expiresAt >= strtotime(date('Y-m-d')) ? 'Valid' : 'Invalid';
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $customer_id = intval($_SESSION['user_id']);
     $service = trim($_POST['service_type'] ?? 'Repair');
+    $service = in_array($service, ['Repair', 'Maintenance'], true) ? $service : 'Repair';
     $preferred_date = $_POST['preferred_date'] ?? null;
     $time_slot = $_POST['time_slot'] ?? '';
-    $model = trim(($_POST['brand'] ?? '') . ' ' . ($_POST['model'] ?? ''));
     $issue = trim($_POST['issue_description'] ?? '');
-    $warranty = $_POST['warranty_request'] ?? 'No Warranty';
-    $warranty_status = ($warranty === "Under Warranty") ? "Valid" : "Invalid";
+    $warranty_id = intval($_POST['warranty_id'] ?? 0);
+    $technician_id = intval($_POST['technician_id'] ?? 0);
+
+    if ($warranty_id <= 0 || $technician_id <= 0 || $issue === '' || empty($preferred_date) || $time_slot === '') {
+        header("Location: customerbookrepair.php?error=incomplete");
+        exit();
+    }
+
+    $technicianStmt = $conn->prepare("SELECT user_id FROM users WHERE user_id = ? AND role = 'Technician' LIMIT 1");
+    $technicianStmt->bind_param("i", $technician_id);
+    $technicianStmt->execute();
+    if (!$technicianStmt->get_result()->fetch_assoc()) {
+        header("Location: customerbookrepair.php?error=invalid_technician");
+        exit();
+    }
+
+    $bikeStmt = $conn->prepare("
+        SELECT warranty_id, ebike_model, purchase_date, warranty_period, warranty_status
+        FROM warranty_records
+        WHERE warranty_id = ? AND customer_id = ?
+        LIMIT 1
+    ");
+    $bikeStmt->bind_param("ii", $warranty_id, $customer_id);
+    $bikeStmt->execute();
+    $bike = $bikeStmt->get_result()->fetch_assoc();
+
+    if (!$bike) {
+        header("Location: customerbookrepair.php?error=invalid_ebike");
+        exit();
+    }
+
+    $model = $bike['ebike_model'];
+    $warranty_status = getAutomaticWarrantyStatus($bike);
+    $amount = 0.00;
+    $payment_status = 'Pending';
     $tracking = 'RS-' . date('YmdHis') . '-' . $customer_id;
-    $description = trim($model . "\n" . $issue . "\nPreferred time: " . $time_slot);
+    $description = trim(
+        "E-bike: " . $model .
+        "\nIssue: " . $issue .
+        "\nPreferred time: " . $time_slot .
+        "\nWarranty: " . $warranty_status .
+        "\nRepair cost: Pending technician assessment"
+    );
+
+    $customerStmt = $conn->prepare("SELECT name, email FROM users WHERE user_id = ? LIMIT 1");
+    $customerStmt->bind_param("i", $customer_id);
+    $customerStmt->execute();
+    $customer = $customerStmt->get_result()->fetch_assoc() ?: [];
 
     $stmt = $conn->prepare("
         INSERT INTO repair_bookings
-        (customer_id, service_type, preferred_date, description, booking_status, tracking_number, warranty_status, payment_status)
-        VALUES (?, ?, ?, ?, 'Pending', ?, ?, 'Pending')
+        (customer_id, warranty_id, service_type, preferred_date, preferred_time, description, booking_status, tracking_number, warranty_status, estimated_amount, payment_status)
+        VALUES (?, ?, ?, ?, ?, ?, 'Pending', ?, ?, ?, ?)
     ");
-    $stmt->bind_param("isssss", $customer_id, $service, $preferred_date, $description, $tracking, $warranty_status);
+    $stmt->bind_param("iissssssds", $customer_id, $warranty_id, $service, $preferred_date, $time_slot, $description, $tracking, $warranty_status, $amount, $payment_status);
     $stmt->execute();
+    $booking_id = $conn->insert_id;
 
     $repairStmt = $conn->prepare("
-        INSERT INTO repairs (customer_id, ebike_model, issue_description, repair_status, amount)
-        VALUES (?, ?, ?, 'Pending', 0.00)
+        INSERT INTO repairs (booking_id, customer_id, technician_id, ebike_model, issue_description, repair_status, warranty_status, amount)
+        VALUES (?, ?, ?, ?, ?, 'Pending', ?, ?)
     ");
-    $repairStmt->bind_param("iss", $customer_id, $model, $issue);
+    $repairStmt->bind_param("iiisssd", $booking_id, $customer_id, $technician_id, $model, $issue, $warranty_status, $amount);
     $repairStmt->execute();
+
+    if ($warranty_status === 'Invalid' && $bike['warranty_status'] === 'Active') {
+        $expireStmt = $conn->prepare("UPDATE warranty_records SET warranty_status = 'Expired' WHERE warranty_id = ?");
+        $expireStmt->bind_param("i", $warranty_id);
+        $expireStmt->execute();
+    }
+
+    if (filter_var($customer['email'] ?? '', FILTER_VALIDATE_EMAIL)) {
+        $safeName = htmlspecialchars($customer['name'] ?? 'Customer', ENT_QUOTES, 'UTF-8');
+        $safeModel = htmlspecialchars($model, ENT_QUOTES, 'UTF-8');
+        $safeIssue = htmlspecialchars($issue, ENT_QUOTES, 'UTF-8');
+        $safeDate = htmlspecialchars((string)$preferred_date, ENT_QUOTES, 'UTF-8');
+        $safeTime = htmlspecialchars($time_slot, ENT_QUOTES, 'UTF-8');
+        $safeWarranty = htmlspecialchars($warranty_status, ENT_QUOTES, 'UTF-8');
+        $emailSent = sendFixTrackEmail(
+            $customer['email'],
+            (string)($customer['name'] ?? 'Customer'),
+            'FixTrack booking confirmation #' . $booking_id,
+            "<h2>Repair booking received</h2><p>Hello {$safeName},</p><p>Your FixTrack repair booking has been received.</p><table cellpadding='6'><tr><td><strong>Booking</strong></td><td>#{$booking_id}</td></tr><tr><td><strong>Tracking</strong></td><td>{$tracking}</td></tr><tr><td><strong>E-bike</strong></td><td>{$safeModel}</td></tr><tr><td><strong>Issue</strong></td><td>{$safeIssue}</td></tr><tr><td><strong>Preferred schedule</strong></td><td>{$safeDate} - {$safeTime}</td></tr><tr><td><strong>Warranty check</strong></td><td>{$safeWarranty}</td></tr><tr><td><strong>Payment</strong></td><td>Pending technician assessment</td></tr></table><p>We will notify you when the technician sets the repair price.</p>",
+            "Repair booking #{$booking_id}\nTracking: {$tracking}\nE-bike: {$model}\nIssue: {$issue}\nSchedule: {$preferred_date} - {$time_slot}\nWarranty: {$warranty_status}\nPayment: Pending technician assessment"
+        );
+        if ($emailSent) {
+            $emailStmt = $conn->prepare("UPDATE repair_bookings SET booking_email_sent_at = NOW() WHERE booking_id = ?");
+            $emailStmt->bind_param("i", $booking_id);
+            $emailStmt->execute();
+        }
+    }
 
     header("Location: customerdashboard.php?booking=success");
     exit();

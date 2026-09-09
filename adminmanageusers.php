@@ -17,16 +17,23 @@ $result = $conn->query($sql);
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Manage Users - Red Star</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manage Users - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
   <?php include("navbaradmin.php"); ?>
 
   <div class="container mt-4">
-    <h3 class="mb-4">Manage Users</h3>
+    <div class="page-hero">
+      <h3 class="mb-1">Manage Users</h3>
+      <p>Review customer, technician, cashier, and admin accounts.</p>
+    </div>
 
-    <table class="table table-hover table-bordered bg-white shadow-sm">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="table-responsive">
+    <table class="table table-hover table-bordered mb-0">
       <thead class="table-danger">
         <tr>
           <th>User ID</th>
@@ -71,6 +78,9 @@ $result = $conn->query($sql);
         <?php endif; ?>
       </tbody>
     </table>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>
