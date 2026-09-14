@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("db.php");
+include_once("dashboard_alerts_logs.php");
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Technician') {
     header("Location: login.php");
@@ -98,6 +99,7 @@ $queue = $conn->query("
       <h3 class="mb-1">Technician Dashboard</h3>
       <p>Assigned repair workload, overdue jobs, and this week's activity.</p>
     </div>
+    <?php renderDashboardAlerts($conn, $_SESSION['role'], (int)$_SESSION['user_id']); ?>
 
     <div class="row g-3 mb-4">
       <?php
@@ -167,9 +169,37 @@ $queue = $conn->query("
     const weekCounts = <?= json_encode($weekCounts, JSON_NUMERIC_CHECK) ?>;
     const axisStyle = { grid: { color: 'rgba(108,117,125,.25)', borderDash: [3, 3] }, ticks: { color: '#6c757d' } };
     const weeklyTechChart = new Chart(document.getElementById('weeklyTechChart'), {
-      type: 'bar',
-      data: { labels: weekLabels, datasets: [{ label: 'Repairs', data: weekCounts, backgroundColor: 'rgba(214,40,40,.7)', borderRadius: 8, maxBarThickness: 36 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0 } } } }
+      type: 'line',
+      data: {
+        labels: weekLabels,
+        datasets: [{
+          label: 'Assigned Repairs',
+          data: weekCounts,
+          borderColor: '#d62828',
+          backgroundColor: 'rgba(214,40,40,.13)',
+          borderWidth: 3,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointBackgroundColor: '#fff',
+          pointBorderColor: '#d62828',
+          pointBorderWidth: 3,
+          tension: .38,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { intersect: false, mode: 'index' },
+        plugins: {
+          legend: { display: true, position: 'bottom', labels: { usePointStyle: true, boxWidth: 10 } },
+          tooltip: { callbacks: { label: context => ` ${context.parsed.y} assigned repair${context.parsed.y === 1 ? '' : 's'}` } }
+        },
+        scales: {
+          x: axisStyle,
+          y: { ...axisStyle, beginAtZero: true, suggestedMax: Math.max(5, ...weekCounts) + 1, ticks: { ...axisStyle.ticks, precision: 0, stepSize: 1 } }
+        }
+      }
     });
 
     async function refreshWeeklyTechChart() {

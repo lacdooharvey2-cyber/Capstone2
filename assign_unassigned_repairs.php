@@ -5,7 +5,7 @@ require_once __DIR__ . '/db.php';
 
 if (PHP_SAPI !== 'cli') {
     session_start();
-    if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'Admin') {
+    if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
         http_response_code(403);
         exit('Admin access required.');
     }

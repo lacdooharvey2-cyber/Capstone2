@@ -2,8 +2,9 @@
 session_start();
 include("db.php");
 include_once("schema_helpers.php");
+include_once("activity_log_helper.php");
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
     header("Location: login.php");
     exit();
 }
@@ -29,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $bookingStmt = $conn->prepare("UPDATE repair_bookings SET warranty_status=?, estimated_amount=?, payment_status=IF(? > 0, payment_status, 'Paid') WHERE booking_id=(SELECT booking_id FROM repairs WHERE repair_id=? LIMIT 1)");
         $bookingStmt->bind_param("sddi", $warranty_status, $amount, $amount, $repair_id);
         $bookingStmt->execute();
+        logActivity($conn, (int)$_SESSION['user_id'], (string)$_SESSION['role'], 'Repair edited', 'Updated repair #' . $repair_id . ' from the admin panel.', 'repair', $repair_id);
 
         header("Location: adminrepairs.php?updated=1");
         exit();

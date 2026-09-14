@@ -168,6 +168,10 @@ for ($i = 0; $i < 30; $i++) {
       data: { labels: dailyRevenue.map(row => row.day), datasets: [{ label: 'Revenue', data: dailyRevenue.map(row => row.total), borderColor: '#0d6efd', backgroundColor: 'rgba(13,110,253,.12)', tension: .35, fill: true, pointRadius: 2 }] },
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true, ticks: { callback: value => 'PHP ' + Number(value).toLocaleString('en-PH') } } } }
     });
+
+    window.setInterval(() => {
+      if (document.visibilityState === 'visible') window.location.reload();
+    }, 15000);
   </script>
 </body>
 </html>

@@ -17,6 +17,7 @@
         <li class="nav-item"><a class="nav-link" href="adminwarranties.php"><i class="bi bi-shield-check me-1"></i>Warranty</a></li>
         <li class="nav-item"><a class="nav-link" href="adminmessages.php"><i class="bi bi-chat-dots me-1"></i>Messages</a></li>
         <li class="nav-item"><a class="nav-link" href="adminanalytics.php"><i class="bi bi-graph-up-arrow me-1"></i>Analytics</a></li>
+        <li class="nav-item"><a class="nav-link" href="activitylogs.php"><i class="bi bi-clock-history me-1"></i>Logs</a></li>
         <li class="nav-item"><a class="nav-link" href="logout.php"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>
       </ul>
     </div>

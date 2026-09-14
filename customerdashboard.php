@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("db.php");
+include_once("dashboard_alerts_logs.php");
 
 // Guard: only allow Customers
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Customer') {
@@ -33,7 +34,7 @@ $myEbikes = $conn->query("
 
 $recentRepairs = $conn->query("
   SELECT r.ebike_model, r.issue_description, r.repair_status, r.created_at,
-         rb.booking_id, rb.payment_status,
+         r.repair_id, rb.booking_id, rb.payment_status,
          COALESCE(NULLIF(rb.estimated_amount, 0), r.amount, 0) AS payable_amount
   FROM repairs r
   LEFT JOIN repair_bookings rb ON rb.booking_id = r.booking_id
@@ -109,6 +110,7 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
       <h2 class="mb-1">Welcome, FixTrack Customer</h2>
       <p>Book repairs, check warranty coverage, and track your e-bike service in one place.</p>
     </div>
+    <?php renderDashboardAlerts($conn, $_SESSION['role'], (int)$_SESSION['user_id']); ?>
 
     <?php if (($_GET['payment'] ?? '') === 'success'): ?>
       <div class="alert alert-success d-flex align-items-center gap-2" role="alert"><i class="bi bi-check-circle-fill"></i> Payment received. Your repair booking is now marked as paid.</div>
@@ -200,7 +202,7 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
     <div class="portal-panel p-4 mb-4">
       <div class="table-responsive">
         <table class="table table-hover mb-0">
-          <thead><tr><th>E-bike</th><th>Problem</th><th>Status</th><th>Date</th><th>Payment</th></tr></thead>
+          <thead><tr><th>E-bike</th><th>Problem</th><th>Status</th><th>Date</th><th>Payment</th><th>Details</th></tr></thead>
           <tbody>
             <?php if ($recentRepairs && $recentRepairs->num_rows > 0): while($repair = $recentRepairs->fetch_assoc()): ?>
               <tr>
@@ -209,10 +211,12 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
                 <td><span class="badge bg-<?= $repair['repair_status'] === 'Completed' ? 'success' : ($repair['repair_status'] === 'In Progress' ? 'primary' : 'warning') ?>"><?= htmlspecialchars($repair['repair_status']) ?></span></td>
                 <td><?= htmlspecialchars($repair['created_at']) ?></td>
                 <td>
-                  <?php if ((float)($repair['payable_amount'] ?? 0) > 0 && ($repair['payment_status'] ?? 'Pending') !== 'Paid'): ?>
-                    <form action="create_checkout_session.php" method="post">
+                  <?php if ((int)($repair['booking_id'] ?? 0) > 0 && (float)($repair['payable_amount'] ?? 0) > 0 && ($repair['payment_status'] ?? 'Pending') !== 'Paid'): ?>
+                    <form action="create_netcorepay_payment.php" method="post" class="netcorepay-payment-form">
                       <input type="hidden" name="booking_id" value="<?= htmlspecialchars((string)$repair['booking_id']) ?>">
-                      <button class="btn btn-sm btn-danger" type="submit"><i class="bi bi-credit-card me-1"></i>Pay PHP <?= number_format((float)$repair['payable_amount'], 2) ?></button>
+                      <button class="btn btn-sm btn-danger" type="submit" data-payment-button>
+                        <i class="bi bi-credit-card me-1"></i>Pay PHP <?= number_format((float)$repair['payable_amount'], 2) ?>
+                      </button>
                     </form>
                   <?php elseif ((float)($repair['payable_amount'] ?? 0) > 0): ?>
                     <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Paid</span>
@@ -220,9 +224,10 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
                     <span class="badge bg-info text-dark"><i class="bi bi-shield-check me-1"></i>Covered</span>
                   <?php endif; ?>
                 </td>
+                <td><a href="repairdetails.php?id=<?= urlencode((string)$repair['repair_id']) ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye me-1"></i>View Details</a></td>
               </tr>
             <?php endwhile; else: ?>
-              <tr><td colspan="5" class="text-center text-muted">No repair history yet.</td></tr>
+              <tr><td colspan="6" class="text-center text-muted">No repair history yet.</td></tr>
             <?php endif; ?>
           </tbody>
         </table>
@@ -243,5 +248,15 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.querySelectorAll('.netcorepay-payment-form').forEach((form) => {
+      form.addEventListener('submit', () => {
+        const button = form.querySelector('[data-payment-button]');
+        if (!button) return;
+        button.disabled = true;
+                        button.innerHTML = '<span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>Redirecting to NetCorePay...';
+      });
+    });
+  </script>
 </body>
 </html>

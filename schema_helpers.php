@@ -62,4 +62,27 @@ function ensureStripeSchema(mysqli $conn): void
     }
 }
 
+function ensureXenditSchema(mysqli $conn): void
+{
+    if (!columnExists($conn, 'repair_bookings', 'xendit_payment_session_id')) {
+        $conn->query("ALTER TABLE repair_bookings ADD COLUMN xendit_payment_session_id VARCHAR(255) NULL AFTER stripe_checkout_session_id");
+    }
+
+    if (!columnExists($conn, 'repair_bookings', 'xendit_payment_request_id')) {
+        $conn->query("ALTER TABLE repair_bookings ADD COLUMN xendit_payment_request_id VARCHAR(255) NULL AFTER xendit_payment_session_id");
+    }
+
+    if (!columnExists($conn, 'repair_bookings', 'xendit_payment_id')) {
+        $conn->query("ALTER TABLE repair_bookings ADD COLUMN xendit_payment_id VARCHAR(255) NULL AFTER xendit_payment_session_id");
+    }
+}
+
+function ensureNetcorepaySchema(mysqli $conn): void
+{
+    ensureXenditSchema($conn);
+    if (!columnExists($conn, 'repair_bookings', 'netcorepay_payment_id')) {
+        $conn->query("ALTER TABLE repair_bookings ADD COLUMN netcorepay_payment_id VARCHAR(255) NULL AFTER xendit_payment_id");
+    }
+}
+
 ?>

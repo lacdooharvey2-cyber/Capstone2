@@ -2,8 +2,9 @@
 session_start();
 include("db.php");
 include_once("schema_helpers.php");
+include_once("dashboard_alerts_logs.php");
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
     header("Location: login.php");
     exit();
 }
@@ -118,12 +119,15 @@ foreach ($brandTotals as $brand => $total) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    .kpi-card { min-height: 128px; }
+    .admin-kpi-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .kpi-card { min-height: 142px; }
     .kpi-body { align-items: flex-start; height: 100%; padding: 18px; position: relative; }
     .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
-    .kpi-value { font-size: clamp(1.05rem, 1.8vw, 1.8rem); font-weight: 800; line-height: 1; margin-bottom: .55rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .kpi-value { font-size: clamp(1.1rem, 2vw, 1.8rem); font-weight: 800; line-height: 1.08; margin-bottom: .55rem; overflow-wrap: anywhere; }
     .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
     .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
+    @media (max-width: 900px) { .admin-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 575px) { .admin-kpi-grid { grid-template-columns: 1fr; } }
     .chart-card { min-height: 340px; padding: 20px; }
     .chart-card h6 { font-size: .95rem; margin-bottom: 4px; }
     .chart-subtitle { color: #6c757d; font-size: .78rem; margin-bottom: 18px; }
@@ -137,8 +141,9 @@ foreach ($brandTotals as $brand => $total) {
       <h3 class="mb-1">Admin Dashboard</h3>
       <p>Repair queue, revenue, turnaround, cancellation, and brand activity overview.</p>
     </div>
+    <?php renderDashboardAlerts($conn, $_SESSION['role'], (int)$_SESSION['user_id']); ?>
 
-    <div class="row g-3 mb-4">
+    <div class="admin-kpi-grid mb-4">
       <?php
       $cards = [
         ['Total Repairs', $totalRepairs, 'All repair tickets', 'text-danger', 'bi-tools'],
@@ -150,7 +155,7 @@ foreach ($brandTotals as $brand => $total) {
       ];
       foreach ($cards as $card):
       ?>
-        <div class="col-md-4 col-xl-2">
+        <div>
           <div class="card kpi-card <?= $card[3] ?> shadow-sm h-100"><div class="card-body kpi-body">
             <div>
               <p class="kpi-label"><?= htmlspecialchars($card[0]) ?></p>
@@ -217,6 +222,10 @@ foreach ($brandTotals as $brand => $total) {
       },
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0 } } } }
     });
+
+    window.setInterval(() => {
+      if (document.visibilityState === 'visible') window.location.reload();
+    }, 15000);
   </script>
 </body>
 </html>

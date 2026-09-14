@@ -84,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <style>
     :root { --brand-red: #dc3545; --brand-dark: #1f2937; --brand-muted: #6c757d; }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       min-height: 100vh;
       margin: 0;
@@ -157,6 +158,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .register-point:nth-child(2) { animation-delay: .12s; }
     .register-point:nth-child(3) { animation-delay: .2s; }
     .register-form { padding: 42px 46px; animation: reveal .7s .15s both; }
+    .register-form .form-section { animation: reveal .6s both; }
+    .register-form .form-section:nth-child(2) { animation-delay: .08s; }
+    .register-form .form-section:nth-child(3) { animation-delay: .16s; }
+    .register-form .form-section:nth-child(4) { animation-delay: .24s; }
+    .register-form > form > .mt-4 { animation: reveal .6s .32s both; }
+    .register-form > .mt-4 { animation: reveal .6s .4s both; }
     .form-heading { margin-bottom: 4px; font-size: 30px; font-weight: 800; }
     .form-subtitle { color: var(--brand-muted); margin-bottom: 28px; }
     .form-section {
@@ -167,7 +174,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .form-section-title { color: #842029; font-size: .9rem; font-weight: 800; letter-spacing: .02em; margin-bottom: 14px; }
     .form-label { color: #495057; font-size: .88rem; font-weight: 700; margin-bottom: 6px; }
     .form-control, .form-select { min-height: 44px; border-radius: 8px; }
-    .form-control:focus, .form-select:focus { border-color: var(--brand-red); box-shadow: 0 0 0 .22rem rgba(220,53,69,.14); }
+    .form-control, .form-select { transition: border-color .28s ease, box-shadow .28s ease, transform .28s cubic-bezier(.22,1,.36,1); }
+    .form-control:focus, .form-select:focus { border-color: var(--brand-red); box-shadow: 0 0 0 .22rem rgba(220,53,69,.14); transform: translateY(-1px); }
     .btn-danger { min-height: 46px; border-radius: 8px; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease; }
     .btn-danger:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(220,53,69,.22); }
     .login-link { color: var(--brand-red); font-weight: 700; text-decoration: none; }
@@ -197,6 +205,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <section class="register-panel">
       <div class="row g-0">
         <div class="col-lg-4 register-brand">
+          <div>
+            <div class="brand-mark"><i class="bi bi-lightning-charge-fill"></i></div>
+          </div>
         </div>
         <div class="col-lg-8 register-form">
           <div>

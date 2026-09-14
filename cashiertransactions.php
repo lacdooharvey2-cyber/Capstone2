@@ -2,6 +2,7 @@
 session_start();
 include("db.php");
 include_once("schema_helpers.php");
+include_once("activity_log_helper.php");
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Cashier') {
     header("Location: login.php");
@@ -16,14 +17,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'], $_POST[
     $stmt = $conn->prepare("UPDATE repair_bookings SET payment_status=? WHERE booking_id=?");
     $stmt->bind_param("si", $payment_status, $booking_id);
     $stmt->execute();
+    logActivity($conn, (int)$_SESSION['user_id'], 'Cashier', 'Payment status updated', 'Marked booking #' . $booking_id . ' as ' . $payment_status . '.', 'booking', $booking_id);
     header("Location: cashiertransactions.php?updated=1");
     exit();
 }
 
 $bookings = $conn->query("
-  SELECT rb.booking_id, rb.customer_id, u.name AS customer_name, rb.service_type,
+  SELECT rb.booking_id, r.repair_id, rb.customer_id, u.name AS customer_name, rb.service_type,
          rb.preferred_date, rb.warranty_status, rb.estimated_amount, rb.booking_status, rb.payment_status, rb.created_at
   FROM repair_bookings rb
+  LEFT JOIN repairs r ON r.booking_id = rb.booking_id
   LEFT JOIN users u ON u.user_id = rb.customer_id
   ORDER BY rb.created_at DESC
 ");
@@ -46,7 +49,7 @@ $bookings = $conn->query("
     <?php if (isset($_GET['updated'])): ?><div class="alert alert-success">Payment status updated.</div><?php endif; ?>
     <div class="card shadow-sm"><div class="card-body"><div class="table-responsive">
     <table class="table table-hover table-bordered mb-0">
-      <thead class="table-danger"><tr><th>Booking ID</th><th>Customer</th><th>Service</th><th>Preferred Date</th><th>Warranty</th><th>Amount</th><th>Booking Status</th><th>Payment</th><th>Action</th></tr></thead>
+      <thead class="table-danger"><tr><th>Booking ID</th><th>Customer</th><th>Service</th><th>Preferred Date</th><th>Warranty</th><th>Amount</th><th>Booking Status</th><th>Payment</th><th>Details</th><th>Action</th></tr></thead>
       <tbody>
         <?php if ($bookings && $bookings->num_rows > 0): while($row = $bookings->fetch_assoc()): ?>
           <tr>
@@ -58,6 +61,7 @@ $bookings = $conn->query("
             <td>PHP <?= number_format((float)$row['estimated_amount'], 2) ?></td>
             <td><?= htmlspecialchars($row['booking_status']) ?></td>
             <td><span class="badge bg-<?= $row['payment_status'] === 'Paid' ? 'success' : 'warning' ?>"><?= htmlspecialchars($row['payment_status']) ?></span></td>
+            <td><?= !empty($row['repair_id']) ? '<a href="repairdetails.php?id=' . urlencode((string)$row['repair_id']) . '" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye me-1"></i>View Details</a>' : '<span class="text-muted">No repair</span>' ?></td>
             <td>
               <form method="post" class="d-flex gap-2">
                 <input type="hidden" name="booking_id" value="<?= htmlspecialchars($row['booking_id']) ?>">
@@ -70,7 +74,7 @@ $bookings = $conn->query("
             </td>
           </tr>
         <?php endwhile; else: ?>
-          <tr><td colspan="9" class="text-center text-muted">No payment records found.</td></tr>
+          <tr><td colspan="10" class="text-center text-muted">No payment records found.</td></tr>
         <?php endif; ?>
       </tbody>
     </table>

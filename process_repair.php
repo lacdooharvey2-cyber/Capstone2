@@ -3,6 +3,7 @@ session_start();
 include("db.php");
 include_once("schema_helpers.php");
 include_once("mail_helper.php");
+include_once("activity_log_helper.php");
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Customer') {
     header("Location: login.php");
@@ -93,6 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     ");
     $repairStmt->bind_param("iiisssd", $booking_id, $customer_id, $technician_id, $model, $issue, $warranty_status, $amount);
     $repairStmt->execute();
+    logActivity($conn, $customer_id, 'Customer', 'Repair booked', 'Created repair booking #' . $booking_id . ' for ' . $model . '.', 'repair', (int)$conn->insert_id);
 
     if ($warranty_status === 'Invalid' && $bike['warranty_status'] === 'Active') {
         $expireStmt = $conn->prepare("UPDATE warranty_records SET warranty_status = 'Expired' WHERE warranty_id = ?");

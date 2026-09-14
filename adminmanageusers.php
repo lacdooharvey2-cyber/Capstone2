@@ -3,7 +3,7 @@ session_start();
 include("db.php");
 
 // Guard: only allow Admins
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
     header("Location: login.php");
     exit();
 }

@@ -7,6 +7,51 @@ if (!is_readable($csvPath)) {
     die("CSV file not found: " . htmlspecialchars($csvPath));
 }
 
+function cleanDatasetText(?string $value, bool $titleCase = false): string
+{
+    $value = trim((string)$value);
+    $value = str_replace(
+        ['Ã±', 'Ã‘', 'â€“', 'â€”', 'â€™', 'â€œ', 'â€�', "\xC2\xA0"],
+        ['ñ', 'Ñ', '-', '-', "'", '"', '"', ' '],
+        $value
+    );
+    $value = preg_replace('/\s+/', ' ', $value) ?? $value;
+
+    if ($titleCase && $value !== '') {
+        if (function_exists('mb_convert_case') && function_exists('mb_strtolower')) {
+            $value = mb_convert_case(mb_strtolower($value, 'UTF-8'), MB_CASE_TITLE, 'UTF-8');
+        } else {
+            $value = ucwords(strtolower($value));
+        }
+    }
+
+    return $value;
+}
+
+function cleanDatasetBrand(?string $value): string
+{
+    $brand = strtoupper(cleanDatasetText($value));
+    if (strpos($brand, 'KUDA') !== false || $brand === 'KDA') {
+        return 'KUDA';
+    }
+    if (strpos($brand, 'NWOW') !== false) {
+        return 'NWOW';
+    }
+    return $brand !== '' ? $brand : 'Unknown';
+}
+
+function cleanDatasetIssue(?string $value): ?string
+{
+    $issue = cleanDatasetText($value, true);
+    return $issue !== '' ? $issue : null;
+}
+
+function cleanDatasetAge(?string $value): int
+{
+    $age = (int)preg_replace('/[^\d]/', '', (string)$value);
+    return max(0, min($age, 120));
+}
+
 $conn->query("
 CREATE TABLE IF NOT EXISTS ebike_synthetic_dataset (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -45,17 +90,29 @@ $headers = fgetcsv($handle);
 $imported = 0;
 
 while (($row = fgetcsv($handle)) !== false) {
+    if (count($row) !== count($headers)) {
+        continue;
+    }
+
     $data = array_combine($headers, $row);
-    $datasetUserId = $data['User ID'];
-    $brand = $data['Brand'];
-    $model = $data['Model'];
-    $name = $data['Name'];
-    $age = (int)$data['Age'];
-    $address = $data['Address'];
-    $numberOfIssues = (int)$data['Number of Issues'];
-    $issue1 = $data['Issue 1'] !== '' ? $data['Issue 1'] : null;
-    $issue2 = $data['Issue 2'] !== '' ? $data['Issue 2'] : null;
-    $issue3 = $data['Issue 3'] !== '' ? $data['Issue 3'] : null;
+    if ($data === false) {
+        continue;
+    }
+
+    $datasetUserId = strtoupper(cleanDatasetText($data['User ID'] ?? ''));
+    if ($datasetUserId === '') {
+        continue;
+    }
+
+    $brand = cleanDatasetBrand($data['Brand'] ?? '');
+    $model = strtoupper(cleanDatasetText($data['Model'] ?? ''));
+    $name = cleanDatasetText($data['Name'] ?? '', true);
+    $age = cleanDatasetAge($data['Age'] ?? '');
+    $address = cleanDatasetText($data['Address'] ?? '', true);
+    $issue1 = cleanDatasetIssue($data['Issue 1'] ?? '');
+    $issue2 = cleanDatasetIssue($data['Issue 2'] ?? '');
+    $issue3 = cleanDatasetIssue($data['Issue 3'] ?? '');
+    $numberOfIssues = count(array_filter([$issue1, $issue2, $issue3]));
 
     $stmt->bind_param(
         "ssssisisss",

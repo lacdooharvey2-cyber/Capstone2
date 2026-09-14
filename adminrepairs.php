@@ -4,7 +4,7 @@ include("db.php");
 include_once("schema_helpers.php");
 
 // Guard: only allow Admins
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
     header("Location: login.php");
     exit();
 }
@@ -80,6 +80,7 @@ $result = $conn->query($sql);
               </td>
               <td><?= htmlspecialchars($row['created_at']) ?></td>
               <td>
+                <a href="repairdetails.php?id=<?= urlencode($row['repair_id']) ?>" class="btn btn-sm btn-outline-secondary">View Details</a>
                 <a href="editrepair.php?id=<?= urlencode($row['repair_id']) ?>" class="btn btn-sm btn-primary">Edit</a>
                 <a href="deleterepair.php?id=<?= urlencode($row['repair_id']) ?>" 
                    class="btn btn-sm btn-danger"

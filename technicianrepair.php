@@ -90,6 +90,7 @@ $warranties = $conn->query("
                   <td><?= (float)$r['amount'] > 0 ? 'PHP ' . number_format((float)$r['amount'], 2) : 'Pending' ?></td>
                   <td><span class="badge bg-<?php echo $r['repair_status']=='Completed'?'success':($r['repair_status']=='In Progress'?'primary':'warning'); ?>"><?= htmlspecialchars($r['repair_status']) ?></span></td>
                   <td>
+                    <a href="repairdetails.php?id=<?= urlencode($r['repair_id']) ?>" class="btn btn-sm btn-outline-secondary mb-1">View Details</a>
                     <form method="post" action="technicianupdaterepair.php" class="d-flex gap-2">
                       <input type="hidden" name="repair_id" value="<?= htmlspecialchars($r['repair_id']) ?>">
                       <input type="number" class="form-control form-control-sm" name="amount" min="0" step="0.01" value="<?= htmlspecialchars($r['amount']) ?>" aria-label="Repair cost">

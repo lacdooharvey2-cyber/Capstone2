@@ -6,6 +6,7 @@ require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/schema_helpers.php';
 require_once __DIR__ . '/stripe_config.php';
 require_once __DIR__ . '/mail_helper.php';
+require_once __DIR__ . '/activity_log_helper.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'Customer') {
@@ -42,6 +43,7 @@ try {
     ");
     $update->bind_param('sssii', $paymentIntentId, $session->id, $invoiceId, $bookingId, $customerId);
     $update->execute();
+    logActivity($conn, $customerId, 'Customer', 'Stripe payment completed', 'Completed Stripe payment for booking #' . $bookingId . '.', 'booking', $bookingId);
 
     $bookingStmt = $conn->prepare("
         SELECT rb.estimated_amount, rb.receipt_email_sent_at,

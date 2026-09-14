@@ -19,7 +19,7 @@ $contacts = $conn->query("
              OR (sender_id=$user_id AND receiver_id=u.user_id)
           ORDER BY sent_at DESC LIMIT 1) AS last_status
   FROM users u
-  WHERE u.user_id <> $user_id AND u.role IN ('Admin','Customer','Technician')
+  WHERE u.user_id <> $user_id AND u.role IN ('Admin','SuperAdmin','Customer','Technician')
   ORDER BY u.role, u.name
 ");
 ?>

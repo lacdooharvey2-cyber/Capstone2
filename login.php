@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("db.php");
+include_once("activity_log_helper.php");
 
 $error = "";
 
@@ -34,9 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['custom_id'] = $row['custom_id'];
             $_SESSION['role'] = $row['role'];
+            logActivity($conn, (int)$row['user_id'], (string)$row['role'], 'Login', 'Signed in to FixTrack.');
 
             switch ($row['role']) {
                 case 'Admin':
+                case 'SuperAdmin':
                     header("Location: admindashboard.php");
                     break;
                 case 'Technician':
@@ -78,6 +81,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     * {
       box-sizing: border-box;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       min-height: 100vh;
@@ -212,6 +217,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       animation: contentReveal .7s .18s both;
     }
 
+    .login-side > * { animation: contentReveal .55s both; }
+    .login-side > *:nth-child(2) { animation-delay: .08s; }
+    .login-side > *:nth-child(3) { animation-delay: .16s; }
+    .login-side > *:nth-child(4) { animation-delay: .24s; }
+    .login-side > *:nth-child(5) { animation-delay: .32s; }
+    .login-side > *:nth-child(6) { animation-delay: .4s; }
+    .login-side form > div { animation: contentReveal .5s both; }
+    .login-side form > div:nth-child(2) { animation-delay: .08s; }
+    .login-side form > button { animation: contentReveal .5s .16s both; }
+
     .login-heading {
       font-size: 30px;
       font-weight: 800;
@@ -238,6 +253,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .form-control:focus {
       border-color: var(--brand-red);
       box-shadow: 0 0 0 .22rem rgba(220, 53, 69, .14);
+    }
+
+    .form-control,
+    .input-group-text,
+    .btn,
+    .small-link,
+    .google-login-btn {
+      transition: border-color .28s ease, color .28s ease, background-color .28s ease, box-shadow .28s ease, transform .28s cubic-bezier(.22,1,.36,1);
     }
 
     .input-group:focus-within .input-group-text {
@@ -362,6 +385,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <section class="auth-panel">
       <div class="row g-0">
         <div class="col-lg-6 brand-side">
+          <div>
+            <div class="brand-mark"><i class="bi bi-lightning-charge-fill"></i></div>
+          </div>
         </div>
 
         <div class="col-lg-6 login-side">
@@ -401,6 +427,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <i class="bi bi-box-arrow-in-right me-1"></i> Login
             </button>
           </form>
+
+          <div class="text-center mb-2">
+            <a href="forgot_password.php" class="small text-danger text-decoration-none">Forgot password?</a>
+          </div>
 
           <div class="divider my-3">
             <span>or</span>

@@ -2,8 +2,9 @@
 session_start();
 include("db.php");
 include_once("schema_helpers.php");
+include_once("dashboard_alerts_logs.php");
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
     header("Location: login.php");
     exit();
 }
@@ -92,12 +93,12 @@ $commonIssues = analyticsRows($conn, "
 ");
 
 $monthlyRevenueRows = analyticsRows($conn, "
-  SELECT DATE_FORMAT(created_at, '%Y-%m') AS month,
+  SELECT DATE_FORMAT(updated_at, '%Y-%m') AS month,
          COALESCE(SUM(CASE WHEN repair_status='Completed' THEN amount ELSE 0 END),0) AS revenue,
          SUM(CASE WHEN repair_status='Completed' THEN 1 ELSE 0 END) AS completed_repairs
   FROM repairs
-  WHERE created_at >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 11 MONTH), '%Y-%m-01')
-  GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+  WHERE updated_at >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 11 MONTH), '%Y-%m-01')
+  GROUP BY DATE_FORMAT(updated_at, '%Y-%m')
   ORDER BY month
 ");
 
@@ -253,15 +254,15 @@ foreach ($chargeTotals as $label => $total) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    .kpi-card { min-height: 128px; }
-    .kpi-row { display: grid; gap: 16px; grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .kpi-card { min-height: 150px; }
+    .kpi-row { display: grid; gap: 22px; grid-template-columns: repeat(1, minmax(0, 1fr)); }
     .kpi-col { min-width: 0; }
     .kpi-card { min-width: 0; }
-    .kpi-body { align-items: flex-start; height: 100%; padding: 18px; position: relative; }
-    .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
-    .kpi-value { font-size: clamp(1.05rem, 1.8vw, 1.8rem); font-weight: 800; line-height: 1; margin-bottom: .55rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .kpi-body { align-items: flex-start; height: 100%; padding: 24px 28px; position: relative; }
+    .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: 1rem; max-width: calc(100% - 58px); min-height: 1.2em; }
+    .kpi-value { font-size: clamp(1.45rem, 2.4vw, 2.1rem); font-weight: 800; line-height: 1.08; margin-bottom: .8rem; max-width: calc(100% - 54px); overflow-wrap: anywhere; }
     .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
+    .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 52px; justify-content: center; position: absolute; right: 22px; top: 22px; width: 52px; }
     .chart-card { min-height: 350px; padding: 20px; }
     .chart-card h6 { font-size: .95rem; margin-bottom: 4px; }
     .chart-subtitle { color: #6c757d; font-size: .78rem; margin-bottom: 18px; }
@@ -271,11 +272,11 @@ foreach ($chargeTotals as $label => $total) {
     @media (min-width: 576px) {
       .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-    @media (min-width: 992px) {
-      .kpi-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    }
+    @media (min-width: 992px) { .kpi-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (min-width: 1200px) {
-      .kpi-row { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+      .kpi-row { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+      .kpi-col:nth-child(-n+4) { grid-column: span 3; }
+      .kpi-col:nth-child(n+5) { grid-column: span 4; }
     }
   </style>
 </head>
@@ -286,6 +287,7 @@ foreach ($chargeTotals as $label => $total) {
       <h3 class="mb-1">Analytics</h3>
       <p>Revenue quality, repair completion, technician performance, and warranty behavior.</p>
     </div>
+    <?php renderDashboardAlerts($conn, $_SESSION['role'], (int)$_SESSION['user_id']); ?>
 
     <div class="kpi-row mb-4">
       <?php
@@ -329,7 +331,7 @@ foreach ($chargeTotals as $label => $total) {
     <div class="row g-3 mb-4">
       <div class="col-lg-8"><div class="card chart-card">
         <h6 class="fw-bold">Monthly Revenue + Completed Repairs</h6>
-        <p class="chart-subtitle">Revenue bars with completed repair line</p>
+        <p class="chart-subtitle">Revenue and completed repair trends by month</p>
         <canvas id="monthlyRevenueChart"></canvas>
       </div></div>
       <div class="col-lg-4"><div class="card chart-card">
@@ -399,14 +401,28 @@ foreach ($chargeTotals as $label => $total) {
       options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ...axisStyle, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0 } }, y: axisStyle } }
     });
     new Chart(document.getElementById('monthlyRevenueChart'), {
+      type: 'bar',
       data: {
         labels: monthlyRevenueTrend.map(row => row.month),
         datasets: [
-          { type: 'bar', label: 'Revenue', data: monthlyRevenueTrend.map(row => row.revenue), backgroundColor: 'rgba(13,110,253,.72)', borderRadius: 8, maxBarThickness: 34, yAxisID: 'y' },
-          { type: 'line', label: 'Completed Repairs', data: monthlyRevenueTrend.map(row => row.completed_repairs), borderColor: '#198754', backgroundColor: 'rgba(25,135,84,.12)', tension: .4, fill: true, pointRadius: 4, yAxisID: 'y1' }
+          { label: 'Revenue', type: 'bar', data: monthlyRevenueTrend.map(row => row.revenue), backgroundColor: 'rgba(13,110,253,.18)', borderColor: 'rgba(13,110,253,.65)', borderWidth: 1, borderRadius: 8, maxBarThickness: 36, order: 2, yAxisID: 'y' },
+          { label: 'Completed Repairs', type: 'line', data: monthlyRevenueTrend.map(row => row.completed_repairs), borderColor: '#d62828', backgroundColor: 'rgba(214,40,40,.12)', borderWidth: 3, pointRadius: 4, pointHoverRadius: 7, pointBackgroundColor: '#fff', pointBorderColor: '#d62828', pointBorderWidth: 3, tension: .4, fill: true, order: 1, yAxisID: 'y1' }
         ]
       },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: legendStyle }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true, position: 'left' }, y1: { ...axisStyle, beginAtZero: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { ...axisStyle.ticks, precision: 0 } } } }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { intersect: false, mode: 'index' },
+        plugins: {
+          legend: legendStyle,
+          tooltip: { callbacks: { label: context => context.dataset.label === 'Revenue' ? ` Revenue: PHP ${Number(context.parsed.y).toLocaleString('en-PH', { minimumFractionDigits: 2 })}` : ` Completed Repairs: ${context.parsed.y}` } }
+        },
+        scales: {
+          x: axisStyle,
+          y: { ...axisStyle, beginAtZero: true, position: 'left', ticks: { ...axisStyle.ticks, callback: value => 'PHP ' + Number(value).toLocaleString('en-PH') } },
+          y1: { ...axisStyle, beginAtZero: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { ...axisStyle.ticks, precision: 0, stepSize: 1 } }
+        }
+      }
     });
     new Chart(document.getElementById('revenueRangeChart'), {
       type: 'bar',
@@ -444,6 +460,10 @@ foreach ($chargeTotals as $label => $total) {
       data: { labels: warrantyPaidBreakdown.map(row => row.label), datasets: [{ data: warrantyPaidBreakdown.map(row => row.total), backgroundColor: ['#198754', '#0d6efd'] }] },
       options: { responsive: true, maintainAspectRatio: false, cutout: '58%', plugins: { legend: legendStyle } }
     });
+
+    window.setInterval(() => {
+      if (document.visibilityState === 'visible') window.location.reload();
+    }, 15000);
   </script>
 </body>
 </html>

@@ -15,6 +15,7 @@
         <li class="nav-item"><a class="nav-link" href="cashiertransactions.php"><i class="bi bi-credit-card me-1"></i>Payments</a></li>
         <li class="nav-item"><a class="nav-link" href="cashierreports.php"><i class="bi bi-file-earmark-bar-graph me-1"></i>Reports</a></li>
         <li class="nav-item"><a class="nav-link" href="cashiermessage.php"><i class="bi bi-chat-dots me-1"></i>Messages</a></li>
+        <li class="nav-item"><a class="nav-link" href="activitylogs.php"><i class="bi bi-clock-history me-1"></i>Logs</a></li>
         <li class="nav-item"><a class="nav-link" href="logout.php"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>
       </ul>
     </div>

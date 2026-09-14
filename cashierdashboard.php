@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("db.php");
+include_once("dashboard_alerts_logs.php");
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Cashier') {
     header("Location: login.php");
@@ -45,6 +46,7 @@ $recentRepairs = $conn->query("
       <h3 class="mb-1">Cashier Dashboard</h3>
       <p>Track paid repairs, pending balances, and daily service revenue.</p>
     </div>
+    <?php renderDashboardAlerts($conn, $_SESSION['role'], (int)$_SESSION['user_id']); ?>
     <div class="row g-3 mb-4">
       <?php
       $cards = [
@@ -76,7 +78,7 @@ $recentRepairs = $conn->query("
         </div>
         <div class="table-responsive">
         <table class="table table-hover table-bordered">
-          <thead class="table-danger"><tr><th>Repair ID</th><th>Customer</th><th>E-Bike</th><th>Amount</th><th>Status</th><th>Updated</th></tr></thead>
+          <thead class="table-danger"><tr><th>Repair ID</th><th>Customer</th><th>E-Bike</th><th>Amount</th><th>Status</th><th>Updated</th><th>Details</th></tr></thead>
           <tbody>
             <?php if ($recentRepairs && $recentRepairs->num_rows > 0): while($row = $recentRepairs->fetch_assoc()): ?>
               <tr>
@@ -86,9 +88,10 @@ $recentRepairs = $conn->query("
                 <td>PHP <?= number_format((float)$row['amount'], 2) ?></td>
                 <td><span class="badge bg-<?= $row['repair_status'] === 'Completed' ? 'success' : 'warning' ?>"><?= htmlspecialchars($row['repair_status']) ?></span></td>
                 <td><?= htmlspecialchars($row['updated_at']) ?></td>
+                <td><a href="repairdetails.php?id=<?= urlencode((string)$row['repair_id']) ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye me-1"></i>View Details</a></td>
               </tr>
             <?php endwhile; else: ?>
-              <tr><td colspan="6" class="text-center text-muted">No repair transactions found.</td></tr>
+              <tr><td colspan="7" class="text-center text-muted">No repair transactions found.</td></tr>
             <?php endif; ?>
           </tbody>
         </table>

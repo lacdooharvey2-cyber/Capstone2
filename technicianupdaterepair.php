@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("db.php");
+include_once("activity_log_helper.php");
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Technician') {
     header("Location: login.php");
@@ -32,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     ");
     $bookingStmt->bind_param("ddi", $amount, $amount, $repair_id);
     $bookingStmt->execute();
+    logActivity($conn, $technician_id, 'Technician', 'Repair updated', 'Updated repair #' . $repair_id . ' to ' . $status . ' with cost PHP ' . number_format($amount, 2) . '.', 'repair', $repair_id);
 
     header("Location: technicianrepair.php?updated=1");
     exit();
