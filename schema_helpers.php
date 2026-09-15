@@ -35,6 +35,78 @@ function ensureRepairAutomationSchema(mysqli $conn): void
     }
 }
 
+function calculatedWarrantyRecordStatus(?string $purchaseDate, int $warrantyPeriod): string
+{
+    if (!$purchaseDate || $warrantyPeriod <= 0) {
+        return 'Expired';
+    }
+
+    $expiresAt = strtotime($purchaseDate . ' +' . $warrantyPeriod . ' months');
+    if ($expiresAt === false) {
+        return 'Expired';
+    }
+
+    return $expiresAt >= strtotime(date('Y-m-d')) ? 'Active' : 'Expired';
+}
+
+function warrantyCoverageStatus(array $warranty): string
+{
+    if (($warranty['warranty_status'] ?? '') !== 'Active') {
+        return 'Invalid';
+    }
+
+    return calculatedWarrantyRecordStatus(
+        $warranty['purchase_date'] ?? null,
+        (int)($warranty['warranty_period'] ?? 0)
+    ) === 'Active' ? 'Valid' : 'Invalid';
+}
+
+function syncWarrantyStatuses(mysqli $conn): int
+{
+    $conn->query("
+        UPDATE warranty_records
+        SET warranty_status = CASE
+            WHEN purchase_date IS NOT NULL
+             AND warranty_period > 0
+             AND DATE_ADD(purchase_date, INTERVAL warranty_period MONTH) >= CURDATE()
+            THEN 'Active'
+            ELSE 'Expired'
+        END,
+        claim_date = NULL
+        WHERE warranty_status NOT IN ('Claimed', 'Rejected')
+    ");
+
+    return $conn->affected_rows;
+}
+
+function syncRepairWarrantyCoverage(mysqli $conn): int
+{
+    $conn->query("
+        UPDATE repair_bookings rb
+        LEFT JOIN warranty_records w ON w.warranty_id = rb.warranty_id
+        SET rb.warranty_status = CASE
+            WHEN w.warranty_status = 'Active'
+             AND w.purchase_date IS NOT NULL
+             AND w.warranty_period > 0
+             AND DATE_ADD(w.purchase_date, INTERVAL w.warranty_period MONTH) >= CURDATE()
+            THEN 'Valid'
+            ELSE 'Invalid'
+        END
+        WHERE rb.warranty_id IS NOT NULL
+    ");
+    $bookingUpdates = max(0, $conn->affected_rows);
+
+    $conn->query("
+        UPDATE repairs r
+        INNER JOIN repair_bookings rb ON rb.booking_id = r.booking_id
+        SET r.warranty_status = rb.warranty_status
+        WHERE r.booking_id IS NOT NULL
+    ");
+    $repairUpdates = max(0, $conn->affected_rows);
+
+    return $bookingUpdates + $repairUpdates;
+}
+
 function ensureStripeSchema(mysqli $conn): void
 {
     if (!columnExists($conn, 'repair_bookings', 'stripe_checkout_session_id')) {

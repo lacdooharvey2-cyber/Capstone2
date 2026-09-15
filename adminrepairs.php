@@ -11,6 +11,21 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin',
 
 ensureRepairAutomationSchema($conn);
 
+function repairPageValue(mysqli $conn, string $sql): int
+{
+    $result = $conn->query($sql);
+    if (!$result) {
+        return 0;
+    }
+    $row = $result->fetch_assoc();
+    return (int)($row['total'] ?? 0);
+}
+
+$totalRepairs = repairPageValue($conn, "SELECT COUNT(*) AS total FROM repairs");
+$pendingRepairs = repairPageValue($conn, "SELECT COUNT(*) AS total FROM repairs WHERE repair_status='Pending'");
+$inProgressRepairs = repairPageValue($conn, "SELECT COUNT(*) AS total FROM repairs WHERE repair_status='In Progress'");
+$completedRepairs = repairPageValue($conn, "SELECT COUNT(*) AS total FROM repairs WHERE repair_status='Completed'");
+
 // Fetch all repair bookings
 $sql = "SELECT r.repair_id, r.customer_id, u.name AS customer_name, r.ebike_model,
                r.issue_description, r.warranty_status, r.amount, r.repair_status, r.created_at
@@ -26,6 +41,14 @@ $result = $conn->query($sql);
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Manage Repairs - FixTrack Admin</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .repair-live-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
+    .repair-live-card { border-left-width: 4px !important; min-height: 104px; }
+    .repair-live-label { color: #6c757d; font-size: .8rem; font-weight: 700; margin-bottom: 6px; }
+    .repair-live-value { font-size: 1.55rem; font-weight: 800; margin-bottom: 0; }
+    @media (max-width: 900px) { .repair-live-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 575px) { .repair-live-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
   <?php include("navbaradmin.php"); ?> <!-- make sure file exists -->
@@ -34,6 +57,25 @@ $result = $conn->query($sql);
     <div class="page-hero">
       <h3 class="mb-1">Manage Repair Bookings</h3>
       <p>Review repair issues, automatic warranty result, and technician-set costing.</p>
+    </div>
+
+    <div class="repair-live-grid" aria-live="polite">
+      <div class="card repair-live-card text-danger shadow-sm"><div class="card-body">
+        <p class="repair-live-label">Total Repairs</p>
+        <p class="repair-live-value" data-stat="total_repairs"><?= htmlspecialchars((string)$totalRepairs) ?></p>
+      </div></div>
+      <div class="card repair-live-card text-warning shadow-sm"><div class="card-body">
+        <p class="repair-live-label">Pending</p>
+        <p class="repair-live-value" data-stat="pending_repairs"><?= htmlspecialchars((string)$pendingRepairs) ?></p>
+      </div></div>
+      <div class="card repair-live-card text-primary shadow-sm"><div class="card-body">
+        <p class="repair-live-label">In Progress</p>
+        <p class="repair-live-value" data-stat="in_progress_repairs"><?= htmlspecialchars((string)$inProgressRepairs) ?></p>
+      </div></div>
+      <div class="card repair-live-card text-success shadow-sm"><div class="card-body">
+        <p class="repair-live-label">Completed</p>
+        <p class="repair-live-value" data-stat="completed_repairs"><?= htmlspecialchars((string)$completedRepairs) ?></p>
+      </div></div>
     </div>
 
     <div class="card shadow-sm">
@@ -99,5 +141,24 @@ $result = $conn->query($sql);
       </div>
     </div>
   </div>
+  <script>
+    async function refreshRepairStats() {
+      if (document.visibilityState !== 'visible') return;
+      try {
+        const response = await fetch('admin_stats_api.php', { cache: 'no-store' });
+        if (!response.ok) return;
+        const stats = await response.json();
+        document.querySelectorAll('[data-stat]').forEach((element) => {
+          const key = element.dataset.stat;
+          if (key in stats) element.textContent = stats[key];
+        });
+      } catch (error) {
+        console.warn('Unable to refresh repair stats', error);
+      }
+    }
+
+    window.setInterval(refreshRepairStats, 15000);
+    refreshRepairStats();
+  </script>
 </body>
 </html>

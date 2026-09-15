@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("db.php");
+include_once("schema_helpers.php");
 
 if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
     header("Location: login.php");
@@ -17,6 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $allowed = ['Active', 'Expired', 'Claimed', 'Rejected'];
 
     if ($warranty_id > 0 && $ebike_model !== '' && $purchase_date !== '' && $warranty_period > 0 && in_array($warranty_status, $allowed, true)) {
+        if (!in_array($warranty_status, ['Claimed', 'Rejected'], true)) {
+            $warranty_status = calculatedWarrantyRecordStatus($purchase_date, $warranty_period);
+        }
         $claimDateSql = $warranty_status === 'Claimed' ? ', claim_date = COALESCE(claim_date, NOW())' : '';
         $stmt = $conn->prepare("UPDATE warranty_records SET ebike_model=?, purchase_date=?, warranty_period=?, warranty_status=? $claimDateSql WHERE warranty_id=?");
         $stmt->bind_param("ssisi", $ebike_model, $purchase_date, $warranty_period, $warranty_status, $warranty_id);

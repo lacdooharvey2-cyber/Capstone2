@@ -146,23 +146,23 @@ foreach ($brandTotals as $brand => $total) {
     <div class="admin-kpi-grid mb-4">
       <?php
       $cards = [
-        ['Total Repairs', $totalRepairs, 'All repair tickets', 'text-danger', 'bi-tools'],
-        ['Open Queue', $openQueue, $pendingRepairs . ' pending, ' . $inProgressRepairs . ' in progress', 'text-warning', 'bi-hourglass-split'],
-        ['Active Customers', $activeCustomers, 'With repair or e-bike record', 'text-success', 'bi-people'],
-        ['Monthly Revenue', 'PHP ' . number_format($monthlyRevenue, 0), 'Completed this month', 'text-primary', 'bi-cash-stack'],
-        ['Avg Turnaround', number_format($avgTurnaround, 1) . ' days', 'Completed repair cycle', 'text-info', 'bi-speedometer2'],
-        ['Cancellations This Month', $cancellationsThisMonth, 'Cancelled repair tickets', 'text-secondary', 'bi-x-circle'],
+        ['total_repairs', 'Total Repairs', $totalRepairs, 'All repair tickets', 'text-danger', 'bi-tools'],
+        ['open_queue', 'Open Queue', $openQueue, $pendingRepairs . ' pending, ' . $inProgressRepairs . ' in progress', 'text-warning', 'bi-hourglass-split'],
+        ['active_customers', 'Active Customers', $activeCustomers, 'With repair or e-bike record', 'text-success', 'bi-people'],
+        ['monthly_revenue', 'Monthly Revenue', 'PHP ' . number_format($monthlyRevenue, 0), 'Completed this month', 'text-primary', 'bi-cash-stack'],
+        ['avg_turnaround', 'Avg Turnaround', number_format($avgTurnaround, 1) . ' days', 'Completed repair cycle', 'text-info', 'bi-speedometer2'],
+        ['cancellations_this_month', 'Cancellations This Month', $cancellationsThisMonth, 'Cancelled repair tickets', 'text-secondary', 'bi-x-circle'],
       ];
       foreach ($cards as $card):
       ?>
         <div>
-          <div class="card kpi-card <?= $card[3] ?> shadow-sm h-100"><div class="card-body kpi-body">
+          <div class="card kpi-card <?= $card[4] ?> shadow-sm h-100"><div class="card-body kpi-body">
             <div>
-              <p class="kpi-label"><?= htmlspecialchars($card[0]) ?></p>
-              <p class="kpi-value <?= $card[3] ?>"><?= htmlspecialchars((string)$card[1]) ?></p>
-              <p class="kpi-note"><?= htmlspecialchars($card[2]) ?></p>
+              <p class="kpi-label"><?= htmlspecialchars($card[1]) ?></p>
+              <p class="kpi-value <?= $card[4] ?>" data-stat="<?= htmlspecialchars($card[0]) ?>"><?= htmlspecialchars((string)$card[2]) ?></p>
+              <p class="kpi-note" <?= $card[0] === 'open_queue' ? 'data-stat-note="open_queue"' : '' ?>><?= htmlspecialchars($card[3]) ?></p>
             </div>
-            <div class="kpi-icon <?= $card[3] ?>"><i class="bi <?= $card[4] ?>"></i></div>
+            <div class="kpi-icon <?= $card[4] ?>"><i class="bi <?= $card[5] ?>"></i></div>
           </div></div>
         </div>
       <?php endforeach; ?>
@@ -223,9 +223,41 @@ foreach ($brandTotals as $brand => $total) {
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0 } } } }
     });
 
-    window.setInterval(() => {
-      if (document.visibilityState === 'visible') window.location.reload();
-    }, 15000);
+    function formatPeso(value) {
+      return 'PHP ' + Number(value || 0).toLocaleString('en-PH', { maximumFractionDigits: 0 });
+    }
+
+    function updateAdminStats(stats) {
+      const formatters = {
+        monthly_revenue: formatPeso,
+        avg_turnaround: (value) => Number(value || 0).toFixed(1) + ' days'
+      };
+
+      document.querySelectorAll('[data-stat]').forEach((element) => {
+        const key = element.dataset.stat;
+        if (!(key in stats)) return;
+        element.textContent = formatters[key] ? formatters[key](stats[key]) : stats[key];
+      });
+
+      const openQueueNote = document.querySelector('[data-stat-note="open_queue"]');
+      if (openQueueNote) {
+        openQueueNote.textContent = `${stats.pending_repairs || 0} pending, ${stats.in_progress_repairs || 0} in progress`;
+      }
+    }
+
+    async function refreshAdminStats() {
+      if (document.visibilityState !== 'visible') return;
+      try {
+        const response = await fetch('admin_stats_api.php', { cache: 'no-store' });
+        if (!response.ok) return;
+        updateAdminStats(await response.json());
+      } catch (error) {
+        console.warn('Unable to refresh admin stats', error);
+      }
+    }
+
+    window.setInterval(refreshAdminStats, 15000);
+    refreshAdminStats();
   </script>
 </body>
 </html>

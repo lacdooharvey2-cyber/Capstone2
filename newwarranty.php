@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("db.php");
+include_once("schema_helpers.php");
 
 if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
     header("Location: login.php");
@@ -20,6 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($customer_id <= 0 || $ebike_model === '' || $purchase_date === '' || $warranty_period <= 0 || !in_array($warranty_status, $allowed, true)) {
         $error = "Please complete all warranty details.";
     } else {
+        if (!in_array($warranty_status, ['Claimed', 'Rejected'], true)) {
+            $warranty_status = calculatedWarrantyRecordStatus($purchase_date, $warranty_period);
+        }
         $claimDateSql = $warranty_status === 'Claimed' ? 'NOW()' : 'NULL';
         $stmt = $conn->prepare("
             INSERT INTO warranty_records (customer_id, ebike_model, purchase_date, warranty_period, warranty_status, claim_date)

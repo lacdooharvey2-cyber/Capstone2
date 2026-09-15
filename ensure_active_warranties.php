@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/schema_helpers.php';
 
 if (PHP_SAPI !== 'cli') {
     session_start();
@@ -11,63 +12,23 @@ if (PHP_SAPI !== 'cli') {
     }
 }
 
-$result = $conn->query("
-    SELECT w.warranty_id
-    FROM warranty_records w
-    INNER JOIN users u ON u.user_id = w.customer_id
-    WHERE u.role = 'Customer'
-      AND w.warranty_status <> 'Active'
-");
-
-if (!$result) {
-    exit('Unable to read warranty records: ' . $conn->error);
-}
-
-$warrantyIds = [];
-while ($row = $result->fetch_assoc()) {
-    $warrantyIds[] = (int)$row['warranty_id'];
-}
-
-$updated = 0;
-if ($warrantyIds) {
-    $stmt = $conn->prepare("
-        UPDATE warranty_records
-        SET warranty_status = 'Active', claim_date = NULL
-        WHERE warranty_id = ?
-    ");
-
-    if (!$stmt) {
-        exit('Unable to prepare warranty update: ' . $conn->error);
-    }
-
-    $conn->begin_transaction();
-    try {
-        foreach ($warrantyIds as $warrantyId) {
-            $stmt->bind_param('i', $warrantyId);
-            if (!$stmt->execute()) {
-                throw new RuntimeException($stmt->error);
-            }
-            $updated += $stmt->affected_rows;
-        }
-        $conn->commit();
-    } catch (Throwable $exception) {
-        $conn->rollback();
-        exit('No warranty records were changed: ' . $exception->getMessage());
-    }
-}
+$updated = syncWarrantyStatuses($conn);
+$repairCoverageUpdated = syncRepairWarrantyCoverage($conn);
 
 $verification = $conn->query("
     SELECT COUNT(*) AS total,
            SUM(warranty_status = 'Active') AS active,
-           SUM(warranty_status <> 'Active') AS non_active
+           SUM(warranty_status = 'Expired') AS expired,
+           SUM(warranty_status IN ('Claimed', 'Rejected')) AS closed
     FROM warranty_records w
     INNER JOIN users u ON u.user_id = w.customer_id
     WHERE u.role = 'Customer'
 ");
 $summary = $verification ? $verification->fetch_assoc() : [];
-$message = "Updated {$updated} warranty record(s).";
+$message = "Synced {$updated} warranty record(s) using purchase date and warranty period.";
+$message .= " Updated {$repairCoverageUpdated} linked repair warranty check(s).";
 if ($summary) {
-    $message .= " Customer e-bike warranties: {$summary['active']} active, {$summary['non_active']} non-active.";
+    $message .= " Customer e-bike warranties: {$summary['active']} active, {$summary['expired']} expired, {$summary['closed']} claimed/rejected.";
 }
 
 if (PHP_SAPI === 'cli') {

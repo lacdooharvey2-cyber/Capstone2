@@ -13,6 +13,7 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link active" href="customerdashboard.php" aria-current="page"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
         <li class="nav-item"><a class="nav-link" href="customerbookrepair.php"><i class="bi bi-tools me-1"></i>Book Repair</a></li>
+        <li class="nav-item"><a class="nav-link" href="customertrackrepiar.php"><i class="bi bi-search me-1"></i>Track Repair</a></li>
         <li class="nav-item"><a class="nav-link" href="customermessage.php"><i class="bi bi-chat-dots me-1"></i>Messages</a></li>
         <li class="nav-item"><a class="nav-link" href="activitylogs.php"><i class="bi bi-clock-history me-1"></i>Logs</a></li>
         <li class="nav-item"><a class="nav-link" href="logout.php"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>

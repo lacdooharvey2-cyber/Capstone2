@@ -10,18 +10,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Customer') {
 }
 
 ensureRepairAutomationSchema($conn);
+syncWarrantyStatuses($conn);
+syncRepairWarrantyCoverage($conn);
 
 $customer_id = intval($_SESSION['user_id']);
-
-function resolveWarrantyStatus(array $bike): string
-{
-    if ($bike['warranty_status'] !== 'Active') {
-        return 'Invalid';
-    }
-
-    $expiresAt = strtotime($bike['purchase_date'] . ' +' . intval($bike['warranty_period']) . ' months');
-    return $expiresAt !== false && $expiresAt >= strtotime(date('Y-m-d')) ? 'Valid' : 'Invalid';
-}
 
 $customerStmt = $conn->prepare("SELECT name, contact_number, province_address FROM users WHERE user_id = ? LIMIT 1");
 $customerStmt->bind_param("i", $customer_id);
@@ -39,7 +31,7 @@ $bikeStmt->execute();
 $bikeResult = $bikeStmt->get_result();
 $ownedEbikes = [];
 while ($bike = $bikeResult->fetch_assoc()) {
-    $bike['computed_warranty_status'] = resolveWarrantyStatus($bike);
+    $bike['computed_warranty_status'] = warrantyCoverageStatus($bike);
     $ownedEbikes[] = $bike;
 }
 
@@ -88,6 +80,19 @@ $technicians = $conn->query("SELECT user_id, name FROM users WHERE role = 'Techn
   <div class="form-container">
     <h3>Repair Request Form</h3>
     <p class="text-muted">Your customer details and warranty will be checked automatically from your account records. The technician will set the repair cost after assessment.</p>
+
+    <?php if (($_GET['error'] ?? '') === 'slot_full'): ?>
+      <div class="alert alert-warning d-flex align-items-center gap-2" role="alert">
+        <span class="fw-bold">Schedule full.</span>
+        <span><?= htmlspecialchars($_GET['slot'] ?? 'Selected slot') ?> on <?= htmlspecialchars($_GET['date'] ?? 'that date') ?> already reached the 3-booking limit. Please choose another schedule.</span>
+      </div>
+    <?php elseif (($_GET['error'] ?? '') === 'incomplete'): ?>
+      <div class="alert alert-danger">Please complete all required repair booking fields.</div>
+    <?php elseif (($_GET['error'] ?? '') === 'invalid_technician'): ?>
+      <div class="alert alert-danger">Please choose a valid technician.</div>
+    <?php elseif (($_GET['error'] ?? '') === 'invalid_ebike'): ?>
+      <div class="alert alert-danger">Please choose an e-bike linked to your account.</div>
+    <?php endif; ?>
 
     <?php if (!$ownedEbikes): ?>
       <div class="alert alert-warning">

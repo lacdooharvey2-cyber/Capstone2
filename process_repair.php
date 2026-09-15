@@ -12,16 +12,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Customer') {
 
 ensureRepairAutomationSchema($conn);
 ensureStripeSchema($conn);
-
-function getAutomaticWarrantyStatus(array $bike): string
-{
-    if ($bike['warranty_status'] !== 'Active') {
-        return 'Invalid';
-    }
-
-    $expiresAt = strtotime($bike['purchase_date'] . ' +' . intval($bike['warranty_period']) . ' months');
-    return $expiresAt !== false && $expiresAt >= strtotime(date('Y-m-d')) ? 'Valid' : 'Invalid';
-}
+syncWarrantyStatuses($conn);
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $customer_id = intval($_SESSION['user_id']);
@@ -35,6 +26,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($warranty_id <= 0 || $technician_id <= 0 || $issue === '' || empty($preferred_date) || $time_slot === '') {
         header("Location: customerbookrepair.php?error=incomplete");
+        exit();
+    }
+
+    $slotCapacity = 3;
+    $slotStmt = $conn->prepare("
+        SELECT COUNT(*) AS total
+        FROM repair_bookings
+        WHERE preferred_date = ?
+          AND preferred_time = ?
+          AND booking_status NOT IN ('Cancelled', 'Rejected')
+    ");
+    $slotStmt->bind_param("ss", $preferred_date, $time_slot);
+    $slotStmt->execute();
+    $slotCount = (int)($slotStmt->get_result()->fetch_assoc()['total'] ?? 0);
+
+    if ($slotCount >= $slotCapacity) {
+        header("Location: customerbookrepair.php?error=slot_full&date=" . urlencode((string)$preferred_date) . "&slot=" . urlencode($time_slot));
         exit();
     }
 
@@ -62,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $model = $bike['ebike_model'];
-    $warranty_status = getAutomaticWarrantyStatus($bike);
+    $warranty_status = warrantyCoverageStatus($bike);
     $amount = 0.00;
     $payment_status = 'Pending';
     $tracking = 'RS-' . date('YmdHis') . '-' . $customer_id;
