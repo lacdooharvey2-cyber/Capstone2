@@ -16,8 +16,25 @@ function columnExists(mysqli $conn, string $table, string $column): bool
     return (int)($row['total'] ?? 0) > 0;
 }
 
+function tableExists(mysqli $conn, string $table): bool
+{
+    $stmt = $conn->prepare("
+        SELECT COUNT(*) AS total
+        FROM INFORMATION_SCHEMA.TABLES
+        WHERE TABLE_SCHEMA = DATABASE()
+          AND TABLE_NAME = ?
+    ");
+    $stmt->bind_param("s", $table);
+    $stmt->execute();
+    $row = $stmt->get_result()->fetch_assoc();
+
+    return (int)($row['total'] ?? 0) > 0;
+}
+
 function ensureRepairAutomationSchema(mysqli $conn): void
 {
+    $conn->query("ALTER TABLE users MODIFY role ENUM('Customer','Staff','Technician','HeadTechnician','Cashier','AssistantAdmin','Admin','AssistantSuperAdmin','SuperAdmin') NOT NULL");
+
     if (!columnExists($conn, 'repair_bookings', 'warranty_id')) {
         $conn->query("ALTER TABLE repair_bookings ADD COLUMN warranty_id INT NULL AFTER customer_id");
     }
@@ -32,6 +49,14 @@ function ensureRepairAutomationSchema(mysqli $conn): void
 
     if (!columnExists($conn, 'repairs', 'warranty_status')) {
         $conn->query("ALTER TABLE repairs ADD COLUMN warranty_status VARCHAR(20) NOT NULL DEFAULT 'Invalid' AFTER repair_status");
+    }
+
+    if (!columnExists($conn, 'repair_bookings', 'proof_file')) {
+        $conn->query("ALTER TABLE repair_bookings ADD COLUMN proof_file VARCHAR(255) NULL AFTER description");
+    }
+
+    if (!columnExists($conn, 'repairs', 'proof_file')) {
+        $conn->query("ALTER TABLE repairs ADD COLUMN proof_file VARCHAR(255) NULL AFTER issue_description");
     }
 }
 
@@ -155,6 +180,124 @@ function ensureNetcorepaySchema(mysqli $conn): void
     if (!columnExists($conn, 'repair_bookings', 'netcorepay_payment_id')) {
         $conn->query("ALTER TABLE repair_bookings ADD COLUMN netcorepay_payment_id VARCHAR(255) NULL AFTER xendit_payment_id");
     }
+}
+
+function normalizePaymentMethod(string $method): string
+{
+    return in_array($method, ['Cashier', 'GCash', 'PayPal'], true) ? $method : 'Cashier';
+}
+
+function normalizePaymentStatus(string $status): string
+{
+    return in_array($status, ['Pending', 'Paid', 'Cancelled'], true) ? $status : 'Pending';
+}
+
+function syncPaymentRecord(mysqli $conn, int $repairId, int $customerId, float $amount, string $method, string $status): bool
+{
+    if (!tableExists($conn, 'payments') || $repairId <= 0 || $customerId <= 0) {
+        return false;
+    }
+
+    $method = normalizePaymentMethod($method);
+    $status = normalizePaymentStatus($status);
+    $amount = max(0, $amount);
+
+    $find = $conn->prepare("
+        SELECT payment_id
+        FROM payments
+        WHERE repair_id = ? AND customer_id = ?
+        ORDER BY payment_id DESC
+        LIMIT 1
+    ");
+    $find->bind_param("ii", $repairId, $customerId);
+    $find->execute();
+    $existing = $find->get_result()->fetch_assoc();
+
+    if ($existing) {
+        $paymentId = (int)$existing['payment_id'];
+        $update = $conn->prepare("
+            UPDATE payments
+            SET amount = ?, method = ?, status = ?
+            WHERE payment_id = ?
+        ");
+        $update->bind_param("dssi", $amount, $method, $status, $paymentId);
+        return $update->execute();
+    }
+
+    $insert = $conn->prepare("
+        INSERT INTO payments (repair_id, customer_id, amount, method, status)
+        VALUES (?, ?, ?, ?, ?)
+    ");
+    $insert->bind_param("iidss", $repairId, $customerId, $amount, $method, $status);
+    return $insert->execute();
+}
+
+function syncBookingPaymentToPayments(mysqli $conn, int $bookingId, string $method = 'Cashier', ?string $statusOverride = null): bool
+{
+    if (!tableExists($conn, 'payments') || $bookingId <= 0) {
+        return false;
+    }
+
+    $stmt = $conn->prepare("
+        SELECT r.repair_id, rb.customer_id,
+               COALESCE(NULLIF(rb.estimated_amount, 0), r.amount, 0) AS payable_amount,
+               rb.payment_status
+        FROM repair_bookings rb
+        INNER JOIN repairs r ON r.booking_id = rb.booking_id
+        WHERE rb.booking_id = ?
+        LIMIT 1
+    ");
+    $stmt->bind_param("i", $bookingId);
+    $stmt->execute();
+    $booking = $stmt->get_result()->fetch_assoc();
+
+    if (!$booking) {
+        return false;
+    }
+
+    return syncPaymentRecord(
+        $conn,
+        (int)$booking['repair_id'],
+        (int)$booking['customer_id'],
+        (float)$booking['payable_amount'],
+        $method,
+        $statusOverride ?? (string)$booking['payment_status']
+    );
+}
+
+function syncAllBookingPaymentsToPayments(mysqli $conn): int
+{
+    if (!tableExists($conn, 'payments')) {
+        return 0;
+    }
+
+    ensureStripeSchema($conn);
+    ensureNetcorepaySchema($conn);
+
+    $result = $conn->query("
+        SELECT rb.booking_id,
+               CASE
+                 WHEN COALESCE(rb.netcorepay_payment_id, rb.xendit_payment_id, rb.xendit_payment_request_id, rb.xendit_payment_session_id, '') <> '' THEN 'GCash'
+                 WHEN COALESCE(rb.stripe_payment_intent_id, rb.stripe_checkout_session_id, '') <> '' THEN 'PayPal'
+                 ELSE 'Cashier'
+               END AS payment_method
+        FROM repair_bookings rb
+        INNER JOIN repairs r ON r.booking_id = rb.booking_id
+        WHERE rb.payment_status IN ('Pending', 'Paid', 'Cancelled')
+    ");
+
+    if (!$result) {
+        return 0;
+    }
+
+    $synced = 0;
+    while ($row = $result->fetch_assoc()) {
+        if (syncBookingPaymentToPayments($conn, (int)$row['booking_id'], (string)$row['payment_method'])) {
+            $synced++;
+        }
+    }
+
+    return $synced;
 }
 
 ?>

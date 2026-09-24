@@ -38,10 +38,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             logActivity($conn, (int)$row['user_id'], (string)$row['role'], 'Login', 'Signed in to FixTrack.');
 
             switch ($row['role']) {
+                case 'AssistantAdmin':
                 case 'Admin':
+                case 'AssistantSuperAdmin':
                 case 'SuperAdmin':
                     header("Location: admindashboard.php");
                     break;
+                case 'HeadTechnician':
                 case 'Technician':
                     header("Location: techniciandashboard.php");
                     break;

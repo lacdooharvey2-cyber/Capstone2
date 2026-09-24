@@ -3,7 +3,7 @@ session_start();
 include("db.php");
 include_once("schema_helpers.php");
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Technician') {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Technician', 'HeadTechnician'], true)) {
     header("Location: login.php");
     exit();
 }
@@ -11,14 +11,18 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Technician') {
 ensureRepairAutomationSchema($conn);
 
 $user_id = intval($_SESSION['user_id']);
+$isHeadTechnician = ($_SESSION['role'] ?? '') === 'HeadTechnician';
+$repairScope = $isHeadTechnician ? '1=1' : "(r.technician_id = $user_id OR r.technician_id IS NULL)";
 $repairs = $conn->query("
   SELECT r.repair_id, r.created_at, r.customer_id, u.name AS customer_name, u.contact_number,
-         r.ebike_model, r.issue_description, r.warranty_status, r.amount, r.repair_status,
+         r.ebike_model, r.issue_description, r.proof_file, r.warranty_status, r.amount, r.repair_status,
+         r.technician_id, tech.name AS technician_name,
          rb.preferred_date, rb.preferred_time
   FROM repairs r
   LEFT JOIN repair_bookings rb ON rb.booking_id = r.booking_id
   LEFT JOIN users u ON u.user_id = r.customer_id
-  WHERE r.technician_id = $user_id OR r.technician_id IS NULL
+  LEFT JOIN users tech ON tech.user_id = r.technician_id
+  WHERE $repairScope
   ORDER BY r.created_at DESC
 ");
 
@@ -28,11 +32,13 @@ $scheduleStmt = $conn->prepare("
   FROM repairs r
   INNER JOIN repair_bookings rb ON rb.booking_id = r.booking_id
   LEFT JOIN users u ON u.user_id = r.customer_id
-  WHERE (r.technician_id = ? OR r.technician_id IS NULL)
+  WHERE " . ($isHeadTechnician ? "1=1" : "(r.technician_id = ? OR r.technician_id IS NULL)") . "
     AND rb.preferred_date IS NOT NULL
   ORDER BY rb.preferred_date, rb.preferred_time
 ");
-$scheduleStmt->bind_param("i", $user_id);
+if (!$isHeadTechnician) {
+    $scheduleStmt->bind_param("i", $user_id);
+}
 $scheduleStmt->execute();
 $scheduleResult = $scheduleStmt->get_result();
 $calendarEvents = [];
@@ -82,6 +88,13 @@ $warranties = $conn->query("
   LEFT JOIN users u ON u.user_id = w.customer_id
   ORDER BY w.created_at DESC
 ");
+$technicianOptions = $conn->query("SELECT user_id, name FROM users WHERE role IN ('Technician','HeadTechnician') AND account_status='Active' ORDER BY role='HeadTechnician' DESC, name");
+$assignableTechnicians = [];
+if ($technicianOptions) {
+    while ($technician = $technicianOptions->fetch_assoc()) {
+        $assignableTechnicians[] = $technician;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -232,7 +245,7 @@ $warranties = $conn->query("
   <div class="technician-workspace">
     <div class="page-hero">
       <h3 class="mb-1">Repair & Warranty Management</h3>
-      <p>Manage assigned repair tickets, set repair costs, and update warranty records.</p>
+      <p><?= $isHeadTechnician ? 'Deploy technicians, monitor repair progress, and review warranty records.' : 'Manage assigned repair tickets, set repair costs, and update warranty records.' ?></p>
     </div>
 
     <?php if (isset($_GET['updated'])): ?>
@@ -266,6 +279,7 @@ $warranties = $conn->query("
               <th class="col-contact">Contact</th>
               <th class="col-bike">E-Bike</th>
               <th class="col-issue">Issue</th>
+              <?php if ($isHeadTechnician): ?><th class="col-customer">Technician</th><?php endif; ?>
               <th class="col-warranty">Warranty</th>
               <th class="col-cost">Cost</th>
               <th class="col-status">Status</th>
@@ -283,6 +297,7 @@ $warranties = $conn->query("
                   <td class="text-truncate-cell" title="<?= htmlspecialchars($r['contact_number'] ?? '') ?>"><?= htmlspecialchars($r['contact_number'] ?? '') ?></td>
                   <td class="text-truncate-cell" title="<?= htmlspecialchars($r['ebike_model']) ?>"><?= htmlspecialchars($r['ebike_model']) ?></td>
                   <td class="text-truncate-cell" title="<?= htmlspecialchars($r['issue_description']) ?>"><?= htmlspecialchars($r['issue_description']) ?></td>
+                  <?php if ($isHeadTechnician): ?><td class="text-truncate-cell" title="<?= htmlspecialchars($r['technician_name'] ?? 'Unassigned') ?>"><?= htmlspecialchars($r['technician_name'] ?? 'Unassigned') ?></td><?php endif; ?>
                   <td><span class="badge bg-<?= $r['warranty_status'] === 'Valid' ? 'success' : 'secondary' ?>"><?= htmlspecialchars($r['warranty_status']) ?></span></td>
                   <td><?= (float)$r['amount'] > 0 ? 'PHP ' . number_format((float)$r['amount'], 2) : 'Pending' ?></td>
                   <td><span class="badge bg-<?php echo $r['repair_status']=='Completed'?'success':($r['repair_status']=='In Progress'?'primary':'warning'); ?>"><?= htmlspecialchars($r['repair_status']) ?></span></td>
@@ -290,6 +305,14 @@ $warranties = $conn->query("
                     <a href="repairdetails.php?id=<?= urlencode($r['repair_id']) ?>" class="btn btn-sm btn-outline-secondary w-100 mb-1">View</a>
                     <form method="post" action="technicianupdaterepair.php" class="repair-action-form">
                       <input type="hidden" name="repair_id" value="<?= htmlspecialchars($r['repair_id']) ?>">
+                      <?php if ($isHeadTechnician): ?>
+                        <select name="technician_id" class="form-select form-select-sm" aria-label="Assign technician">
+                          <option value="">Unassigned</option>
+                          <?php foreach ($assignableTechnicians as $tech): ?>
+                            <option value="<?= htmlspecialchars((string)$tech['user_id']) ?>" <?= (int)($r['technician_id'] ?? 0) === (int)$tech['user_id'] ? 'selected' : '' ?>><?= htmlspecialchars($tech['name']) ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                      <?php endif; ?>
                       <input type="number" class="form-control form-control-sm" name="amount" min="0" step="0.01" value="<?= htmlspecialchars($r['amount']) ?>" aria-label="Repair cost">
                       <select name="status" class="form-select form-select-sm">
                         <option <?= $r['repair_status'] === 'Pending' ? 'selected' : '' ?>>Pending</option>
@@ -303,7 +326,7 @@ $warranties = $conn->query("
                 </tr>
               <?php endwhile; ?>
             <?php else: ?>
-              <tr><td colspan="11" class="text-center text-muted">No repair tickets found.</td></tr>
+              <tr><td colspan="<?= $isHeadTechnician ? 12 : 11 ?>" class="text-center text-muted">No repair tickets found.</td></tr>
             <?php endif; ?>
           </tbody>
         </table>

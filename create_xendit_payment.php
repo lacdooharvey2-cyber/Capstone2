@@ -85,6 +85,7 @@ try {
         WHERE booking_id = ? AND customer_id = ?");
     $update->bind_param('sii', $paymentRequestId, $bookingId, $customerId);
     $update->execute();
+    syncBookingPaymentToPayments($conn, $bookingId, 'GCash', 'Pending');
     logActivity($conn, $customerId, 'Customer', 'Xendit payment started', 'Started GCash payment for booking #' . $bookingId . '.', 'booking', $bookingId);
 
     header('Location: ' . $redirectUrl);

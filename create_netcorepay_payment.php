@@ -63,6 +63,7 @@ try {
     $update = $conn->prepare("UPDATE repair_bookings SET netcorepay_payment_id = ?, payment_status = 'Pending' WHERE booking_id = ? AND customer_id = ?");
     $update->bind_param('sii', $paymentId, $bookingId, $customerId);
     $update->execute();
+    syncBookingPaymentToPayments($conn, $bookingId, 'GCash', 'Pending');
     logActivity($conn, $customerId, 'Customer', 'NetCorePay payment started', 'Started GCash payment for booking #' . $bookingId . '.', 'booking', $bookingId);
 
     header('Location: ' . $checkoutUrl);

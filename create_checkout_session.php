@@ -88,6 +88,7 @@ try {
     $update = $conn->prepare("UPDATE repair_bookings SET xendit_payment_session_id = ?, payment_status = 'Pending' WHERE booking_id = ? AND customer_id = ?");
     $update->bind_param('sii', $paymentSessionId, $bookingId, $customerId);
     $update->execute();
+    syncBookingPaymentToPayments($conn, $bookingId, 'GCash', 'Pending');
     logActivity($conn, $customerId, 'Customer', 'Xendit payment started', 'Started Xendit Checkout for booking #' . $bookingId . '.', 'booking', $bookingId);
 
     header('Location: ' . $paymentUrl);

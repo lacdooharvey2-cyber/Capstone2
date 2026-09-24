@@ -2,7 +2,7 @@
 session_start();
 include("db.php");
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Technician') {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Technician', 'HeadTechnician'], true)) {
     header("Location: login.php");
     exit();
 }

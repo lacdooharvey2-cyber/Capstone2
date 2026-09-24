@@ -3,7 +3,7 @@ session_start();
 include("db.php");
 
 // Guard: only allow Admins
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['AssistantAdmin', 'Admin', 'AssistantSuperAdmin', 'SuperAdmin'], true)) {
     header("Location: login.php");
     exit();
 }
@@ -27,7 +27,7 @@ $result = $conn->query($sql);
   <div class="container mt-4">
     <div class="page-hero">
       <h3 class="mb-1">Manage Users</h3>
-      <p>Review customer, technician, cashier, and admin accounts.</p>
+      <p>Review customer, technician, head technician, cashier, assistant, and admin accounts.</p>
     </div>
 
     <div class="card shadow-sm">

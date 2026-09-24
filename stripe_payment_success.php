@@ -43,6 +43,7 @@ try {
     ");
     $update->bind_param('sssii', $paymentIntentId, $session->id, $invoiceId, $bookingId, $customerId);
     $update->execute();
+    syncBookingPaymentToPayments($conn, $bookingId, 'PayPal', 'Paid');
     logActivity($conn, $customerId, 'Customer', 'Stripe payment completed', 'Completed Stripe payment for booking #' . $bookingId . '.', 'booking', $bookingId);
 
     $bookingStmt = $conn->prepare("

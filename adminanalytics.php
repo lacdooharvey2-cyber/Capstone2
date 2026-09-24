@@ -4,7 +4,7 @@ include("db.php");
 include_once("schema_helpers.php");
 include_once("dashboard_alerts_logs.php");
 
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['AssistantAdmin', 'Admin', 'AssistantSuperAdmin', 'SuperAdmin'], true)) {
     header("Location: login.php");
     exit();
 }
@@ -102,43 +102,6 @@ $monthlyRevenueRows = analyticsRows($conn, "
   ORDER BY month
 ");
 
-$revenueRangeRows = analyticsRows($conn, "
-  SELECT revenue_group, COUNT(*) AS repairs
-  FROM (
-    SELECT CASE
-      WHEN COALESCE(amount,0) = 0 THEN 'No Charge/Pending'
-      WHEN amount < 500 THEN 'Below PHP 500'
-      WHEN amount BETWEEN 500 AND 999.99 THEN 'PHP 500-999'
-      WHEN amount BETWEEN 1000 AND 1999.99 THEN 'PHP 1,000-1,999'
-      ELSE 'PHP 2,000+'
-    END AS revenue_group
-    FROM repairs
-    WHERE repair_status='Completed'
-  ) revenue_data
-  GROUP BY revenue_group
-");
-
-$weeklyCompletionRows = analyticsRows($conn, "
-  SELECT DATE_FORMAT(created_at, '%x-W%v') AS week_label,
-         COUNT(*) AS total_repairs,
-         SUM(CASE WHEN repair_status='Completed' THEN 1 ELSE 0 END) AS completed_repairs
-  FROM repairs
-  WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 8 WEEK)
-  GROUP BY DATE_FORMAT(created_at, '%x-W%v')
-  ORDER BY week_label
-");
-
-$turnaroundRows = analyticsRows($conn, "
-  SELECT DATE_FORMAT(updated_at, '%Y-%m') AS month,
-         COALESCE(AVG(TIMESTAMPDIFF(DAY, created_at, updated_at)),0) AS avg_days
-  FROM repairs
-  WHERE repair_status='Completed'
-    AND updated_at IS NOT NULL
-    AND updated_at >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 11 MONTH), '%Y-%m-01')
-  GROUP BY DATE_FORMAT(updated_at, '%Y-%m')
-  ORDER BY month
-");
-
 $technicianPerformance = analyticsRows($conn, "
   SELECT COALESCE(u.name, 'Unassigned') AS technician, COUNT(*) AS completed_repairs
   FROM repairs r
@@ -175,12 +138,7 @@ foreach ($monthlyRevenueRows as $row) {
         'completed_repairs' => (int)$row['completed_repairs'],
     ];
 }
-$turnaroundTotals = [];
-foreach ($turnaroundRows as $row) {
-    $turnaroundTotals[$row['month']] = (float)$row['avg_days'];
-}
 $monthlyRevenueTrend = [];
-$turnaroundTrend = [];
 $monthCursor = new DateTime('first day of -11 months');
 for ($i = 0; $i < 12; $i++) {
     $monthKey = $monthCursor->format('Y-m');
@@ -189,50 +147,7 @@ for ($i = 0; $i < 12; $i++) {
         'revenue' => $monthlyTotals[$monthKey]['revenue'] ?? 0,
         'completed_repairs' => $monthlyTotals[$monthKey]['completed_repairs'] ?? 0,
     ];
-    $turnaroundTrend[] = [
-        'month' => $monthKey,
-        'avg_days' => $turnaroundTotals[$monthKey] ?? 0,
-    ];
     $monthCursor->modify('+1 month');
-}
-
-$revenueGroups = [
-    'No Charge/Pending' => 0,
-    'Below PHP 500' => 0,
-    'PHP 500-999' => 0,
-    'PHP 1,000-1,999' => 0,
-    'PHP 2,000+' => 0,
-];
-foreach ($revenueRangeRows as $row) {
-    $revenueGroups[$row['revenue_group']] = (int)$row['repairs'];
-}
-$revenueByRange = [];
-foreach ($revenueGroups as $range => $repairs) {
-    $revenueByRange[] = ['range' => $range, 'repairs' => $repairs];
-}
-
-$weeklyTotals = [];
-foreach ($weeklyCompletionRows as $row) {
-    $total = (int)$row['total_repairs'];
-    $completed = (int)$row['completed_repairs'];
-    $weeklyTotals[$row['week_label']] = [
-        'total_repairs' => $total,
-        'completed_repairs' => $completed,
-        'completion_rate' => analyticsPct($completed, $total),
-    ];
-}
-$weeklyCompletion = [];
-$weekCursor = new DateTime('monday this week');
-$weekCursor->modify('-7 weeks');
-for ($i = 0; $i < 8; $i++) {
-    $weekKey = $weekCursor->format('o-\WW');
-    $weeklyCompletion[] = [
-        'week_label' => $weekKey,
-        'total_repairs' => $weeklyTotals[$weekKey]['total_repairs'] ?? 0,
-        'completed_repairs' => $weeklyTotals[$weekKey]['completed_repairs'] ?? 0,
-        'completion_rate' => $weeklyTotals[$weekKey]['completion_rate'] ?? 0,
-    ];
-    $weekCursor->modify('+1 week');
 }
 
 $chargeTotals = ['Warranty' => 0, 'Paid' => 0];
@@ -243,6 +158,76 @@ $warrantyPaidBreakdown = [];
 foreach ($chargeTotals as $label => $total) {
     $warrantyPaidBreakdown[] = ['label' => $label, 'total' => $total];
 }
+
+$analyticsBreakdowns = [
+    'total_revenue' => [
+        'title' => 'Total Revenue Breakdown',
+        'headers' => ['ID', 'Customer', 'E-Bike', 'Amount', 'Completed'],
+        'rows' => analyticsRows($conn, "
+            SELECT r.repair_id, COALESCE(u.name, CONCAT('Customer #', r.customer_id)) AS customer, r.ebike_model, CONCAT('PHP ', FORMAT(r.amount, 2)) AS amount, r.updated_at
+            FROM repairs r LEFT JOIN users u ON u.user_id = r.customer_id
+            WHERE r.repair_status='Completed'
+            ORDER BY r.updated_at DESC LIMIT 50
+        "),
+        'fields' => ['repair_id', 'customer', 'ebike_model', 'amount', 'updated_at'],
+    ],
+    'monthly_revenue' => [
+        'title' => 'Monthly Revenue Breakdown',
+        'headers' => ['ID', 'Customer', 'Amount', 'Completed'],
+        'rows' => analyticsRows($conn, "
+            SELECT r.repair_id, COALESCE(u.name, CONCAT('Customer #', r.customer_id)) AS customer, CONCAT('PHP ', FORMAT(r.amount, 2)) AS amount, r.updated_at
+            FROM repairs r LEFT JOIN users u ON u.user_id = r.customer_id
+            WHERE r.repair_status='Completed' AND r.updated_at >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
+            ORDER BY r.updated_at DESC LIMIT 50
+        "),
+        'fields' => ['repair_id', 'customer', 'amount', 'updated_at'],
+    ],
+    'average_revenue' => [
+        'title' => 'Average Revenue / Repair Breakdown',
+        'headers' => ['ID', 'Customer', 'Amount', 'Status'],
+        'rows' => analyticsRows($conn, "
+            SELECT r.repair_id, COALESCE(u.name, CONCAT('Customer #', r.customer_id)) AS customer, CONCAT('PHP ', FORMAT(r.amount, 2)) AS amount, r.repair_status
+            FROM repairs r LEFT JOIN users u ON u.user_id = r.customer_id
+            WHERE r.repair_status='Completed' AND r.amount > 0
+            ORDER BY r.amount DESC LIMIT 50
+        "),
+        'fields' => ['repair_id', 'customer', 'amount', 'repair_status'],
+    ],
+    'completion_rate' => [
+        'title' => 'Completion Rate Breakdown',
+        'headers' => ['Status', 'Total'],
+        'rows' => analyticsRows($conn, "SELECT repair_status, COUNT(*) AS total FROM repairs GROUP BY repair_status ORDER BY total DESC"),
+        'fields' => ['repair_status', 'total'],
+    ],
+    'pending_payments' => [
+        'title' => 'Pending Payments Breakdown',
+        'headers' => ['Booking', 'Customer', 'Amount', 'Schedule'],
+        'rows' => analyticsRows($conn, "
+            SELECT rb.booking_id, COALESCE(u.name, CONCAT('Customer #', rb.customer_id)) AS customer, CONCAT('PHP ', FORMAT(rb.estimated_amount, 2)) AS amount, CONCAT(rb.preferred_date, ' ', rb.preferred_time) AS schedule
+            FROM repair_bookings rb LEFT JOIN users u ON u.user_id = rb.customer_id
+            WHERE rb.payment_status='Pending'
+            ORDER BY rb.preferred_date DESC LIMIT 50
+        "),
+        'fields' => ['booking_id', 'customer', 'amount', 'schedule'],
+    ],
+    'brand_users' => [
+        'title' => 'KUDA vs NWOW Users Breakdown',
+        'headers' => ['Brand', 'Registered Owners'],
+        'rows' => $brandUsers,
+        'fields' => ['brand', 'users'],
+    ],
+    'warranty_claim_rate' => [
+        'title' => 'Warranty Claim Rate Breakdown',
+        'headers' => ['Warranty ID', 'Customer', 'E-Bike', 'Status', 'Claim Date'],
+        'rows' => analyticsRows($conn, "
+            SELECT w.warranty_id, COALESCE(u.name, CONCAT('Customer #', w.customer_id)) AS customer, w.ebike_model, w.warranty_status, w.claim_date
+            FROM warranty_records w LEFT JOIN users u ON u.user_id = w.customer_id
+            WHERE w.warranty_status='Claimed'
+            ORDER BY w.claim_date DESC, w.created_at DESC LIMIT 50
+        "),
+        'fields' => ['warranty_id', 'customer', 'ebike_model', 'warranty_status', 'claim_date'],
+    ],
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -263,6 +248,9 @@ foreach ($chargeTotals as $label => $total) {
     .kpi-value { font-size: clamp(1.45rem, 2.4vw, 2.1rem); font-weight: 800; line-height: 1.08; margin-bottom: .8rem; max-width: calc(100% - 54px); overflow-wrap: anywhere; }
     .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
     .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 52px; justify-content: center; position: absolute; right: 22px; top: 22px; width: 52px; }
+    .kpi-button { background: transparent; border: 0; padding: 0; text-align: left; width: 100%; }
+    .kpi-button .card { cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
+    .kpi-button:hover .card { transform: translateY(-2px); box-shadow: 0 .7rem 1.4rem rgba(31,41,55,.12) !important; }
     .chart-card { min-height: 350px; padding: 20px; }
     .chart-card h6 { font-size: .95rem; margin-bottom: 4px; }
     .chart-subtitle { color: #6c757d; font-size: .78rem; margin-bottom: 18px; }
@@ -292,28 +280,57 @@ foreach ($chargeTotals as $label => $total) {
     <div class="kpi-row mb-4">
       <?php
       $cards = [
-        ['Total Revenue', 'PHP ' . number_format($totalRevenue, 0), 'Completed repairs', 'text-primary', 'bi-cash-stack'],
-        ['Monthly Revenue', 'PHP ' . number_format($monthlyRevenue, 0), 'Current month', 'text-info', 'bi-calendar3'],
-        ['Avg Revenue / Repair', 'PHP ' . number_format($averageRevenue, 0), 'Priced completed jobs', 'text-dark', 'bi-receipt'],
-        ['Completion Rate', $completionRate . '%', $completedRepairs . ' completed', 'text-success', 'bi-check2-circle'],
-        ['Pending Payments', $pendingPayments, 'Bookings awaiting payment', 'text-warning', 'bi-clock-history'],
-        ['KUDA vs NWOW Users', $kudaUsers . ' / ' . $nwowUsers, 'KUDA/KDA vs NWOW', 'text-danger', 'bi-bicycle'],
-        ['Warranty Claim Rate', $warrantyClaimRate . '%', $warrantyClaims . ' of ' . $totalWarranties . ' warranties', 'text-secondary', 'bi-shield-check'],
+        ['total_revenue', 'Total Revenue', 'PHP ' . number_format($totalRevenue, 0), 'Completed repairs', 'text-primary', 'bi-cash-stack'],
+        ['monthly_revenue', 'Monthly Revenue', 'PHP ' . number_format($monthlyRevenue, 0), 'Current month', 'text-info', 'bi-calendar3'],
+        ['average_revenue', 'Avg Revenue / Repair', 'PHP ' . number_format($averageRevenue, 0), 'Priced completed jobs', 'text-dark', 'bi-receipt'],
+        ['completion_rate', 'Completion Rate', $completionRate . '%', $completedRepairs . ' completed', 'text-success', 'bi-check2-circle'],
+        ['pending_payments', 'Pending Payments', $pendingPayments, 'Bookings awaiting payment', 'text-warning', 'bi-clock-history'],
+        ['brand_users', 'KUDA vs NWOW Users', $kudaUsers . ' / ' . $nwowUsers, 'KUDA/KDA vs NWOW', 'text-danger', 'bi-bicycle'],
+        ['warranty_claim_rate', 'Warranty Claim Rate', $warrantyClaimRate . '%', $warrantyClaims . ' of ' . $totalWarranties . ' warranties', 'text-secondary', 'bi-shield-check'],
       ];
       foreach ($cards as $card):
       ?>
         <div class="kpi-col">
-          <div class="card kpi-card <?= $card[3] ?> shadow-sm h-100"><div class="card-body kpi-body">
+          <button type="button" class="kpi-button" data-bs-toggle="modal" data-bs-target="#analyticsModal-<?= htmlspecialchars($card[0]) ?>">
+          <div class="card kpi-card <?= $card[4] ?> shadow-sm h-100"><div class="card-body kpi-body">
             <div>
-              <p class="kpi-label"><?= htmlspecialchars($card[0]) ?></p>
-              <p class="kpi-value <?= $card[3] ?>"><?= htmlspecialchars((string)$card[1]) ?></p>
-              <p class="kpi-note"><?= htmlspecialchars($card[2]) ?></p>
+              <p class="kpi-label"><?= htmlspecialchars($card[1]) ?></p>
+              <p class="kpi-value <?= $card[4] ?>"><?= htmlspecialchars((string)$card[2]) ?></p>
+              <p class="kpi-note"><?= htmlspecialchars($card[3]) ?></p>
             </div>
-            <div class="kpi-icon <?= $card[3] ?>"><i class="bi <?= $card[4] ?>"></i></div>
+            <div class="kpi-icon <?= $card[4] ?>"><i class="bi <?= $card[5] ?>"></i></div>
           </div></div>
+          </button>
         </div>
       <?php endforeach; ?>
     </div>
+
+    <?php foreach ($analyticsBreakdowns as $key => $breakdown): ?>
+      <div class="modal fade" id="analyticsModal-<?= htmlspecialchars($key) ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"><?= htmlspecialchars($breakdown['title']) ?></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="table-responsive">
+                <table class="table table-sm table-hover align-middle">
+                  <thead><tr><?php foreach ($breakdown['headers'] as $header): ?><th><?= htmlspecialchars($header) ?></th><?php endforeach; ?></tr></thead>
+                  <tbody>
+                    <?php if (!empty($breakdown['rows'])): foreach ($breakdown['rows'] as $row): ?>
+                      <tr><?php foreach ($breakdown['fields'] as $field): ?><td><?= htmlspecialchars((string)($row[$field] ?? '')) ?></td><?php endforeach; ?></tr>
+                    <?php endforeach; else: ?>
+                      <tr><td colspan="<?= count($breakdown['headers']) ?>" class="text-center text-muted">No records found for this KPI.</td></tr>
+                    <?php endif; ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>
 
     <div class="row g-3 mb-4">
       <div class="col-lg-6"><div class="card chart-card">
@@ -329,38 +346,12 @@ foreach ($chargeTotals as $label => $total) {
     </div>
 
     <div class="row g-3 mb-4">
-      <div class="col-lg-8"><div class="card chart-card">
+      <div class="col-lg-7"><div class="card chart-card">
         <h6 class="fw-bold">Monthly Revenue + Completed Repairs</h6>
         <p class="chart-subtitle">Revenue and completed repair trends by month</p>
         <canvas id="monthlyRevenueChart"></canvas>
       </div></div>
-      <div class="col-lg-4"><div class="card chart-card">
-        <h6 class="fw-bold">Revenue by Value Range</h6>
-        <p class="chart-subtitle">Completed repairs grouped by price band</p>
-        <canvas id="revenueRangeChart"></canvas>
-      </div></div>
-    </div>
-
-    <div class="row g-3 mb-4">
-      <div class="col-lg-8"><div class="card chart-card">
-        <h6 class="fw-bold">Weekly Completion Volume</h6>
-        <p class="chart-subtitle">Stacked open remainder and completed jobs</p>
-        <canvas id="weeklyCompletionBarChart"></canvas>
-      </div></div>
-      <div class="col-lg-4"><div class="card chart-card small-chart">
-        <h6 class="fw-bold">Weekly Completion Rate</h6>
-        <p class="chart-subtitle">Completion percentage by week</p>
-        <canvas id="weeklyCompletionLineChart"></canvas>
-      </div></div>
-    </div>
-
-    <div class="row g-3 mb-4">
-      <div class="col-lg-6"><div class="card chart-card">
-        <h6 class="fw-bold">Avg Turnaround Time Trend</h6>
-        <p class="chart-subtitle">Average days from created to completed</p>
-        <canvas id="turnaroundTrendChart"></canvas>
-      </div></div>
-      <div class="col-lg-6"><div class="card chart-card">
+      <div class="col-lg-5"><div class="card chart-card">
         <h6 class="fw-bold">Technician Performance</h6>
         <p class="chart-subtitle">Completed repairs per technician</p>
         <canvas id="technicianPerformanceChart"></canvas>
@@ -376,13 +367,11 @@ foreach ($chargeTotals as $label => $total) {
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const brandUsers = <?= json_encode($brandUsers, JSON_NUMERIC_CHECK) ?>;
     const commonIssues = <?= json_encode($commonIssues, JSON_NUMERIC_CHECK) ?>;
     const monthlyRevenueTrend = <?= json_encode($monthlyRevenueTrend, JSON_NUMERIC_CHECK) ?>;
-    const revenueByRange = <?= json_encode($revenueByRange, JSON_NUMERIC_CHECK) ?>;
-    const weeklyCompletion = <?= json_encode($weeklyCompletion, JSON_NUMERIC_CHECK) ?>;
-    const turnaroundTrend = <?= json_encode($turnaroundTrend, JSON_NUMERIC_CHECK) ?>;
     const technicianPerformance = <?= json_encode($technicianPerformance, JSON_NUMERIC_CHECK) ?>;
     const warrantyPaidBreakdown = <?= json_encode($warrantyPaidBreakdown, JSON_NUMERIC_CHECK) ?>;
     const colors = ['#d62828', '#0d6efd', '#198754', '#f77f00', '#17a2b8', '#6c757d', '#6f42c1', '#20c997'];
@@ -424,36 +413,31 @@ foreach ($chargeTotals as $label => $total) {
         }
       }
     });
-    new Chart(document.getElementById('revenueRangeChart'), {
-      type: 'bar',
-      data: { labels: revenueByRange.map(row => row.range), datasets: [{ label: 'Repairs', data: revenueByRange.map(row => row.repairs), backgroundColor: colors, borderRadius: 8, maxBarThickness: 32 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0 } } } }
-    });
-    new Chart(document.getElementById('weeklyCompletionBarChart'), {
-      type: 'bar',
-      data: {
-        labels: weeklyCompletion.map(row => row.week_label),
-        datasets: [
-          { label: 'Completed', data: weeklyCompletion.map(row => row.completed_repairs), backgroundColor: 'rgba(25,135,84,.72)', borderRadius: 8 },
-          { label: 'Remaining', data: weeklyCompletion.map(row => Math.max(row.total_repairs - row.completed_repairs, 0)), backgroundColor: 'rgba(214,40,40,.55)', borderRadius: 8 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: legendStyle }, scales: { x: { ...axisStyle, stacked: true }, y: { ...axisStyle, stacked: true, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0 } } } }
-    });
-    new Chart(document.getElementById('weeklyCompletionLineChart'), {
-      type: 'line',
-      data: { labels: weeklyCompletion.map(row => row.week_label), datasets: [{ label: 'Completion Rate %', data: weeklyCompletion.map(row => row.completion_rate), borderColor: '#0d6efd', backgroundColor: 'rgba(13,110,253,.12)', tension: .4, fill: true, pointRadius: 4 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: legendStyle }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true, max: 100 } } }
-    });
-    new Chart(document.getElementById('turnaroundTrendChart'), {
-      type: 'line',
-      data: { labels: turnaroundTrend.map(row => row.month), datasets: [{ label: 'Avg Days', data: turnaroundTrend.map(row => row.avg_days), borderColor: '#f77f00', backgroundColor: 'rgba(247,127,0,.12)', tension: .4, fill: true, pointRadius: 4 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: legendStyle }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true } } }
-    });
     new Chart(document.getElementById('technicianPerformanceChart'), {
       type: 'bar',
-      data: { labels: technicianPerformance.map(row => row.technician), datasets: [{ label: 'Completed Repairs', data: technicianPerformance.map(row => row.completed_repairs), backgroundColor: 'rgba(214,40,40,.7)', borderRadius: 8, maxBarThickness: 26 }] },
-      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ...axisStyle, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0 } }, y: axisStyle } }
+      data: {
+        labels: technicianPerformance.map(row => row.technician),
+        datasets: [{
+          label: 'Completed Repairs',
+          data: technicianPerformance.map(row => row.completed_repairs),
+          backgroundColor: technicianPerformance.map((row, index) => colors[index % colors.length] + 'cc'),
+          borderColor: technicianPerformance.map((row, index) => colors[index % colors.length]),
+          borderWidth: 1,
+          borderRadius: technicianPerformance.map((row, index) => ({ topLeft: 6 + (index % 3) * 3, topRight: 6 + (index % 3) * 3, bottomLeft: 3, bottomRight: 3 })),
+          maxBarThickness: 42,
+          categoryPercentage: .72,
+          barPercentage: .82
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ...axisStyle, ticks: { ...axisStyle.ticks, maxRotation: 35, minRotation: 0 } },
+          y: { ...axisStyle, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0, stepSize: 1 } }
+        }
+      }
     });
     new Chart(document.getElementById('warrantyPaidChart'), {
       type: 'doughnut',

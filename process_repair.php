@@ -22,14 +22,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $time_slot = $_POST['time_slot'] ?? '';
     $issue = trim($_POST['issue_description'] ?? '');
     $warranty_id = intval($_POST['warranty_id'] ?? 0);
-    $technician_id = intval($_POST['technician_id'] ?? 0);
 
-    if ($warranty_id <= 0 || $technician_id <= 0 || $issue === '' || empty($preferred_date) || $time_slot === '') {
+    if ($warranty_id <= 0 || $issue === '' || empty($preferred_date) || $time_slot === '') {
         header("Location: customerbookrepair.php?error=incomplete");
         exit();
     }
 
+    if (strtotime((string)$preferred_date) < strtotime(date('Y-m-d'))) {
+        header("Location: customerbookrepair.php?error=past_date");
+        exit();
+    }
+
     $slotCapacity = 3;
+    if (!in_array($time_slot, ['Morning', 'Afternoon', 'Evening'], true)) {
+        header("Location: customerbookrepair.php?error=incomplete");
+        exit();
+    }
     $slotStmt = $conn->prepare("
         SELECT COUNT(*) AS total
         FROM repair_bookings
@@ -43,14 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($slotCount >= $slotCapacity) {
         header("Location: customerbookrepair.php?error=slot_full&date=" . urlencode((string)$preferred_date) . "&slot=" . urlencode($time_slot));
-        exit();
-    }
-
-    $technicianStmt = $conn->prepare("SELECT user_id FROM users WHERE user_id = ? AND role = 'Technician' LIMIT 1");
-    $technicianStmt->bind_param("i", $technician_id);
-    $technicianStmt->execute();
-    if (!$technicianStmt->get_result()->fetch_assoc()) {
-        header("Location: customerbookrepair.php?error=invalid_technician");
         exit();
     }
 
@@ -74,6 +74,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $amount = 0.00;
     $payment_status = 'Pending';
     $tracking = 'RS-' . date('YmdHis') . '-' . $customer_id;
+    $proofFile = null;
+
+    if (isset($_FILES['proof_file']) && ($_FILES['proof_file']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
+        if ($_FILES['proof_file']['error'] !== UPLOAD_ERR_OK || (int)($_FILES['proof_file']['size'] ?? 0) > 5 * 1024 * 1024) {
+            header("Location: customerbookrepair.php?error=upload");
+            exit();
+        }
+
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf', 'doc', 'docx'];
+        $originalName = (string)($_FILES['proof_file']['name'] ?? '');
+        $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+        if (!in_array($extension, $allowedExtensions, true)) {
+            header("Location: customerbookrepair.php?error=upload");
+            exit();
+        }
+
+        $uploadDir = __DIR__ . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'repair_proofs';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0775, true);
+        }
+
+        $filename = 'repair-proof-' . $customer_id . '-' . date('YmdHis') . '-' . bin2hex(random_bytes(4)) . '.' . $extension;
+        $target = $uploadDir . DIRECTORY_SEPARATOR . $filename;
+        if (!move_uploaded_file($_FILES['proof_file']['tmp_name'], $target)) {
+            header("Location: customerbookrepair.php?error=upload");
+            exit();
+        }
+        $proofFile = 'uploads/repair_proofs/' . $filename;
+    }
+
     $description = trim(
         "E-bike: " . $model .
         "\nIssue: " . $issue .
@@ -89,18 +119,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $stmt = $conn->prepare("
         INSERT INTO repair_bookings
-        (customer_id, warranty_id, service_type, preferred_date, preferred_time, description, booking_status, tracking_number, warranty_status, estimated_amount, payment_status)
-        VALUES (?, ?, ?, ?, ?, ?, 'Pending', ?, ?, ?, ?)
+        (customer_id, warranty_id, service_type, preferred_date, preferred_time, description, proof_file, booking_status, tracking_number, warranty_status, estimated_amount, payment_status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', ?, ?, ?, ?)
     ");
-    $stmt->bind_param("iissssssds", $customer_id, $warranty_id, $service, $preferred_date, $time_slot, $description, $tracking, $warranty_status, $amount, $payment_status);
+    $stmt->bind_param("iisssssssds", $customer_id, $warranty_id, $service, $preferred_date, $time_slot, $description, $proofFile, $tracking, $warranty_status, $amount, $payment_status);
     $stmt->execute();
     $booking_id = $conn->insert_id;
 
     $repairStmt = $conn->prepare("
-        INSERT INTO repairs (booking_id, customer_id, technician_id, ebike_model, issue_description, repair_status, warranty_status, amount)
+        INSERT INTO repairs (booking_id, customer_id, ebike_model, issue_description, proof_file, repair_status, warranty_status, amount)
         VALUES (?, ?, ?, ?, ?, 'Pending', ?, ?)
     ");
-    $repairStmt->bind_param("iiisssd", $booking_id, $customer_id, $technician_id, $model, $issue, $warranty_status, $amount);
+    $repairStmt->bind_param("iissssd", $booking_id, $customer_id, $model, $issue, $proofFile, $warranty_status, $amount);
     $repairStmt->execute();
     logActivity($conn, $customer_id, 'Customer', 'Repair booked', 'Created repair booking #' . $booking_id . ' for ' . $model . '.', 'repair', (int)$conn->insert_id);
 

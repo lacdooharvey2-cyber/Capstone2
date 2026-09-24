@@ -35,7 +35,7 @@ while ($bike = $bikeResult->fetch_assoc()) {
     $ownedEbikes[] = $bike;
 }
 
-$technicians = $conn->query("SELECT user_id, name FROM users WHERE role = 'Technician' ORDER BY name");
+$slotCapacity = 3;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,6 +72,14 @@ $technicians = $conn->query("SELECT user_id, name FROM users WHERE role = 'Techn
       box-shadow: 0 0 6px rgba(220,53,69,0.5);
       border-color: #dc3545;
     }
+    .availability-calendar { border: 1px solid #dee2e6; border-radius: 8px; overflow: hidden; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    .calendar-cell { align-items: center; background: #fff; border-right: 1px solid #edf0f2; border-top: 1px solid #edf0f2; display: flex; font-size: .82rem; font-weight: 700; justify-content: center; min-height: 42px; }
+    .calendar-cell:nth-child(7n) { border-right: 0; }
+    .calendar-head { background: #fff1f2; color: #842029; font-size: .72rem; min-height: 34px; text-transform: uppercase; }
+    .calendar-muted { color: #adb5bd; }
+    .calendar-full { background: #dc3545; color: #fff; }
+    .calendar-selected { outline: 3px solid rgba(13,110,253,.35); outline-offset: -3px; }
   </style>
 </head>
 <body>
@@ -88,8 +96,10 @@ $technicians = $conn->query("SELECT user_id, name FROM users WHERE role = 'Techn
       </div>
     <?php elseif (($_GET['error'] ?? '') === 'incomplete'): ?>
       <div class="alert alert-danger">Please complete all required repair booking fields.</div>
-    <?php elseif (($_GET['error'] ?? '') === 'invalid_technician'): ?>
-      <div class="alert alert-danger">Please choose a valid technician.</div>
+    <?php elseif (($_GET['error'] ?? '') === 'past_date'): ?>
+      <div class="alert alert-danger">Please choose today or a future service date.</div>
+    <?php elseif (($_GET['error'] ?? '') === 'upload'): ?>
+      <div class="alert alert-danger">The proof file could not be uploaded. Please use an image, PDF, DOC, or DOCX file up to 5MB.</div>
     <?php elseif (($_GET['error'] ?? '') === 'invalid_ebike'): ?>
       <div class="alert alert-danger">Please choose an e-bike linked to your account.</div>
     <?php endif; ?>
@@ -100,7 +110,7 @@ $technicians = $conn->query("SELECT user_id, name FROM users WHERE role = 'Techn
       </div>
       <a href="customerdashboard.php" class="btn btn-secondary">Back to Dashboard</a>
     <?php else: ?>
-    <form action="process_repair.php" method="POST">
+    <form action="process_repair.php" method="POST" enctype="multipart/form-data">
       <div class="summary-box mb-3">
         <div class="row g-3">
           <div class="col-md-4">
@@ -142,6 +152,11 @@ $technicians = $conn->query("SELECT user_id, name FROM users WHERE role = 'Techn
         <label class="form-label">Issue Description *</label>
         <textarea class="form-control" name="issue_description" id="issue_description" rows="4" placeholder="Describe the E-Bike issue..." required></textarea>
       </div>
+      <div class="mb-3">
+        <label class="form-label">Proof Image or File</label>
+        <input type="file" class="form-control" name="proof_file" accept="image/*,.pdf,.doc,.docx">
+        <div class="form-text">Upload a photo or document that shows the issue. Accepted: image, PDF, DOC, DOCX.</div>
+      </div>
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">Service Type *</label>
@@ -152,28 +167,29 @@ $technicians = $conn->query("SELECT user_id, name FROM users WHERE role = 'Techn
         </div>
         <div class="col-md-6">
           <label class="form-label">Preferred Service Date *</label>
-          <input type="date" class="form-control" name="preferred_date" required>
+          <input type="date" class="form-control" name="preferred_date" id="preferred_date" min="<?= htmlspecialchars(date('Y-m-d')) ?>" required>
         </div>
       </div>
       <div class="row mb-3">
         <div class="col-md-6">
-          <label class="form-label">Available Technician *</label>
-          <select class="form-select" name="technician_id" required>
-            <option value="">Choose a technician</option>
-            <?php if ($technicians): while ($technician = $technicians->fetch_assoc()): ?>
-              <option value="<?= htmlspecialchars((string)$technician['user_id']) ?>"><?= htmlspecialchars($technician['name']) ?></option>
-            <?php endwhile; endif; ?>
-          </select>
-        </div>
-        <div class="col-md-6">
           <label class="form-label">Time Slot *</label>
-          <select class="form-select" name="time_slot" required>
+          <select class="form-select" name="time_slot" id="time_slot" required>
             <option value="">Choose a time...</option>
             <option value="Morning">Morning</option>
             <option value="Afternoon">Afternoon</option>
             <option value="Evening">Evening</option>
           </select>
         </div>
+      </div>
+      <div class="mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <label class="form-label mb-0">Date Availability</label>
+          <span class="small"><span class="badge bg-danger">Red</span> Not available</span>
+        </div>
+        <div class="availability-calendar">
+          <div class="calendar-grid" id="availabilityCalendar"></div>
+        </div>
+        <div class="form-text">Blank dates are available. A date turns red only when Morning, Afternoon, and Evening are all fully booked. Full time slots are disabled after you pick a date.</div>
       </div>
 
       <!-- Agreement -->
@@ -197,6 +213,10 @@ $technicians = $conn->query("SELECT user_id, name FROM users WHERE role = 'Techn
     const ownedEbikes = <?= json_encode($ownedEbikes, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>;
     const warrantySelect = document.getElementById('warranty_id');
     const warrantyStatus = document.getElementById('warrantyStatus');
+    const preferredDate = document.getElementById('preferred_date');
+    const timeSlot = document.getElementById('time_slot');
+    const availabilityCalendar = document.getElementById('availabilityCalendar');
+    let availabilityPayload = { full_dates: [], full_slots: {}, slot_counts: {}, slot_capacity: <?= (int)$slotCapacity ?> };
 
     function refreshWarrantyStatus() {
       if (!warrantySelect) {
@@ -226,6 +246,67 @@ $technicians = $conn->query("SELECT user_id, name FROM users WHERE role = 'Techn
       });
       submitBtn.disabled = true;
     }
+
+    async function loadAvailability() {
+      if (!availabilityCalendar) return;
+      const visibleDate = preferredDate?.value ? new Date(preferredDate.value + 'T00:00:00') : new Date();
+      const year = visibleDate.getFullYear();
+      const month = visibleDate.getMonth() + 1;
+      const response = await fetch(`repair_availability_api.php?year=${year}&month=${month}`, { cache: 'no-store' });
+      if (!response.ok) return;
+      availabilityPayload = await response.json();
+      renderAvailability(year, month, availabilityPayload.full_dates || []);
+      refreshTimeSlotAvailability();
+    }
+
+    function renderAvailability(year, month, fullDates) {
+      const fullSet = new Set(fullDates);
+      const selected = preferredDate?.value || '';
+      const first = new Date(year, month - 1, 1);
+      const days = new Date(year, month, 0).getDate();
+      const leading = first.getDay();
+      const labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      availabilityCalendar.innerHTML = labels.map(label => `<div class="calendar-cell calendar-head">${label}</div>`).join('');
+      for (let i = 0; i < leading; i++) {
+        availabilityCalendar.insertAdjacentHTML('beforeend', '<div class="calendar-cell calendar-muted"></div>');
+      }
+      for (let day = 1; day <= days; day++) {
+        const value = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const classes = ['calendar-cell'];
+        if (fullSet.has(value)) classes.push('calendar-full');
+        if (selected === value) classes.push('calendar-selected');
+        availabilityCalendar.insertAdjacentHTML('beforeend', `<button type="button" class="${classes.join(' ')}" data-date="${value}" ${fullSet.has(value) ? 'disabled title="Not available"' : ''}>${day}</button>`);
+      }
+      availabilityCalendar.querySelectorAll('[data-date]').forEach((button) => {
+        button.addEventListener('click', () => {
+          preferredDate.value = button.dataset.date;
+          renderAvailability(year, month, fullDates);
+          refreshTimeSlotAvailability();
+        });
+      });
+    }
+
+    function refreshTimeSlotAvailability() {
+      if (!timeSlot || !preferredDate?.value) return;
+      const fullSlots = new Set(availabilityPayload.full_slots?.[preferredDate.value] || []);
+      const slotCounts = availabilityPayload.slot_counts?.[preferredDate.value] || {};
+      const capacity = Number(availabilityPayload.slot_capacity || <?= (int)$slotCapacity ?>);
+
+      [...timeSlot.options].forEach((option) => {
+        if (!option.value) return;
+        const isFull = fullSlots.has(option.value);
+        const count = Number(slotCounts[option.value] || 0);
+        option.disabled = isFull;
+        option.textContent = isFull ? `${option.value} - Full` : `${option.value} (${Math.max(0, capacity - count)} left)`;
+      });
+
+      if (timeSlot.selectedOptions[0]?.disabled) {
+        timeSlot.value = '';
+      }
+    }
+
+    preferredDate?.addEventListener('change', loadAvailability);
+    loadAvailability();
   </script>
 </body>
 </html>

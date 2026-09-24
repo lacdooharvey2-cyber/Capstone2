@@ -60,6 +60,7 @@ try {
     $update = $conn->prepare("UPDATE repair_bookings SET payment_status = 'Paid', paid_at = NOW(), xendit_payment_id = ? WHERE booking_id = ? AND customer_id = ?");
     $update->bind_param('sii', $paymentId, $bookingId, $customerId);
     $update->execute();
+    syncBookingPaymentToPayments($conn, $bookingId, 'GCash', 'Paid');
     logActivity($conn, $customerId, 'Customer', 'Xendit payment completed', 'Completed Xendit payment for booking #' . $bookingId . '.', 'booking', $bookingId);
 
     if (empty($booking['receipt_email_sent_at']) && filter_var($booking['customer_email'] ?? '', FILTER_VALIDATE_EMAIL)) {

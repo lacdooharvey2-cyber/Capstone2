@@ -3,7 +3,7 @@ session_start();
 include("db.php");
 include_once("schema_helpers.php");
 
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['AssistantAdmin', 'Admin', 'AssistantSuperAdmin', 'SuperAdmin'], true)) {
     header("Location: login.php");
     exit();
 }

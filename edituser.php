@@ -3,7 +3,7 @@ session_start();
 include("db.php");
 include_once("activity_log_helper.php");
 
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['AssistantAdmin', 'Admin', 'AssistantSuperAdmin', 'SuperAdmin'], true)) {
     header("Location: login.php");
     exit();
 }
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contact = trim($_POST['contact_number'] ?? '');
     $role = $_POST['role'] ?? 'Customer';
     $account_status = $_POST['account_status'] ?? 'Active';
-    $allowedRoles = ['Customer', 'Staff', 'Technician', 'Cashier', 'Admin', 'SuperAdmin'];
+    $allowedRoles = ['Customer', 'Staff', 'Technician', 'HeadTechnician', 'Cashier', 'AssistantAdmin', 'Admin', 'AssistantSuperAdmin', 'SuperAdmin'];
     $allowedStatuses = ['Active', 'Inactive'];
 
     if ($user_id > 0 && $name !== '' && $email !== '' && in_array($role, $allowedRoles, true) && in_array($account_status, $allowedStatuses, true)) {
@@ -52,7 +52,7 @@ $user = $stmt->get_result()->fetch_assoc();
           <div class="mb-3"><label class="form-label">Name</label><input class="form-control" name="name" value="<?= htmlspecialchars($user['name']) ?>" required></div>
           <div class="mb-3"><label class="form-label">Email</label><input class="form-control" type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required></div>
           <div class="mb-3"><label class="form-label">Contact Number</label><input class="form-control" name="contact_number" value="<?= htmlspecialchars($user['contact_number'] ?? '') ?>"></div>
-          <div class="mb-3"><label class="form-label">Role</label><select class="form-select" name="role"><?php foreach(['Customer','Staff','Technician','Cashier','Admin','SuperAdmin'] as $role): ?><option <?= $user['role']===$role?'selected':'' ?>><?= $role ?></option><?php endforeach; ?></select></div>
+          <div class="mb-3"><label class="form-label">Role</label><select class="form-select" name="role"><?php foreach(['Customer','Staff','Technician','HeadTechnician','Cashier','AssistantAdmin','Admin','AssistantSuperAdmin','SuperAdmin'] as $role): ?><option <?= $user['role']===$role?'selected':'' ?>><?= $role ?></option><?php endforeach; ?></select></div>
           <div class="mb-3"><label class="form-label">Status</label><select class="form-select" name="account_status"><?php foreach(['Active','Inactive'] as $status): ?><option <?= $user['account_status']===$status?'selected':'' ?>><?= $status ?></option><?php endforeach; ?></select></div>
           <button class="btn btn-danger">Save</button>
           <a href="adminmanageusers.php" class="btn btn-secondary">Cancel</a>

@@ -3,7 +3,7 @@ session_start();
 include("db.php");
 
 // Guard: only allow Technicians
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Technician') {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Technician', 'HeadTechnician'], true)) {
     header("Location: login.php");
     exit();
 }
@@ -22,7 +22,8 @@ $contacts = $conn->query("
              OR (sender_id=$user_id AND receiver_id=u.user_id) 
           ORDER BY sent_at DESC LIMIT 1) AS last_status
   FROM users u
-  WHERE u.role IN ('Admin','SuperAdmin','Customer','Cashier')
+  WHERE u.role IN ('AssistantAdmin','Admin','AssistantSuperAdmin','SuperAdmin','Customer','Cashier','HeadTechnician','Technician')
+    AND u.user_id <> $user_id
   ORDER BY u.name
 ");
 ?>

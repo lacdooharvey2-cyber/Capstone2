@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 session_start();
 require 'db.php';
+require_once 'schema_helpers.php';
+
+ensureRepairAutomationSchema($conn);
 
 $role = $_SESSION['role'] ?? '';
 $userId = (int)($_SESSION['user_id'] ?? 0);
-$allowedRoles = ['Admin', 'SuperAdmin', 'Technician', 'Cashier', 'Customer'];
+$allowedRoles = ['AssistantAdmin', 'Admin', 'AssistantSuperAdmin', 'SuperAdmin', 'Technician', 'HeadTechnician', 'Cashier', 'Customer'];
 if ($userId <= 0 || !in_array($role, $allowedRoles, true)) {
     header('Location: login.php');
     exit();
@@ -26,7 +29,7 @@ if ($role === 'Customer') {
 }
 
 $stmt = $conn->prepare("SELECT
-    r.repair_id, r.booking_id, r.ebike_model, r.issue_description, r.repair_status,
+    r.repair_id, r.booking_id, r.ebike_model, r.issue_description, r.proof_file, r.repair_status,
     r.warranty_status, r.amount, r.created_at, r.updated_at,
     c.name AS customer_name, c.custom_id AS customer_custom_id, c.email AS customer_email, c.contact_number AS customer_contact,
     t.name AS technician_name, t.custom_id AS technician_custom_id,
@@ -55,7 +58,7 @@ function detailValue(array $row, string $key, string $fallback = 'Not recorded')
 
 $backUrl = match ($role) {
     'Customer' => 'customerdashboard.php',
-    'Technician' => 'technicianrepair.php',
+    'Technician', 'HeadTechnician' => 'technicianrepair.php',
     'Cashier' => 'cashiertransactions.php',
     default => 'adminrepairs.php',
 };
@@ -81,7 +84,7 @@ $backUrl = match ($role) {
 <?php
 $navbar = match ($role) {
     'Customer' => 'navbarcustomer.php',
-    'Technician' => 'navbartechnician.php',
+    'Technician', 'HeadTechnician' => 'navbartechnician.php',
     'Cashier' => 'navbarcashier.php',
     default => 'navbaradmin.php',
 };
@@ -123,6 +126,14 @@ include $navbar;
             <div class="col-sm-6"><p class="detail-label">Created</p><p class="detail-value"><?= htmlspecialchars(detailValue($repair, 'created_at')) ?></p></div>
             <div class="col-sm-6"><p class="detail-label">Last updated</p><p class="detail-value"><?= htmlspecialchars(detailValue($repair, 'updated_at')) ?></p></div>
             <div class="col-12"><p class="detail-label">Reported issue</p><div class="issue-box"><?= htmlspecialchars(detailValue($repair, 'issue_description')) ?></div></div>
+            <div class="col-12">
+              <p class="detail-label">Issue proof</p>
+              <?php if (!empty($repair['proof_file'])): ?>
+                <a class="btn btn-outline-secondary btn-sm" href="<?= htmlspecialchars($repair['proof_file']) ?>" target="_blank"><i class="bi bi-paperclip me-1"></i>Open attachment</a>
+              <?php else: ?>
+                <p class="detail-value">No attachment uploaded</p>
+              <?php endif; ?>
+            </div>
           </div>
         </section>
       </div>

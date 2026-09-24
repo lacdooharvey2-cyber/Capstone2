@@ -4,7 +4,7 @@ include("db.php");
 include_once("schema_helpers.php");
 include_once("activity_log_helper.php");
 
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['AssistantAdmin', 'Admin', 'AssistantSuperAdmin', 'SuperAdmin'], true)) {
     header("Location: login.php");
     exit();
 }
@@ -41,7 +41,7 @@ $stmt = $conn->prepare("SELECT * FROM repairs WHERE repair_id=?");
 $stmt->bind_param("i", $repair_id);
 $stmt->execute();
 $repair = $stmt->get_result()->fetch_assoc();
-$technicians = $conn->query("SELECT user_id, name FROM users WHERE role='Technician' ORDER BY name");
+$technicians = $conn->query("SELECT user_id, name FROM users WHERE role IN ('Technician','HeadTechnician') ORDER BY role='HeadTechnician' DESC, name");
 ?>
 <!DOCTYPE html>
 <html lang="en">

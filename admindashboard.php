@@ -4,7 +4,7 @@ include("db.php");
 include_once("schema_helpers.php");
 include_once("dashboard_alerts_logs.php");
 
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin', 'SuperAdmin'], true)) {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['AssistantAdmin', 'Admin', 'AssistantSuperAdmin', 'SuperAdmin'], true)) {
     header("Location: login.php");
     exit();
 }
@@ -108,6 +108,80 @@ $brandRepairs = [];
 foreach ($brandTotals as $brand => $total) {
     $brandRepairs[] = ['brand' => $brand, 'total' => $total];
 }
+
+$dashboardBreakdowns = [
+    'total_repairs' => [
+        'title' => 'Total Repairs Breakdown',
+        'headers' => ['ID', 'Customer', 'E-Bike', 'Status', 'Created'],
+        'rows' => dashboardRows($conn, "
+            SELECT r.repair_id, COALESCE(u.name, CONCAT('Customer #', r.customer_id)) AS customer, r.ebike_model, r.repair_status, r.created_at
+            FROM repairs r LEFT JOIN users u ON u.user_id = r.customer_id
+            ORDER BY r.created_at DESC LIMIT 50
+        "),
+        'fields' => ['repair_id', 'customer', 'ebike_model', 'repair_status', 'created_at'],
+    ],
+    'open_queue' => [
+        'title' => 'Open Queue Breakdown',
+        'headers' => ['ID', 'Customer', 'E-Bike', 'Status', 'Technician'],
+        'rows' => dashboardRows($conn, "
+            SELECT r.repair_id, COALESCE(c.name, CONCAT('Customer #', r.customer_id)) AS customer, r.ebike_model, r.repair_status, COALESCE(t.name, 'Unassigned') AS technician
+            FROM repairs r
+            LEFT JOIN users c ON c.user_id = r.customer_id
+            LEFT JOIN users t ON t.user_id = r.technician_id
+            WHERE r.repair_status IN ('Pending','In Progress')
+            ORDER BY r.created_at ASC LIMIT 50
+        "),
+        'fields' => ['repair_id', 'customer', 'ebike_model', 'repair_status', 'technician'],
+    ],
+    'active_customers' => [
+        'title' => 'Active Customers Breakdown',
+        'headers' => ['Customer', 'Email', 'Repairs', 'Warranty Records'],
+        'rows' => dashboardRows($conn, "
+            SELECT u.name AS customer, u.email, COUNT(DISTINCT r.repair_id) AS repairs, COUNT(DISTINCT w.warranty_id) AS warranties
+            FROM users u
+            LEFT JOIN repairs r ON r.customer_id = u.user_id
+            LEFT JOIN warranty_records w ON w.customer_id = u.user_id
+            WHERE u.role='Customer'
+            GROUP BY u.user_id, u.name, u.email
+            HAVING repairs > 0 OR warranties > 0
+            ORDER BY u.name LIMIT 50
+        "),
+        'fields' => ['customer', 'email', 'repairs', 'warranties'],
+    ],
+    'monthly_revenue' => [
+        'title' => 'Monthly Revenue Breakdown',
+        'headers' => ['ID', 'Customer', 'E-Bike', 'Amount', 'Completed'],
+        'rows' => dashboardRows($conn, "
+            SELECT r.repair_id, COALESCE(u.name, CONCAT('Customer #', r.customer_id)) AS customer, r.ebike_model, CONCAT('PHP ', FORMAT(r.amount, 2)) AS amount, r.updated_at
+            FROM repairs r LEFT JOIN users u ON u.user_id = r.customer_id
+            WHERE r.repair_status='Completed' AND r.updated_at >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
+            ORDER BY r.updated_at DESC LIMIT 50
+        "),
+        'fields' => ['repair_id', 'customer', 'ebike_model', 'amount', 'updated_at'],
+    ],
+    'avg_turnaround' => [
+        'title' => 'Turnaround Breakdown',
+        'headers' => ['ID', 'Customer', 'Created', 'Completed', 'Days'],
+        'rows' => dashboardRows($conn, "
+            SELECT r.repair_id, COALESCE(u.name, CONCAT('Customer #', r.customer_id)) AS customer, r.created_at, r.updated_at, TIMESTAMPDIFF(DAY, r.created_at, r.updated_at) AS days
+            FROM repairs r LEFT JOIN users u ON u.user_id = r.customer_id
+            WHERE r.repair_status='Completed' AND r.updated_at IS NOT NULL
+            ORDER BY r.updated_at DESC LIMIT 50
+        "),
+        'fields' => ['repair_id', 'customer', 'created_at', 'updated_at', 'days'],
+    ],
+    'cancellations_this_month' => [
+        'title' => 'Cancellation Breakdown',
+        'headers' => ['ID', 'Customer', 'E-Bike', 'Cancelled', 'Issue'],
+        'rows' => dashboardRows($conn, "
+            SELECT r.repair_id, COALESCE(u.name, CONCAT('Customer #', r.customer_id)) AS customer, r.ebike_model, r.updated_at, r.issue_description
+            FROM repairs r LEFT JOIN users u ON u.user_id = r.customer_id
+            WHERE r.repair_status='Cancelled' AND r.updated_at >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
+            ORDER BY r.updated_at DESC LIMIT 50
+        "),
+        'fields' => ['repair_id', 'customer', 'ebike_model', 'updated_at', 'issue_description'],
+    ],
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -126,6 +200,9 @@ foreach ($brandTotals as $brand => $total) {
     .kpi-value { font-size: clamp(1.1rem, 2vw, 1.8rem); font-weight: 800; line-height: 1.08; margin-bottom: .55rem; overflow-wrap: anywhere; }
     .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
     .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
+    .kpi-button { background: transparent; border: 0; padding: 0; text-align: left; width: 100%; }
+    .kpi-button .card { cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
+    .kpi-button:hover .card { transform: translateY(-2px); box-shadow: 0 .7rem 1.4rem rgba(31,41,55,.12) !important; }
     @media (max-width: 900px) { .admin-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 575px) { .admin-kpi-grid { grid-template-columns: 1fr; } }
     .chart-card { min-height: 340px; padding: 20px; }
@@ -156,6 +233,7 @@ foreach ($brandTotals as $brand => $total) {
       foreach ($cards as $card):
       ?>
         <div>
+          <button type="button" class="kpi-button" data-bs-toggle="modal" data-bs-target="#kpiModal-<?= htmlspecialchars($card[0]) ?>">
           <div class="card kpi-card <?= $card[4] ?> shadow-sm h-100"><div class="card-body kpi-body">
             <div>
               <p class="kpi-label"><?= htmlspecialchars($card[1]) ?></p>
@@ -164,9 +242,37 @@ foreach ($brandTotals as $brand => $total) {
             </div>
             <div class="kpi-icon <?= $card[4] ?>"><i class="bi <?= $card[5] ?>"></i></div>
           </div></div>
+          </button>
         </div>
       <?php endforeach; ?>
     </div>
+
+    <?php foreach ($dashboardBreakdowns as $key => $breakdown): ?>
+      <div class="modal fade" id="kpiModal-<?= htmlspecialchars($key) ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"><?= htmlspecialchars($breakdown['title']) ?></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="table-responsive">
+                <table class="table table-sm table-hover align-middle">
+                  <thead><tr><?php foreach ($breakdown['headers'] as $header): ?><th><?= htmlspecialchars($header) ?></th><?php endforeach; ?></tr></thead>
+                  <tbody>
+                    <?php if (!empty($breakdown['rows'])): foreach ($breakdown['rows'] as $row): ?>
+                      <tr><?php foreach ($breakdown['fields'] as $field): ?><td><?= htmlspecialchars((string)($row[$field] ?? '')) ?></td><?php endforeach; ?></tr>
+                    <?php endforeach; else: ?>
+                      <tr><td colspan="<?= count($breakdown['headers']) ?>" class="text-center text-muted">No records found for this KPI.</td></tr>
+                    <?php endif; ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>
 
     <div class="row g-3 mb-4">
       <div class="col-lg-4"><div class="card chart-card">
@@ -189,6 +295,7 @@ foreach ($brandTotals as $brand => $total) {
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const repairStatus = <?= json_encode($repairStatus, JSON_NUMERIC_CHECK) ?>;
     const monthlyRepairs = <?= json_encode($monthlyRepairs, JSON_NUMERIC_CHECK) ?>;

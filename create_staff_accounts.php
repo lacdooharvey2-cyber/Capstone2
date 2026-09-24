@@ -10,11 +10,15 @@ if (PHP_SAPI !== 'cli') {
 }
 
 require 'db.php';
+require_once 'schema_helpers.php';
 
 // Keep the role enum aligned with the application roles before inserting accounts.
-$conn->query("ALTER TABLE users MODIFY role ENUM('Customer','Staff','Technician','Cashier','Admin','SuperAdmin') NOT NULL");
+ensureRepairAutomationSchema($conn);
 
 $accounts = [
+    ['ASUPER-01', 'Assistant SuperAdmin', 'assistant.superadmin@fixtrack.local', 'AssistantSuperAdmin'],
+    ['AADMIN-01', 'Assistant Admin', 'assistant.admin@fixtrack.local', 'AssistantAdmin'],
+    ['HTECH-001', 'Head Technician', 'head.tech@fixtrack.local', 'HeadTechnician'],
     ['TECH-001', 'Technician 1', 'tech1@fixtrack.local', 'Technician'],
     ['TECH-002', 'Technician 2', 'tech2@fixtrack.local', 'Technician'],
     ['TECH-003', 'Technician 3', 'tech3@fixtrack.local', 'Technician'],

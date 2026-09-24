@@ -7,25 +7,31 @@ require_once __DIR__ . '/db.php';
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
-if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'Technician') {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Technician', 'HeadTechnician'], true)) {
     http_response_code(403);
     echo json_encode(['error' => 'Unauthorized']);
     exit();
 }
 
 $technicianId = (int)$_SESSION['user_id'];
+$isHeadTechnician = ($_SESSION['role'] ?? '') === 'HeadTechnician';
 $weekStart = date('Y-m-d', strtotime('monday this week'));
 $weekEnd = date('Y-m-d', strtotime($weekStart . ' +7 days'));
 
-$stmt = $conn->prepare("
+$sql = "
     SELECT WEEKDAY(created_at) AS weekday_index, COUNT(*) AS total
     FROM repairs
-    WHERE technician_id = ?
+    WHERE " . ($isHeadTechnician ? "1=1" : "technician_id = ?") . "
       AND created_at >= ?
       AND created_at < ?
     GROUP BY WEEKDAY(created_at)
-");
-$stmt->bind_param('iss', $technicianId, $weekStart, $weekEnd);
+";
+$stmt = $conn->prepare($sql);
+if ($isHeadTechnician) {
+    $stmt->bind_param('ss', $weekStart, $weekEnd);
+} else {
+    $stmt->bind_param('iss', $technicianId, $weekStart, $weekEnd);
+}
 $stmt->execute();
 
 $weekCounts = array_fill(0, 7, 0);
