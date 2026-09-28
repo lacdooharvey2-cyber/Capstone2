@@ -89,9 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     body {
       min-height: 100vh;
-      background:
-        linear-gradient(135deg, rgba(25, 135, 84, 0.08), rgba(255, 255, 255, 0.94)),
-        url("https://imgcdn.zigwheels.ph/large/gallery/exterior/154/3048/nwow-gb2-slant-front-view-full-image-859417.jpg") center/cover fixed;
+      background: #f7f8f7;
       color: var(--brand-dark);
       font-family: 'Segoe UI', sans-serif;
       overflow-x: hidden;
@@ -100,20 +98,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .auth-shell {
       min-height: 100vh;
       display: flex;
-      align-items: center;
-      padding: 32px 16px;
+      align-items: stretch;
+      padding: 0;
     }
 
     .auth-panel {
       width: 100%;
-      max-width: 1040px;
-      margin: 0 auto;
+      max-width: none;
+      min-height: 100vh;
+      margin: 0;
       background: #fff;
-      border: 1px solid rgba(222, 226, 230, 0.85);
-      border-radius: 18px;
+      border: 0;
+      border-radius: 0;
       overflow: hidden;
-      box-shadow: 0 24px 70px rgba(31, 41, 55, 0.18);
+      box-shadow: none;
       animation: fadeInUp 0.7s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .auth-panel > .row {
+      min-height: 100vh;
     }
 
     @keyframes fadeInUp {
@@ -122,66 +125,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .brand-side {
-      min-height: 620px;
-      padding: 48px;
-      background:
-        linear-gradient(160deg, rgba(0, 59, 22, 0.94), rgba(18, 63, 35, 0.88)),
-        url("https://filebroker-cdn.lazada.com.ph/kf/S5cc28fccabd645cf918dfee7f7a54fa7I.jpg") center/cover;
-      color: #fff;
+      min-height: 100vh;
+      padding: clamp(48px, 8vw, 120px);
+      background: #f7f8f7;
+      border-right: 1px solid #e4e9e5;
+      color: #17221a;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       position: relative;
-      isolation: isolate;
-    }
-
-    .brand-side::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent 25%, rgba(255,255,255,.12) 48%, transparent 70%);
-      transform: translateX(-110%);
-      animation: panelSheen 7s ease-in-out 1.2s infinite;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    @keyframes panelSheen {
-      0%, 55% { transform: translateX(-110%); }
-      75%, 100% { transform: translateX(110%); }
     }
 
     .brand-mark {
-      width: 54px;
-      height: 54px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.14);
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      background: #003b16;
+      color: #fff;
       display: grid;
       place-items: center;
-      font-size: 28px;
-      border: 1px solid rgba(255,255,255,0.25);
-      animation: markPulse 3.5s ease-in-out infinite;
+      font-size: 18px;
     }
 
-    @keyframes markPulse {
-      0%, 100% { transform: translateY(0); box-shadow: 0 0 0 rgba(255,255,255,0); }
-      50% { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.16); }
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #003b16;
+      font-size: 1.25rem;
+      font-weight: 800;
+      text-decoration: none;
     }
 
     .brand-title {
-      font-size: 42px;
+      max-width: 420px;
+      font-size: clamp(2.3rem, 4vw, 4rem);
       font-weight: 800;
       letter-spacing: 0;
-      margin: 24px 0 10px;
-      animation: contentReveal .7s .15s both;
+      line-height: 1.08;
+      margin: 42px 0 16px;
     }
 
     .brand-copy {
       max-width: 390px;
-      color: rgba(255,255,255,0.82);
+      color: #647068;
       font-size: 16px;
       line-height: 1.7;
-      animation: contentReveal .7s .25s both;
     }
 
     .feature-row {
@@ -194,16 +183,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       align-items: center;
       gap: 12px;
       padding: 12px 14px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 8px;
-      color: rgba(255,255,255,0.92);
-      animation: contentReveal .7s both;
+      background: #e5f8e9;
+      border: 1px solid #b8e4c2;
+      border-radius: 6px;
+      color: #146c43;
       transition: transform .2s ease, background-color .2s ease;
     }
 
     .feature-pill:hover {
-      background: rgba(255,255,255,0.18);
+      background: #d9f2df;
       transform: translateX(5px);
     }
 
@@ -216,7 +204,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .login-side {
-      padding: 52px 46px;
+      min-height: 100vh;
+      padding: clamp(48px, 8vw, 120px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       animation: contentReveal .7s .18s both;
     }
 
@@ -366,16 +358,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     @media (max-width: 575px) {
-      .auth-shell {
-        padding: 16px 10px;
-      }
-
       .brand-side {
         display: none;
       }
 
       .auth-panel {
-        border-radius: 12px;
+        border-radius: 0;
       }
 
       .login-side {
@@ -399,12 +387,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="row g-0">
         <div class="col-lg-6 brand-side">
           <div>
-            <div class="brand-mark"><i class="bi bi-lightning-charge-fill"></i></div>
+            <a class="brand-lockup" href="Homepage.php">
+              <span class="brand-mark"><i class="bi bi-wrench-adjustable"></i></span> FixTrack
+            </a>
+            <h1 class="brand-title">Built for smoother E-bike service.</h1>
+            <p class="brand-copy">Book repairs, track service progress, and manage warranty coverage in one clear workspace.</p>
           </div>
         </div>
 
         <div class="col-lg-6 login-side">
           <div class="mb-4">
+            <a href="Homepage.php" class="small text-success text-decoration-none d-inline-flex align-items-center gap-2 mb-4">
+              <i class="bi bi-arrow-left"></i> Back to home
+            </a>
+            <br>
             <span class="badge text-bg-danger-subtle text-danger border border-danger-subtle mb-3">FixTrack Portal</span>
             <h2 class="login-heading">Welcome back</h2>
             <p class="text-muted mb-0">Login to book and track your e-bike repair.</p>

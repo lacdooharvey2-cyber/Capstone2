@@ -16,6 +16,7 @@ $currentPage = basename($_SERVER['PHP_SELF'] ?? '');
     <a class="app-side-button <?= $currentPage === 'adminmanageusers.php' ? 'is-active' : '' ?>" href="adminmanageusers.php"><i class="bi bi-people"></i><span>Users</span></a>
     <?php endif; ?>
     <a class="app-side-button <?= $currentPage === 'adminrepairs.php' ? 'is-active' : '' ?>" href="adminrepairs.php"><i class="bi bi-tools"></i><span>Repairs</span></a>
+    <a class="app-side-button <?= $currentPage === 'adminreports.php' ? 'is-active' : '' ?>" href="adminreports.php"><i class="bi bi-clipboard2-data"></i><span>Service Reports</span></a>
     <a class="app-side-button <?= $currentPage === 'adminwarranties.php' ? 'is-active' : '' ?>" href="adminwarranties.php"><i class="bi bi-shield-check"></i><span>Warranty</span></a>
     <a class="app-side-button <?= $currentPage === 'adminmessages.php' ? 'is-active' : '' ?>" href="adminmessages.php"><i class="bi bi-chat-dots"></i><span>Messages</span></a>
     <a class="app-side-button <?= $currentPage === 'adminanalytics.php' ? 'is-active' : '' ?>" href="adminanalytics.php"><i class="bi bi-graph-up-arrow"></i><span>Analytics</span></a>

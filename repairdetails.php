@@ -50,6 +50,21 @@ if (!$repair) {
     $pageError = 'Repair record not found or you do not have access to it.';
 }
 
+$serviceReport = null;
+$chargeItems = [];
+if ($repair) {
+    $reportStmt = $conn->prepare('SELECT tr.*, u.name AS report_technician_name FROM technician_repair_reports tr LEFT JOIN users u ON u.user_id=tr.technician_id WHERE tr.repair_id=? LIMIT 1');
+    $reportStmt->bind_param('i', $repairId);
+    $reportStmt->execute();
+    $serviceReport = $reportStmt->get_result()->fetch_assoc();
+    if ($serviceReport) {
+        $itemStmt = $conn->prepare('SELECT item_type, item_name, quantity, unit_price FROM repair_charge_items WHERE report_id=? ORDER BY item_id');
+        $itemStmt->bind_param('i', $serviceReport['report_id']);
+        $itemStmt->execute();
+        $chargeItems = $itemStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+}
+
 function detailValue(array $row, string $key, string $fallback = 'Not recorded'): string
 {
     $value = trim((string)($row[$key] ?? ''));
@@ -164,6 +179,26 @@ include $navbar;
         </section>
       </div>
     </div>
+    <section class="details-card p-4 mt-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-4">
+        <div>
+          <h2 class="h5 mb-1"><i class="bi bi-receipt-cutoff text-success me-2"></i>Itemized Service Report</h2>
+          <p class="text-secondary mb-0">Work completed and a transparent breakdown of the customer payment.</p>
+        </div>
+        <?php if ($serviceReport): ?><span class="badge bg-success">Reported by <?= htmlspecialchars($serviceReport['report_technician_name'] ?? 'Technician') ?></span><?php endif; ?>
+      </div>
+      <?php if ($serviceReport): ?>
+        <?php if (trim((string)$serviceReport['work_performed']) !== ''): ?><p class="detail-label">Work performed</p><div class="issue-box mb-3"><?= htmlspecialchars($serviceReport['work_performed']) ?></div><?php endif; ?>
+        <?php if (trim((string)$serviceReport['technician_notes']) !== ''): ?><p class="detail-label">Technician notes</p><div class="issue-box mb-3"><?= htmlspecialchars($serviceReport['technician_notes']) ?></div><?php endif; ?>
+        <div class="table-responsive"><table class="table align-middle mb-0"><thead class="table-light"><tr><th>Type</th><th>Part or service</th><th class="text-end">Qty</th><th class="text-end">Unit price</th><th class="text-end">Line total</th></tr></thead><tbody>
+          <?php $itemizedTotal = 0; foreach ($chargeItems as $item): $lineTotal = (float)$item['quantity'] * (float)$item['unit_price']; $itemizedTotal += $lineTotal; ?>
+          <tr><td><?= htmlspecialchars($item['item_type']) ?></td><td><?= htmlspecialchars($item['item_name']) ?></td><td class="text-end"><?= number_format((float)$item['quantity'], 2) ?></td><td class="text-end">PHP <?= number_format((float)$item['unit_price'], 2) ?></td><td class="text-end">PHP <?= number_format($lineTotal, 2) ?></td></tr>
+          <?php endforeach; ?>
+        </tbody><tfoot><tr><th colspan="4" class="text-end">Total payable</th><th class="text-end text-success">PHP <?= number_format($itemizedTotal, 2) ?></th></tr></tfoot></table></div>
+      <?php else: ?>
+        <div class="alert alert-info mb-0"><i class="bi bi-info-circle me-1"></i>The technician has not submitted an itemized service report yet. The final payment amount will appear here after assessment.</div>
+      <?php endif; ?>
+    </section>
   <?php endif; ?>
 </main>
 </body>

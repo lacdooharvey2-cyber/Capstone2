@@ -303,6 +303,7 @@ if ($technicianOptions) {
                   <td><span class="badge bg-<?php echo $r['repair_status']=='Completed'?'success':($r['repair_status']=='In Progress'?'primary':'warning'); ?>"><?= htmlspecialchars($r['repair_status']) ?></span></td>
                   <td>
                     <a href="repairdetails.php?id=<?= urlencode($r['repair_id']) ?>" class="btn btn-sm btn-outline-secondary w-100 mb-1">View</a>
+                    <a href="technicianreport.php?repair_id=<?= urlencode($r['repair_id']) ?>" class="btn btn-sm btn-outline-success w-100 mb-1">Report</a>
                     <form method="post" action="technicianupdaterepair.php" class="repair-action-form">
                       <input type="hidden" name="repair_id" value="<?= htmlspecialchars($r['repair_id']) ?>">
                       <?php if ($isHeadTechnician): ?>

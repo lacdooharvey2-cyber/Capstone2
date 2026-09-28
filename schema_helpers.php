@@ -58,6 +58,28 @@ function ensureRepairAutomationSchema(mysqli $conn): void
     if (!columnExists($conn, 'repairs', 'proof_file')) {
         $conn->query("ALTER TABLE repairs ADD COLUMN proof_file VARCHAR(255) NULL AFTER issue_description");
     }
+
+    $conn->query("CREATE TABLE IF NOT EXISTS technician_repair_reports (
+        report_id INT AUTO_INCREMENT PRIMARY KEY,
+        repair_id INT NOT NULL UNIQUE,
+        technician_id INT NOT NULL,
+        work_performed TEXT NULL,
+        technician_notes TEXT NULL,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX idx_report_technician (technician_id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
+    $conn->query("CREATE TABLE IF NOT EXISTS repair_charge_items (
+        item_id INT AUTO_INCREMENT PRIMARY KEY,
+        report_id INT NOT NULL,
+        item_type ENUM('Labor','Part','Other') NOT NULL DEFAULT 'Part',
+        item_name VARCHAR(150) NOT NULL,
+        quantity DECIMAL(10,2) NOT NULL DEFAULT 1.00,
+        unit_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_charge_report (report_id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 }
 
 function calculatedWarrantyRecordStatus(?string $purchaseDate, int $warrantyPeriod): string

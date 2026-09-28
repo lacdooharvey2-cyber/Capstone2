@@ -88,9 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     body {
       min-height: 100vh;
       margin: 0;
-      background:
-        linear-gradient(135deg, rgba(229, 248, 233, .92), rgba(255,255,255,.94)),
-        url("https://imgcdn.zigwheels.ph/large/gallery/exterior/154/3048/nwow-gb2-slant-front-view-full-image-859417.jpg") center/cover fixed;
+      background: #f7f8f7;
       color: var(--brand-dark);
       font-family: "Segoe UI", Arial, sans-serif;
       overflow-x: hidden;
@@ -101,64 +99,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       max-width: none;
       min-height: 100vh;
       margin: 0;
-      overflow: hidden;
+      overflow: visible;
       background: #fff;
       border: 0;
       border-radius: 0;
       box-shadow: none;
       animation: panelIn .7s cubic-bezier(.2,.8,.2,1) both;
     }
+    .register-panel > .row { min-height: 100vh; }
     .register-brand {
       min-height: 100vh;
       padding: clamp(48px, 7vw, 110px);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      color: #fff;
-      background:
-        linear-gradient(160deg, rgba(0,59,22,.94), rgba(20,108,67,.88)),
-        url("https://filebroker-cdn.lazada.com.ph/kf/S5cc28fccabd645cf918dfee7f7a54fa7I.jpg") center/cover;
+      justify-content: center;
+      color: #17221a;
+      background: #f7f8f7;
+      border-right: 1px solid #e4e9e5;
       position: relative;
-      isolation: isolate;
-    }
-    .register-brand::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent 25%, rgba(255,255,255,.12) 48%, transparent 70%);
-      transform: translateX(-110%);
-      animation: sheen 7s ease-in-out 1s infinite;
-      pointer-events: none;
-      z-index: -1;
     }
     .brand-mark {
-      width: 54px;
-      height: 54px;
+      width: 38px;
+      height: 38px;
       display: grid;
       place-items: center;
-      border-radius: 14px;
-      background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.25);
-      font-size: 28px;
-      animation: markFloat 3.5s ease-in-out infinite;
+      border-radius: 6px;
+      background: #003b16;
+      color: #fff;
+      font-size: 18px;
     }
-    .brand-title { margin: 22px 0 10px; font-size: 42px; font-weight: 800; }
-    .brand-copy { max-width: 370px; color: rgba(255,255,255,.82); line-height: 1.7; }
+    .brand-lockup { display: inline-flex; align-items: center; gap: 10px; color: #003b16; font-size: 1.25rem; font-weight: 800; text-decoration: none; }
+    .brand-title { max-width: 420px; margin: 42px 0 16px; font-size: clamp(2.3rem, 4vw, 4rem); font-weight: 800; line-height: 1.08; }
+    .brand-copy { max-width: 390px; color: #647068; line-height: 1.7; }
     .register-points { display: grid; gap: 12px; }
     .register-point {
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 12px 14px;
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 8px;
-      background: rgba(255,255,255,.12);
-      color: rgba(255,255,255,.92);
+      border: 1px solid #b8e4c2;
+      border-radius: 6px;
+      background: #e5f8e9;
+      color: #146c43;
       animation: reveal .7s both;
     }
     .register-point:nth-child(2) { animation-delay: .12s; }
     .register-point:nth-child(3) { animation-delay: .2s; }
-    .register-form { padding: clamp(44px, 7vw, 100px); animation: reveal .7s .15s both; }
+    .register-form {
+      min-height: 100vh;
+      padding: clamp(32px, 4vw, 64px) clamp(28px, 6vw, 96px);
+      animation: reveal .7s .15s both;
+    }
     .register-form .form-section { animation: reveal .6s both; }
     .register-form .form-section:nth-child(2) { animation-delay: .08s; }
     .register-form .form-section:nth-child(3) { animation-delay: .16s; }
@@ -183,8 +174,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .login-link:hover { text-decoration: underline; }
     @keyframes panelIn { from { opacity: 0; transform: translateY(18px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes sheen { 0%,55% { transform: translateX(-110%); } 75%,100% { transform: translateX(110%); } }
-    @keyframes markFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
     @media (max-width: 991px) {
       .register-brand { min-height: auto; padding: 32px; }
       .register-form { padding: 34px; }
@@ -204,12 +193,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <main class="register-shell">
     <section class="register-panel">
       <div class="row g-0">
-        <div class="col-lg-4 register-brand">
+        <div class="col-lg-3 register-brand">
           <div>
-            <div class="brand-mark"><i class="bi bi-lightning-charge-fill"></i></div>
+            <a class="brand-lockup" href="Homepage.php"><span class="brand-mark"><i class="bi bi-wrench-adjustable"></i></span> FixTrack</a>
+            <h1 class="brand-title">Built for smoother E-bike service.</h1>
+            <p class="brand-copy">Create your account to book repairs, track service progress, and manage warranty coverage in one place.</p>
           </div>
         </div>
-        <div class="col-lg-8 register-form">
+        <div class="col-lg-9 register-form">
           <div>
             <span class="badge text-bg-danger-subtle text-danger border border-danger-subtle mb-3">FixTrack Portal</span>
             <h2 class="form-heading">Create your account</h2>
@@ -260,7 +251,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
         </div>
         <div class="row g-3 mt-0">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label class="form-label">Gender *</label>
           <select name="gender" class="form-select" required>
             <option value="">Select Gender</option>
@@ -268,11 +259,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option>Female</option>
           </select>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label class="form-label">Date of Birth *</label>
           <input type="date" name="dob" class="form-control" required>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label class="form-label">Age *</label>
           <input type="number" name="age" min="1" max="120" class="form-control" required>
         </div>

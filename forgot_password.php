@@ -72,17 +72,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
     :root { --brand-red: #198754; --brand-dark: #1f2937; }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { min-height: 100vh; margin: 0; background: linear-gradient(135deg, rgba(229,248,233,.92), rgba(255,255,255,.94)), url("https://imgcdn.zigwheels.ph/large/gallery/exterior/154/3048/nwow-gb2-slant-front-view-full-image-859417.jpg") center/cover fixed; color: var(--brand-dark); font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
+    body { min-height: 100vh; margin: 0; background: #f7f8f7; color: var(--brand-dark); font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
     .auth-shell { min-height: 100vh; display: flex; align-items: stretch; padding: 0; }
     .auth-panel { width: 100%; max-width: none; min-height: 100vh; margin: 0; background: #fff; border: 0; border-radius: 0; overflow: hidden; box-shadow: none; animation: fadeInUp .7s cubic-bezier(.2,.8,.2,1) both; }
-    .brand-side { min-height: 100vh; padding: clamp(48px, 8vw, 120px); background: linear-gradient(160deg, rgba(0,59,22,.94), rgba(20,108,67,.88)), url("https://filebroker-cdn.lazada.com.ph/kf/S5cc28fccabd645cf918dfee7f7a54fa7I.jpg") center/cover; color: #fff; display: flex; flex-direction: column; justify-content: space-between; position: relative; isolation: isolate; }
-    .brand-side::after { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 25%, rgba(255,255,255,.12) 48%, transparent 70%); transform: translateX(-110%); animation: panelSheen 7s ease-in-out 1.2s infinite; pointer-events: none; z-index: -1; }
-    .brand-mark { width: 54px; height: 54px; border-radius: 14px; background: rgba(255,255,255,.14); display: grid; place-items: center; font-size: 28px; border: 1px solid rgba(255,255,255,.25); animation: markPulse 3.5s ease-in-out infinite; }
-    .brand-title { font-size: 42px; font-weight: 800; margin: 24px 0 10px; animation: contentReveal .7s .15s both; }
-    .brand-copy { max-width: 390px; color: rgba(255,255,255,.82); font-size: 16px; line-height: 1.7; animation: contentReveal .7s .25s both; }
+    .brand-side { min-height: 100vh; padding: clamp(48px, 8vw, 120px); background: #f7f8f7; border-right: 1px solid #e4e9e5; color: #17221a; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .brand-mark { width: 38px; height: 38px; border-radius: 6px; background: #003b16; color: #fff; display: grid; place-items: center; font-size: 18px; }
+    .brand-lockup { display: inline-flex; align-items: center; gap: 10px; color: #003b16; font-size: 1.25rem; font-weight: 800; text-decoration: none; }
+    .brand-title { max-width: 420px; font-size: clamp(2.3rem, 4vw, 4rem); font-weight: 800; line-height: 1.08; margin: 42px 0 16px; }
+    .brand-copy { max-width: 390px; color: #647068; font-size: 16px; line-height: 1.7; }
     .feature-row { display: grid; gap: 12px; }
-    .feature-pill { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.16); border-radius: 8px; color: rgba(255,255,255,.92); animation: contentReveal .7s both; transition: transform .2s ease, background-color .2s ease; }
-    .feature-pill:hover { background: rgba(255,255,255,.18); transform: translateX(5px); }
+    .feature-pill { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #e5f8e9; border: 1px solid #b8e4c2; border-radius: 6px; color: #146c43; animation: contentReveal .7s both; transition: transform .2s ease, background-color .2s ease; }
+    .feature-pill:hover { background: #d9f2df; transform: translateX(5px); }
     .feature-pill:nth-child(2) { animation-delay: .12s; }
     .feature-pill:nth-child(3) { animation-delay: .2s; }
     .login-side { padding: clamp(48px, 8vw, 120px); display: flex; flex-direction: column; justify-content: center; animation: contentReveal .7s .18s both; }
@@ -105,8 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
     .small-link:hover { text-decoration: underline; }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes contentReveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes panelSheen { 0%,55% { transform: translateX(-110%); } 75%,100% { transform: translateX(110%); } }
-    @keyframes markPulse { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.16); } }
     @media (max-width: 991px) { .brand-side { min-height: auto; padding: 34px; } .login-side { padding: 34px; } }
     @media (max-width: 575px) { .brand-side { display: none; } .login-side { padding: 30px 22px; } .login-heading { font-size: 26px; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
@@ -118,7 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
       <div class="row g-0">
         <div class="col-lg-5 brand-side">
           <div>
-            <div class="brand-mark"><i class="bi bi-lightning-charge-fill"></i></div>
+            <a class="brand-lockup" href="Homepage.php"><span class="brand-mark"><i class="bi bi-wrench-adjustable"></i></span> FixTrack</a>
+            <h1 class="brand-title">Account support, made simple.</h1>
+            <p class="brand-copy">Use your email to securely restore access to your FixTrack E-bike service account.</p>
           </div>
         </div>
         <div class="col-lg-7 login-side">

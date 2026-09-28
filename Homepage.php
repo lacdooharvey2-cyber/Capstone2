@@ -194,24 +194,6 @@ if (isset($_SESSION['role'])) {
           </div>
         </div>
       </section>
-
-      <section class="proof" id="about">
-        <div class="proof-item"><strong>One workspace</strong><span>for every repair and service record</span></div>
-        <div class="proof-item"><strong>Clear updates</strong><span>from booking through completion</span></div>
-        <div class="proof-item"><strong>Role-based access</strong><span>for your whole service operation</span></div>
-      </section>
-
-      <section class="features" id="features">
-        <div class="features-inner">
-          <span class="section-label">MADE FOR THE WORKSHOP</span>
-          <h2>Everything your team needs to keep service moving.</h2>
-          <div class="feature-grid">
-            <article class="feature"><i class="bi bi-calendar2-check"></i><h3>Repair scheduling</h3><p>Organize requests and workshop availability without losing sight of the day’s priorities.</p></article>
-            <article class="feature"><i class="bi bi-person-gear"></i><h3>Technician workflow</h3><p>Give technicians a focused queue, clear repair details, and up-to-date job statuses.</p></article>
-            <article class="feature"><i class="bi bi-receipt"></i><h3>Payments and warranties</h3><p>Manage payment records and warranty verification alongside the repairs they support.</p></article>
-          </div>
-        </div>
-      </section>
     </main>
 
     <footer class="footer"><span>&copy; <?= date('Y') ?> FixTrack</span><span>E-bike repair management made clear.</span></footer>
