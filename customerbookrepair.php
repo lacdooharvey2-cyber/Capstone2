@@ -58,28 +58,28 @@ $slotCapacity = 3;
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    h3 { color: #dc3545; font-weight: bold; margin-bottom: 20px; }
+    h3 { color: #198754; font-weight: bold; margin-bottom: 20px; }
     .form-label { font-weight: 500; margin-bottom: 4px; }
     .summary-box { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 16px; }
     .summary-label { color: #6c757d; font-size: 14px; margin-bottom: 4px; }
     .summary-value { font-weight: 700; margin-bottom: 0; }
-    .btn-danger { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-    .btn-danger:hover {
+    .btn-success { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .btn-success:hover {
       transform: translateY(-2px);
-      box-shadow: 0px 4px 12px rgba(220,53,69,0.4);
+      box-shadow: 0px 4px 12px rgba(25,135,84,0.4);
     }
     input:focus, select:focus, textarea:focus {
-      box-shadow: 0 0 6px rgba(220,53,69,0.5);
-      border-color: #dc3545;
+      box-shadow: 0 0 6px rgba(25,135,84,0.5);
+      border-color: #198754;
     }
     .availability-calendar { border: 1px solid #dee2e6; border-radius: 8px; overflow: hidden; }
     .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
     .calendar-cell { align-items: center; background: #fff; border-right: 1px solid #edf0f2; border-top: 1px solid #edf0f2; display: flex; font-size: .82rem; font-weight: 700; justify-content: center; min-height: 42px; }
     .calendar-cell:nth-child(7n) { border-right: 0; }
-    .calendar-head { background: #fff1f2; color: #842029; font-size: .72rem; min-height: 34px; text-transform: uppercase; }
+    .calendar-head { background: #f3f5f3; color: #374151; font-size: .72rem; min-height: 34px; text-transform: uppercase; }
     .calendar-muted { color: #adb5bd; }
-    .calendar-full { background: #dc3545; color: #fff; }
-    .calendar-selected { outline: 3px solid rgba(13,110,253,.35); outline-offset: -3px; }
+    .calendar-full { background: #198754; color: #fff; }
+    .calendar-selected { outline: 3px solid rgba(25,135,84,.35); outline-offset: -3px; }
   </style>
 </head>
 <body>
@@ -201,7 +201,7 @@ $slotCapacity = 3;
       </div>
 
       <div class="d-flex justify-content-between">
-        <button type="submit" class="btn btn-danger">Submit Repair Request</button>
+        <button type="submit" class="btn btn-success">Submit Repair Request</button>
         <a href="customerdashboard.php" class="btn btn-secondary">Cancel</a>
       </div>
     </form>

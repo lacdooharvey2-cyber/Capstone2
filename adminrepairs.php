@@ -117,6 +117,7 @@ $repairBreakdowns = [
 </head>
 <body>
   <?php include("navbaradmin.php"); ?> <!-- make sure file exists -->
+  <?php $isAssistantAdmin = ($_SESSION['role'] ?? '') === 'AssistantAdmin'; ?>
 
   <div class="container mt-4">
     <div class="page-hero">
@@ -125,22 +126,22 @@ $repairBreakdowns = [
     </div>
 
     <div class="repair-live-grid" aria-live="polite">
-      <button type="button" class="repair-kpi-button" data-bs-toggle="modal" data-bs-target="#repairKpi-total_repairs"><div class="card repair-live-card text-danger shadow-sm"><div class="card-body">
+      <div class="<?= $isAssistantAdmin ? '' : 'repair-kpi-button' ?>" <?= $isAssistantAdmin ? '' : 'data-bs-toggle="modal" data-bs-target="#repairKpi-total_repairs"' ?>><div class="card repair-live-card text-danger shadow-sm"><div class="card-body">
         <p class="repair-live-label">Total Repairs</p>
         <p class="repair-live-value" data-stat="total_repairs"><?= htmlspecialchars((string)$totalRepairs) ?></p>
-      </div></div></button>
-      <button type="button" class="repair-kpi-button" data-bs-toggle="modal" data-bs-target="#repairKpi-pending_repairs"><div class="card repair-live-card text-warning shadow-sm"><div class="card-body">
+      </div></div></div>
+      <div class="<?= $isAssistantAdmin ? '' : 'repair-kpi-button' ?>" <?= $isAssistantAdmin ? '' : 'data-bs-toggle="modal" data-bs-target="#repairKpi-pending_repairs"' ?>><div class="card repair-live-card text-warning shadow-sm"><div class="card-body">
         <p class="repair-live-label">Pending</p>
         <p class="repair-live-value" data-stat="pending_repairs"><?= htmlspecialchars((string)$pendingRepairs) ?></p>
-      </div></div></button>
-      <button type="button" class="repair-kpi-button" data-bs-toggle="modal" data-bs-target="#repairKpi-in_progress_repairs"><div class="card repair-live-card text-primary shadow-sm"><div class="card-body">
+      </div></div></div>
+      <div class="<?= $isAssistantAdmin ? '' : 'repair-kpi-button' ?>" <?= $isAssistantAdmin ? '' : 'data-bs-toggle="modal" data-bs-target="#repairKpi-in_progress_repairs"' ?>><div class="card repair-live-card text-primary shadow-sm"><div class="card-body">
         <p class="repair-live-label">In Progress</p>
         <p class="repair-live-value" data-stat="in_progress_repairs"><?= htmlspecialchars((string)$inProgressRepairs) ?></p>
-      </div></div></button>
-      <button type="button" class="repair-kpi-button" data-bs-toggle="modal" data-bs-target="#repairKpi-completed_repairs"><div class="card repair-live-card text-success shadow-sm"><div class="card-body">
+      </div></div></div>
+      <div class="<?= $isAssistantAdmin ? '' : 'repair-kpi-button' ?>" <?= $isAssistantAdmin ? '' : 'data-bs-toggle="modal" data-bs-target="#repairKpi-completed_repairs"' ?>><div class="card repair-live-card text-success shadow-sm"><div class="card-body">
         <p class="repair-live-label">Completed</p>
         <p class="repair-live-value" data-stat="completed_repairs"><?= htmlspecialchars((string)$completedRepairs) ?></p>
-      </div></div></button>
+      </div></div></div>
     </div>
 
     <div class="card shadow-sm">
@@ -173,7 +174,7 @@ $repairBreakdowns = [
             </select>
           </div>
           <div class="col-md-2 d-flex gap-2">
-            <button class="btn btn-danger flex-fill">Apply</button>
+            <button class="btn btn-success flex-fill">Apply</button>
             <a href="adminrepairs.php" class="btn btn-outline-secondary">Reset</a>
           </div>
         </form>
@@ -228,10 +229,12 @@ $repairBreakdowns = [
               <td><?= htmlspecialchars($row['created_at']) ?></td>
               <td>
                 <a href="repairdetails.php?id=<?= urlencode($row['repair_id']) ?>" class="btn btn-sm btn-outline-secondary">View Details</a>
-                <a href="editrepair.php?id=<?= urlencode($row['repair_id']) ?>" class="btn btn-sm btn-primary">Edit</a>
-                <a href="deleterepair.php?id=<?= urlencode($row['repair_id']) ?>" 
-                   class="btn btn-sm btn-danger"
-                   onclick="return confirm('Are you sure you want to delete this booking?');">Delete</a>
+                <?php if (!$isAssistantAdmin): ?>
+                  <a href="editrepair.php?id=<?= urlencode($row['repair_id']) ?>" class="btn btn-sm btn-primary">Edit</a>
+                  <a href="deleterepair.php?id=<?= urlencode($row['repair_id']) ?>"
+                     class="btn btn-sm btn-success"
+                     onclick="return confirm('Are you sure you want to delete this booking?');">Delete</a>
+                <?php endif; ?>
               </td>
             </tr>
           <?php endwhile; ?>
@@ -246,7 +249,7 @@ $repairBreakdowns = [
       </div>
     </div>
   </div>
-  <?php foreach ($repairBreakdowns as $key => $breakdown): ?>
+  <?php if (!$isAssistantAdmin): foreach ($repairBreakdowns as $key => $breakdown): ?>
     <div class="modal fade" id="repairKpi-<?= htmlspecialchars($key) ?>" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
@@ -271,7 +274,7 @@ $repairBreakdowns = [
         </div>
       </div>
     </div>
-  <?php endforeach; ?>
+  <?php endforeach; endif; ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     async function refreshRepairStats() {

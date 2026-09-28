@@ -10,6 +10,7 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Assista
 }
 
 ensureRepairAutomationSchema($conn);
+$isAssistantAdmin = ($_SESSION['role'] ?? '') === 'AssistantAdmin';
 
 function analyticsValue(mysqli $conn, string $sql, string $key = 'total')
 {
@@ -112,14 +113,11 @@ $technicianPerformance = analyticsRows($conn, "
   LIMIT 8
 ");
 
-$warrantyVsPaid = analyticsRows($conn, "
-  SELECT charge_type AS label, COUNT(*) AS total
-  FROM (
-    SELECT CASE WHEN warranty_status='Valid' THEN 'Warranty' ELSE 'Paid' END AS charge_type
-    FROM repairs
-    WHERE repair_status='Completed'
-  ) charge_data
-  GROUP BY charge_type
+
+$warrantyClaimStatuses = analyticsRows($conn, "
+  SELECT CASE WHEN warranty_status='Claimed' THEN 'Claimed' ELSE 'Not Claimed' END AS label, COUNT(*) AS total
+  FROM warranty_records
+  GROUP BY CASE WHEN warranty_status='Claimed' THEN 'Claimed' ELSE 'Not Claimed' END
 ");
 
 $brandTotals = ['KUDA/KDA' => 0, 'NWOW' => 0, 'Other' => 0];
@@ -150,8 +148,8 @@ for ($i = 0; $i < 12; $i++) {
     $monthCursor->modify('+1 month');
 }
 
-$chargeTotals = ['Warranty' => 0, 'Paid' => 0];
-foreach ($warrantyVsPaid as $row) {
+$chargeTotals = ['Claimed' => 0, 'Not Claimed' => 0];
+foreach ($warrantyClaimStatuses as $row) {
     $chargeTotals[$row['label']] = (int)$row['total'];
 }
 $warrantyPaidBreakdown = [];
@@ -228,6 +226,16 @@ $analyticsBreakdowns = [
         'fields' => ['warranty_id', 'customer', 'ebike_model', 'warranty_status', 'claim_date'],
     ],
 ];
+
+$analyticsBreakdowns['warranty_claims'] = $analyticsBreakdowns['warranty_claim_rate'];
+$analyticsBreakdowns['warranty_claims']['title'] = 'Warranty Claims Breakdown';
+
+if ($isAssistantAdmin) {
+    foreach (['total_revenue', 'monthly_revenue', 'average_revenue', 'pending_payments'] as $restrictedKey) {
+        unset($analyticsBreakdowns[$restrictedKey]);
+    }
+    $monthlyRevenueTrend = [];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -247,7 +255,7 @@ $analyticsBreakdowns = [
     .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: 1rem; max-width: calc(100% - 58px); min-height: 1.2em; }
     .kpi-value { font-size: clamp(1.45rem, 2.4vw, 2.1rem); font-weight: 800; line-height: 1.08; margin-bottom: .8rem; max-width: calc(100% - 54px); overflow-wrap: anywhere; }
     .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 52px; justify-content: center; position: absolute; right: 22px; top: 22px; width: 52px; }
+    .kpi-icon { align-items: center; background: #e5f8e9; border-radius: 8px; display: inline-flex; height: 52px; justify-content: center; position: absolute; right: 22px; top: 22px; width: 52px; }
     .kpi-button { background: transparent; border: 0; padding: 0; text-align: left; width: 100%; }
     .kpi-button .card { cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
     .kpi-button:hover .card { transform: translateY(-2px); box-shadow: 0 .7rem 1.4rem rgba(31,41,55,.12) !important; }
@@ -273,7 +281,7 @@ $analyticsBreakdowns = [
   <div class="container mt-4">
     <div class="page-hero">
       <h3 class="mb-1">Analytics</h3>
-      <p>Revenue quality, repair completion, technician performance, and warranty behavior.</p>
+      <p><?= $isAssistantAdmin ? 'Repair completion, warranty activity, ownership, common issues, and technician performance.' : 'Revenue quality, repair completion, technician performance, and warranty behavior.' ?></p>
     </div>
     <?php renderDashboardAlerts($conn, $_SESSION['role'], (int)$_SESSION['user_id']); ?>
 
@@ -286,12 +294,17 @@ $analyticsBreakdowns = [
         ['completion_rate', 'Completion Rate', $completionRate . '%', $completedRepairs . ' completed', 'text-success', 'bi-check2-circle'],
         ['pending_payments', 'Pending Payments', $pendingPayments, 'Bookings awaiting payment', 'text-warning', 'bi-clock-history'],
         ['brand_users', 'KUDA vs NWOW Users', $kudaUsers . ' / ' . $nwowUsers, 'KUDA/KDA vs NWOW', 'text-danger', 'bi-bicycle'],
+        ['warranty_claims', 'Warranty Claims', $warrantyClaims, 'Claimed warranty records', 'text-warning', 'bi-shield-exclamation'],
         ['warranty_claim_rate', 'Warranty Claim Rate', $warrantyClaimRate . '%', $warrantyClaims . ' of ' . $totalWarranties . ' warranties', 'text-secondary', 'bi-shield-check'],
       ];
+      if ($isAssistantAdmin) {
+        $restrictedKpis = ['total_revenue', 'monthly_revenue', 'average_revenue', 'pending_payments'];
+        $cards = array_values(array_filter($cards, static fn (array $card): bool => !in_array($card[0], $restrictedKpis, true)));
+      }
       foreach ($cards as $card):
       ?>
         <div class="kpi-col">
-          <button type="button" class="kpi-button" data-bs-toggle="modal" data-bs-target="#analyticsModal-<?= htmlspecialchars($card[0]) ?>">
+          <button type="button" class="kpi-button" <?= $isAssistantAdmin ? 'disabled aria-disabled="true"' : 'data-bs-toggle="modal" data-bs-target="#analyticsModal-' . htmlspecialchars($card[0]) . '"' ?>>
           <div class="card kpi-card <?= $card[4] ?> shadow-sm h-100"><div class="card-body kpi-body">
             <div>
               <p class="kpi-label"><?= htmlspecialchars($card[1]) ?></p>
@@ -305,7 +318,7 @@ $analyticsBreakdowns = [
       <?php endforeach; ?>
     </div>
 
-    <?php foreach ($analyticsBreakdowns as $key => $breakdown): ?>
+    <?php if (!$isAssistantAdmin): foreach ($analyticsBreakdowns as $key => $breakdown): ?>
       <div class="modal fade" id="analyticsModal-<?= htmlspecialchars($key) ?>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
           <div class="modal-content">
@@ -330,7 +343,7 @@ $analyticsBreakdowns = [
           </div>
         </div>
       </div>
-    <?php endforeach; ?>
+    <?php endforeach; endif; ?>
 
     <div class="row g-3 mb-4">
       <div class="col-lg-6"><div class="card chart-card">
@@ -346,12 +359,14 @@ $analyticsBreakdowns = [
     </div>
 
     <div class="row g-3 mb-4">
+      <?php if (!$isAssistantAdmin): ?>
       <div class="col-lg-7"><div class="card chart-card">
         <h6 class="fw-bold">Monthly Revenue + Completed Repairs</h6>
         <p class="chart-subtitle">Revenue and completed repair trends by month</p>
         <canvas id="monthlyRevenueChart"></canvas>
       </div></div>
-      <div class="col-lg-5"><div class="card chart-card">
+      <?php endif; ?>
+      <div class="<?= $isAssistantAdmin ? 'col-12' : 'col-lg-5' ?>"><div class="card chart-card">
         <h6 class="fw-bold">Technician Performance</h6>
         <p class="chart-subtitle">Completed repairs per technician</p>
         <canvas id="technicianPerformanceChart"></canvas>
@@ -361,7 +376,7 @@ $analyticsBreakdowns = [
     <div class="row g-3 mb-4">
       <div class="col-lg-4"><div class="card chart-card">
         <h6 class="fw-bold">Warranty Claim Rate</h6>
-        <p class="chart-subtitle">Completed repairs covered by warranty vs paid</p>
+        <p class="chart-subtitle">Claimed and non-claimed warranty records</p>
         <canvas id="warrantyPaidChart"></canvas>
       </div></div>
     </div>
@@ -374,14 +389,14 @@ $analyticsBreakdowns = [
     const monthlyRevenueTrend = <?= json_encode($monthlyRevenueTrend, JSON_NUMERIC_CHECK) ?>;
     const technicianPerformance = <?= json_encode($technicianPerformance, JSON_NUMERIC_CHECK) ?>;
     const warrantyPaidBreakdown = <?= json_encode($warrantyPaidBreakdown, JSON_NUMERIC_CHECK) ?>;
-    const colors = ['#d62828', '#0d6efd', '#198754', '#f77f00', '#17a2b8', '#6c757d', '#6f42c1', '#20c997'];
+    const colors = ['#003b16', '#146c43', '#198754', '#67b87a', '#b8e4c2', '#6c757d', '#374151', '#e5f8e9'];
     const gridStyle = { color: 'rgba(108,117,125,.28)', borderDash: [3, 3], drawTicks: false };
     const axisStyle = { grid: gridStyle, border: { color: 'rgba(108,117,125,.45)' }, ticks: { color: '#6c757d', padding: 8 } };
     const legendStyle = { labels: { boxWidth: 10, boxHeight: 10, color: '#495057', usePointStyle: true }, position: 'bottom' };
 
     new Chart(document.getElementById('brandOwnersChart'), {
       type: 'bar',
-      data: { labels: brandUsers.map(row => row.brand), datasets: [{ label: 'Owners', data: brandUsers.map(row => row.users), backgroundColor: ['#d62828', '#0d6efd', '#6c757d'], borderRadius: 8, maxBarThickness: 40 }] },
+      data: { labels: brandUsers.map(row => row.brand), datasets: [{ label: 'Owners', data: brandUsers.map(row => row.users), backgroundColor: ['#003b16', '#198754', '#6c757d'], borderRadius: 8, maxBarThickness: 40 }] },
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0 } } } }
     });
     new Chart(document.getElementById('issueCategoryChart'), {
@@ -389,13 +404,14 @@ $analyticsBreakdowns = [
       data: { labels: commonIssues.map(row => row.issue_category), datasets: [{ label: 'Repairs', data: commonIssues.map(row => row.total), backgroundColor: colors, borderRadius: 8, maxBarThickness: 24 }] },
       options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ...axisStyle, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0 } }, y: axisStyle } }
     });
+    <?php if (!$isAssistantAdmin): ?>
     new Chart(document.getElementById('monthlyRevenueChart'), {
       type: 'bar',
       data: {
         labels: monthlyRevenueTrend.map(row => row.month),
         datasets: [
-          { label: 'Revenue', type: 'bar', data: monthlyRevenueTrend.map(row => row.revenue), backgroundColor: 'rgba(13,110,253,.18)', borderColor: 'rgba(13,110,253,.65)', borderWidth: 1, borderRadius: 8, maxBarThickness: 36, order: 2, yAxisID: 'y' },
-          { label: 'Completed Repairs', type: 'line', data: monthlyRevenueTrend.map(row => row.completed_repairs), borderColor: '#d62828', backgroundColor: 'rgba(214,40,40,.12)', borderWidth: 3, pointRadius: 4, pointHoverRadius: 7, pointBackgroundColor: '#fff', pointBorderColor: '#d62828', pointBorderWidth: 3, tension: .4, fill: true, order: 1, yAxisID: 'y1' }
+          { label: 'Revenue', type: 'bar', data: monthlyRevenueTrend.map(row => row.revenue), backgroundColor: 'rgba(20,108,67,.18)', borderColor: 'rgba(20,108,67,.65)', borderWidth: 1, borderRadius: 8, maxBarThickness: 36, order: 2, yAxisID: 'y' },
+          { label: 'Completed Repairs', type: 'line', data: monthlyRevenueTrend.map(row => row.completed_repairs), borderColor: '#198754', backgroundColor: 'rgba(25,135,84,.12)', borderWidth: 3, pointRadius: 4, pointHoverRadius: 7, pointBackgroundColor: '#fff', pointBorderColor: '#198754', pointBorderWidth: 3, tension: .4, fill: true, order: 1, yAxisID: 'y1' }
         ]
       },
       options: {
@@ -413,6 +429,7 @@ $analyticsBreakdowns = [
         }
       }
     });
+    <?php endif; ?>
     new Chart(document.getElementById('technicianPerformanceChart'), {
       type: 'bar',
       data: {
@@ -441,7 +458,7 @@ $analyticsBreakdowns = [
     });
     new Chart(document.getElementById('warrantyPaidChart'), {
       type: 'doughnut',
-      data: { labels: warrantyPaidBreakdown.map(row => row.label), datasets: [{ data: warrantyPaidBreakdown.map(row => row.total), backgroundColor: ['#198754', '#0d6efd'] }] },
+      data: { labels: warrantyPaidBreakdown.map(row => row.label), datasets: [{ data: warrantyPaidBreakdown.map(row => row.total), backgroundColor: ['#dc3545', '#198754'] }] },
       options: { responsive: true, maintainAspectRatio: false, cutout: '58%', plugins: { legend: legendStyle } }
     });
 

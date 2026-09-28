@@ -82,7 +82,7 @@ $contacts = $conn->query("
               <input type="hidden" name="redirect" value="cashiermessage.php">
               <div class="input-group">
                 <input type="text" name="content" class="form-control" placeholder="Type a message...">
-                <button class="btn btn-danger">Send</button>
+                <button class="btn btn-success">Send</button>
               </div>
             </form>
           </div>

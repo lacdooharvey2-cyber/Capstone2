@@ -165,7 +165,7 @@ $result = $stmt->get_result();
     .status-select:focus {
       background: #fff;
       color: #212529;
-      border-color: #dc3545;
+      border-color: #198754;
       box-shadow: none;
     }
     .new-btn {
@@ -176,7 +176,7 @@ $result = $stmt->get_result();
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: #dc3545;
+      background: #198754;
       color: #fff;
       border: 0;
       text-decoration: none;
@@ -193,9 +193,9 @@ $result = $stmt->get_result();
       color: #212529;
     }
     .table thead th {
-      background: #f8d7da;
-      color: #842029;
-      border-color: #f5c2c7;
+      background: #f3f5f3;
+      color: #146c43;
+      border-color: #e5e7eb;
       font-weight: 700;
       white-space: nowrap;
     }

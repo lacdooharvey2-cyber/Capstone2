@@ -55,7 +55,7 @@ $result = $conn->query($sql);
               <td><?= htmlspecialchars($row['name']) ?></td>
               <td><?= htmlspecialchars($row['email']) ?></td>
               <td><?= htmlspecialchars($row['contact_number']) ?></td>
-              <td><span class="badge bg-secondary"><?= htmlspecialchars($row['role']) ?></span></td>
+              <td><span class="badge bg-secondary"><?= htmlspecialchars($row['role'] === 'AssistantAdmin' ? 'Assistant Admin' : $row['role']) ?></span></td>
               <td>
                 <?php if ($row['account_status'] === 'Active'): ?>
                   <span class="badge bg-success">Active</span>
@@ -66,7 +66,7 @@ $result = $conn->query($sql);
               <td>
                 <a href="edituser.php?id=<?= urlencode($row['user_id']) ?>" class="btn btn-sm btn-primary">Edit</a>
                 <a href="deleteuser.php?id=<?= urlencode($row['user_id']) ?>" 
-                   class="btn btn-sm btn-danger"
+                   class="btn btn-sm btn-success"
                    onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
               </td>
             </tr>

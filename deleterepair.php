@@ -7,6 +7,11 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Assista
     exit();
 }
 
+if (($_SESSION['role'] ?? '') === 'AssistantAdmin') {
+    header("Location: adminrepairs.php");
+    exit();
+}
+
 $repair_id = intval($_GET['id'] ?? $_POST['repair_id'] ?? 0);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $repair_id > 0) {
@@ -31,7 +36,7 @@ $repair = $stmt->get_result()->fetch_assoc();
     <h3 class="mb-3">Delete Repair</h3>
     <?php if ($repair): ?>
       <p>Delete repair #<?= htmlspecialchars($repair['repair_id']) ?> for <strong><?= htmlspecialchars($repair['ebike_model']) ?></strong>?</p>
-      <form method="post"><input type="hidden" name="repair_id" value="<?= htmlspecialchars($repair['repair_id']) ?>"><button class="btn btn-danger">Delete</button> <a href="adminrepairs.php" class="btn btn-secondary">Cancel</a></form>
+      <form method="post"><input type="hidden" name="repair_id" value="<?= htmlspecialchars($repair['repair_id']) ?>"><button class="btn btn-success">Delete</button> <a href="adminrepairs.php" class="btn btn-secondary">Cancel</a></form>
     <?php else: ?>
       <p class="text-muted">Repair not found.</p><a href="adminrepairs.php" class="btn btn-secondary">Back</a>
     <?php endif; ?>

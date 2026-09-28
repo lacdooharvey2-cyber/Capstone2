@@ -75,7 +75,7 @@ function statusBadgeClass(string $status): string
             <input type="text" class="form-control tracking-code" name="tracking_number" value="<?= htmlspecialchars($tracking_number) ?>" placeholder="Example: RS-20260915123000-12" required>
           </div>
           <div class="col-md-auto">
-            <button class="btn btn-danger w-100" type="submit"><i class="bi bi-search me-1"></i>Track</button>
+            <button class="btn btn-success w-100" type="submit"><i class="bi bi-search me-1"></i>Track</button>
           </div>
         </form>
 

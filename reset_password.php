@@ -59,16 +59,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
-    body { min-height: 100vh; display: grid; place-items: center; padding: 20px; background: linear-gradient(135deg, #fff5f5, #f3f6fa); font-family: 'Segoe UI', sans-serif; }
-    .reset-card { width: 100%; max-width: 470px; background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 34px; box-shadow: 0 18px 50px rgba(31,41,55,.12); animation: resetRise .6s cubic-bezier(.2,.8,.2,1) both; }
+    body { min-height: 100vh; display: grid; place-items: stretch; padding: 0; background: #f7f8f7; font-family: 'Segoe UI', sans-serif; }
+    .reset-card { width: 100%; max-width: none; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; background: #fff; border: 0; border-radius: 0; padding: clamp(40px, 9vw, 140px); box-shadow: none; animation: resetRise .6s cubic-bezier(.2,.8,.2,1) both; }
+    .reset-card > * { width: 100%; max-width: 520px; margin-left: auto; margin-right: auto; }
     .reset-card > * { animation: resetReveal .5s both; }
     .reset-card > *:nth-child(2) { animation-delay: .08s; }
     .reset-card > *:nth-child(3) { animation-delay: .16s; }
     .reset-card > *:nth-child(4) { animation-delay: .24s; }
     .reset-card .form-control { transition: border-color .28s ease, box-shadow .28s ease, transform .28s cubic-bezier(.22,1,.36,1); }
-    .reset-card .form-control:focus { border-color: #dc3545; box-shadow: 0 0 0 .22rem rgba(220,53,69,.14); transform: translateY(-1px); }
-    .reset-card .btn-danger { transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease; }
-    .reset-card .btn-danger:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(220,53,69,.22); }
+    .reset-card .form-control:focus { border-color: #198754; box-shadow: 0 0 0 .22rem rgba(25,135,84,.14); transform: translateY(-1px); }
+    .reset-card .btn-success { transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease; }
+    .reset-card .btn-success:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(25,135,84,.22); }
     @keyframes resetRise { from { opacity: 0; transform: translateY(18px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes resetReveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
@@ -79,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
     <div class="text-danger fs-2 mb-2"><i class="bi bi-key"></i></div>
     <h1 class="h3 fw-bold mb-2">Create a new password</h1>
     <?php if ($error !== ''): ?><div class="alert alert-danger"><?= htmlspecialchars($error) ?></div><?php endif; ?>
-    <?php if ($message !== ''): ?><div class="alert alert-success"><?= htmlspecialchars($message) ?></div><a href="login.php" class="btn btn-danger w-100">Back to login</a><?php endif; ?>
+    <?php if ($message !== ''): ?><div class="alert alert-success"><?= htmlspecialchars($message) ?></div><a href="login.php" class="btn btn-success w-100">Back to login</a><?php endif; ?>
     <?php if ($reset): ?>
       <p class="text-secondary mb-4">Use at least 8 characters for your new password.</p>
       <form method="post">
@@ -88,10 +89,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
         <input class="form-control mb-3" id="password" name="password" type="password" minlength="8" required autocomplete="new-password">
         <label class="form-label fw-semibold" for="confirm_password">Confirm password</label>
         <input class="form-control mb-4" id="confirm_password" name="confirm_password" type="password" minlength="8" required autocomplete="new-password">
-        <button class="btn btn-danger w-100" type="submit"><i class="bi bi-check2-circle me-1"></i>Update password</button>
+        <button class="btn btn-success w-100" type="submit"><i class="bi bi-check2-circle me-1"></i>Update password</button>
       </form>
     <?php elseif ($message === ''): ?>
-      <a href="forgot_password.php" class="btn btn-danger w-100">Request a new reset link</a>
+      <a href="forgot_password.php" class="btn btn-success w-100">Request a new reset link</a>
     <?php endif; ?>
   </main>
 </body>

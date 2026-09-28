@@ -36,7 +36,7 @@ $recentRepairs = $conn->query("
     .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
     .kpi-value { font-size: clamp(1.05rem, 1.8vw, 1.8rem); font-weight: 800; line-height: 1; margin-bottom: .55rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
+    .kpi-icon { align-items: center; background: #e5f8e9; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
   </style>
 </head>
 <body class="bg-light">
@@ -74,7 +74,7 @@ $recentRepairs = $conn->query("
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h5 class="mb-0">Recent Repair Payments</h5>
-          <a href="cashiertransactions.php" class="btn btn-danger btn-sm">View Payments</a>
+          <a href="cashiertransactions.php" class="btn btn-success btn-sm">View Payments</a>
         </div>
         <div class="table-responsive">
         <table class="table table-hover table-bordered">

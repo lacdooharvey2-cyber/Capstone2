@@ -1,23 +1,17 @@
+<?php $currentPage = basename($_SERVER['PHP_SELF'] ?? ''); ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-<link href="assets/css/app-theme.css" rel="stylesheet">
-<nav class="navbar navbar-expand-lg navbar-dark app-navbar">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="cashierdashboard.php">
-      <span class="app-brand-icon"><i class="bi bi-cash-coin"></i></span>
-      FixTrack Cashier
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#cashierNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="cashierNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="cashierdashboard.php"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="cashiertransactions.php"><i class="bi bi-credit-card me-1"></i>Payments</a></li>
-        <li class="nav-item"><a class="nav-link" href="cashierreports.php"><i class="bi bi-file-earmark-bar-graph me-1"></i>Reports</a></li>
-        <li class="nav-item"><a class="nav-link" href="cashiermessage.php"><i class="bi bi-chat-dots me-1"></i>Messages</a></li>
-        <li class="nav-item"><a class="nav-link" href="activitylogs.php"><i class="bi bi-clock-history me-1"></i>Logs</a></li>
-        <li class="nav-item"><a class="nav-link" href="logout.php"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<link href="assets/css/app-theme.css?v=20260928-2" rel="stylesheet">
+<header class="app-topbar">
+  <a class="app-logo" href="cashierdashboard.php"><i class="bi bi-cash-coin"></i><span>FixTrack Cashier</span></a>
+  <span class="app-account-dot" aria-hidden="true"></span>
+</header>
+<aside class="app-sidebar" aria-label="Cashier navigation">
+  <nav class="app-sidebar-nav">
+    <a class="app-side-button <?= $currentPage === 'cashierdashboard.php' ? 'is-active' : '' ?>" href="cashierdashboard.php"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+    <a class="app-side-button <?= $currentPage === 'cashiertransactions.php' ? 'is-active' : '' ?>" href="cashiertransactions.php"><i class="bi bi-credit-card"></i><span>Payments</span></a>
+    <a class="app-side-button <?= $currentPage === 'cashierreports.php' ? 'is-active' : '' ?>" href="cashierreports.php"><i class="bi bi-file-earmark-bar-graph"></i><span>Reports</span></a>
+    <a class="app-side-button <?= $currentPage === 'cashiermessage.php' ? 'is-active' : '' ?>" href="cashiermessage.php"><i class="bi bi-chat-dots"></i><span>Messages</span></a>
+    <a class="app-side-button <?= $currentPage === 'activitylogs.php' ? 'is-active' : '' ?>" href="activitylogs.php"><i class="bi bi-clock-history"></i><span>Audit Trail</span></a>
+    <a class="app-side-button app-logout" href="logout.php"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a>
+  </nav>
+</aside>

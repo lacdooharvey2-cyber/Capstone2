@@ -69,13 +69,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-    :root { --brand-red: #dc3545; --brand-dark: #1f2937; }
+    :root { --brand-red: #198754; --brand-dark: #1f2937; }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { min-height: 100vh; margin: 0; background: linear-gradient(135deg, rgba(220,53,69,.08), rgba(255,255,255,.94)), url("https://imgcdn.zigwheels.ph/large/gallery/exterior/154/3048/nwow-gb2-slant-front-view-full-image-859417.jpg") center/cover fixed; color: var(--brand-dark); font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
-    .auth-shell { min-height: 100vh; display: flex; align-items: center; padding: 32px 16px; }
-    .auth-panel { width: 100%; max-width: 1040px; margin: 0 auto; background: #fff; border: 1px solid rgba(222,226,230,.85); border-radius: 18px; overflow: hidden; box-shadow: 0 24px 70px rgba(31,41,55,.18); animation: fadeInUp .7s cubic-bezier(.2,.8,.2,1) both; }
-    .brand-side { min-height: 520px; padding: 48px; background: linear-gradient(160deg, rgba(132,32,41,.92), rgba(33,37,41,.86)), url("https://filebroker-cdn.lazada.com.ph/kf/S5cc28fccabd645cf918dfee7f7a54fa7I.jpg") center/cover; color: #fff; display: flex; flex-direction: column; justify-content: space-between; position: relative; isolation: isolate; }
+    body { min-height: 100vh; margin: 0; background: linear-gradient(135deg, rgba(229,248,233,.92), rgba(255,255,255,.94)), url("https://imgcdn.zigwheels.ph/large/gallery/exterior/154/3048/nwow-gb2-slant-front-view-full-image-859417.jpg") center/cover fixed; color: var(--brand-dark); font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
+    .auth-shell { min-height: 100vh; display: flex; align-items: stretch; padding: 0; }
+    .auth-panel { width: 100%; max-width: none; min-height: 100vh; margin: 0; background: #fff; border: 0; border-radius: 0; overflow: hidden; box-shadow: none; animation: fadeInUp .7s cubic-bezier(.2,.8,.2,1) both; }
+    .brand-side { min-height: 100vh; padding: clamp(48px, 8vw, 120px); background: linear-gradient(160deg, rgba(0,59,22,.94), rgba(20,108,67,.88)), url("https://filebroker-cdn.lazada.com.ph/kf/S5cc28fccabd645cf918dfee7f7a54fa7I.jpg") center/cover; color: #fff; display: flex; flex-direction: column; justify-content: space-between; position: relative; isolation: isolate; }
     .brand-side::after { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 25%, rgba(255,255,255,.12) 48%, transparent 70%); transform: translateX(-110%); animation: panelSheen 7s ease-in-out 1.2s infinite; pointer-events: none; z-index: -1; }
     .brand-mark { width: 54px; height: 54px; border-radius: 14px; background: rgba(255,255,255,.14); display: grid; place-items: center; font-size: 28px; border: 1px solid rgba(255,255,255,.25); animation: markPulse 3.5s ease-in-out infinite; }
     .brand-title { font-size: 42px; font-weight: 800; margin: 24px 0 10px; animation: contentReveal .7s .15s both; }
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
     .feature-pill:hover { background: rgba(255,255,255,.18); transform: translateX(5px); }
     .feature-pill:nth-child(2) { animation-delay: .12s; }
     .feature-pill:nth-child(3) { animation-delay: .2s; }
-    .login-side { padding: 52px 46px; animation: contentReveal .7s .18s both; }
+    .login-side { padding: clamp(48px, 8vw, 120px); display: flex; flex-direction: column; justify-content: center; animation: contentReveal .7s .18s both; }
     .login-side > * { animation: contentReveal .55s both; }
     .login-side > *:nth-child(2) { animation-delay: .08s; }
     .login-side > *:nth-child(3) { animation-delay: .16s; }
@@ -97,10 +97,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
     .input-group .form-control { border-left: 0; }
     .input-group-text { background: #fff; color: #6c757d; }
     .form-control { transition: border-color .28s ease, box-shadow .28s ease, transform .28s cubic-bezier(.22,1,.36,1); }
-    .form-control:focus { border-color: var(--brand-red); box-shadow: 0 0 0 .22rem rgba(220,53,69,.14); transform: translateY(-1px); }
+    .form-control:focus { border-color: var(--brand-red); box-shadow: 0 0 0 .22rem rgba(25,135,84,.14); transform: translateY(-1px); }
     .input-group:focus-within .input-group-text { border-color: var(--brand-red); color: var(--brand-red); }
-    .btn-danger { font-weight: 700; background: var(--brand-red); border-color: var(--brand-red); transition: transform .2s ease, box-shadow .2s ease; }
-    .btn-danger:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(220,53,69,.22); }
+    .btn-success { font-weight: 700; background: var(--brand-red); border-color: var(--brand-red); transition: transform .2s ease, box-shadow .2s ease; }
+    .btn-success:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(25,135,84,.22); }
     .small-link { color: var(--brand-red); font-weight: 700; text-decoration: none; }
     .small-link:hover { text-decoration: underline; }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
     @keyframes panelSheen { 0%,55% { transform: translateX(-110%); } 75%,100% { transform: translateX(110%); } }
     @keyframes markPulse { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.16); } }
     @media (max-width: 991px) { .brand-side { min-height: auto; padding: 34px; } .login-side { padding: 34px; } }
-    @media (max-width: 575px) { .auth-shell { padding: 16px 10px; } .brand-side { display: none; } .login-side { padding: 30px 22px; } .login-heading { font-size: 26px; } }
+    @media (max-width: 575px) { .brand-side { display: none; } .login-side { padding: 30px 22px; } .login-heading { font-size: 26px; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
   </style>
 </head>
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
               <span class="input-group-text"><i class="bi bi-envelope"></i></span>
               <input id="email" name="email" type="email" class="form-control" required autocomplete="email" autofocus>
             </div>
-            <button class="btn btn-danger w-100" type="submit"><i class="bi bi-send me-1"></i>Send reset link</button>
+            <button class="btn btn-success w-100" type="submit"><i class="bi bi-send me-1"></i>Send reset link</button>
           </form>
           <div class="text-center mt-4"><a href="login.php" class="small-link"><i class="bi bi-arrow-left me-1"></i>Back to login</a></div>
         </div>

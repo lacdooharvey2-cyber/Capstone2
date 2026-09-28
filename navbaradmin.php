@@ -1,33 +1,27 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-<link href="assets/css/app-theme.css" rel="stylesheet">
 <?php
 $currentAdminRole = $_SESSION['role'] ?? '';
 $canMaintainSystem = in_array($currentAdminRole, ['SuperAdmin', 'AssistantSuperAdmin'], true);
+$currentPage = basename($_SERVER['PHP_SELF'] ?? '');
 ?>
-<nav class="navbar navbar-expand-lg navbar-dark app-navbar">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="admindashboard.php">
-      <span class="app-brand-icon"><i class="bi bi-shield-lock"></i></span>
-      FixTrack Admin
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="adminNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="admindashboard.php"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
-        <?php if ($canMaintainSystem): ?>
-        <li class="nav-item"><a class="nav-link" href="adminmanageusers.php"><i class="bi bi-people me-1"></i>Users</a></li>
-        <?php endif; ?>
-        <li class="nav-item"><a class="nav-link" href="adminrepairs.php"><i class="bi bi-tools me-1"></i>Repairs</a></li>
-        <li class="nav-item"><a class="nav-link" href="adminwarranties.php"><i class="bi bi-shield-check me-1"></i>Warranty</a></li>
-        <li class="nav-item"><a class="nav-link" href="adminmessages.php"><i class="bi bi-chat-dots me-1"></i>Messages</a></li>
-        <li class="nav-item"><a class="nav-link" href="adminanalytics.php"><i class="bi bi-graph-up-arrow me-1"></i>Analytics</a></li>
-        <?php if ($canMaintainSystem): ?>
-        <li class="nav-item"><a class="nav-link" href="activitylogs.php"><i class="bi bi-clock-history me-1"></i>Logs</a></li>
-        <?php endif; ?>
-        <li class="nav-item"><a class="nav-link" href="logout.php"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link href="assets/css/app-theme.css?v=20260928-2" rel="stylesheet">
+<header class="app-topbar">
+  <a class="app-logo" href="admindashboard.php"><i class="bi bi-shield-lock"></i><span>FixTrack Admin</span></a>
+  <span class="app-account-dot" aria-hidden="true"></span>
+</header>
+<aside class="app-sidebar" aria-label="Admin navigation">
+  <nav class="app-sidebar-nav">
+    <a class="app-side-button <?= $currentPage === 'admindashboard.php' ? 'is-active' : '' ?>" href="admindashboard.php"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+    <?php if ($canMaintainSystem): ?>
+    <a class="app-side-button <?= $currentPage === 'adminmanageusers.php' ? 'is-active' : '' ?>" href="adminmanageusers.php"><i class="bi bi-people"></i><span>Users</span></a>
+    <?php endif; ?>
+    <a class="app-side-button <?= $currentPage === 'adminrepairs.php' ? 'is-active' : '' ?>" href="adminrepairs.php"><i class="bi bi-tools"></i><span>Repairs</span></a>
+    <a class="app-side-button <?= $currentPage === 'adminwarranties.php' ? 'is-active' : '' ?>" href="adminwarranties.php"><i class="bi bi-shield-check"></i><span>Warranty</span></a>
+    <a class="app-side-button <?= $currentPage === 'adminmessages.php' ? 'is-active' : '' ?>" href="adminmessages.php"><i class="bi bi-chat-dots"></i><span>Messages</span></a>
+    <a class="app-side-button <?= $currentPage === 'adminanalytics.php' ? 'is-active' : '' ?>" href="adminanalytics.php"><i class="bi bi-graph-up-arrow"></i><span>Analytics</span></a>
+    <?php if ($canMaintainSystem): ?>
+    <a class="app-side-button <?= $currentPage === 'activitylogs.php' ? 'is-active' : '' ?>" href="activitylogs.php"><i class="bi bi-clock-history"></i><span>Audit Trail</span></a>
+    <?php endif; ?>
+    <a class="app-side-button app-logout" href="logout.php"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a>
+  </nav>
+</aside>

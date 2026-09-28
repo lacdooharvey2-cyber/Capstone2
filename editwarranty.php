@@ -49,7 +49,7 @@ $warranty = $stmt->get_result()->fetch_assoc();
         <div class="mb-3"><label class="form-label">Purchase Date</label><input class="form-control" type="date" name="purchase_date" value="<?= htmlspecialchars($warranty['purchase_date']) ?>" required></div>
         <div class="mb-3"><label class="form-label">Warranty Period</label><input class="form-control" type="number" min="1" name="warranty_period" value="<?= htmlspecialchars($warranty['warranty_period']) ?>" required></div>
         <div class="mb-3"><label class="form-label">Status</label><select class="form-select" name="warranty_status"><?php foreach(['Active','Expired','Claimed','Rejected'] as $status): ?><option <?= $warranty['warranty_status']===$status?'selected':'' ?>><?= $status ?></option><?php endforeach; ?></select></div>
-        <button class="btn btn-danger">Save</button>
+        <button class="btn btn-success">Save</button>
         <a href="adminwarranties.php" class="btn btn-secondary">Cancel</a>
       </form>
     <?php else: ?>

@@ -96,7 +96,7 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Assista
             <input type="hidden" name="redirect" value="adminmessages.php">
             <div class="input-group">
               <input type="text" name="content" class="form-control" placeholder="Type a message...">
-              <button class="btn btn-danger">Send</button>
+              <button class="btn btn-success">Send</button>
             </div>
           </form>
         </div>

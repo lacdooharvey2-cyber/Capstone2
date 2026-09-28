@@ -54,7 +54,7 @@ $user = $stmt->get_result()->fetch_assoc();
           <div class="mb-3"><label class="form-label">Contact Number</label><input class="form-control" name="contact_number" value="<?= htmlspecialchars($user['contact_number'] ?? '') ?>"></div>
           <div class="mb-3"><label class="form-label">Role</label><select class="form-select" name="role"><?php foreach(['Customer','Staff','Technician','HeadTechnician','Cashier','AssistantAdmin','Admin','AssistantSuperAdmin','SuperAdmin'] as $role): ?><option <?= $user['role']===$role?'selected':'' ?>><?= $role ?></option><?php endforeach; ?></select></div>
           <div class="mb-3"><label class="form-label">Status</label><select class="form-select" name="account_status"><?php foreach(['Active','Inactive'] as $status): ?><option <?= $user['account_status']===$status?'selected':'' ?>><?= $status ?></option><?php endforeach; ?></select></div>
-          <button class="btn btn-danger">Save</button>
+          <button class="btn btn-success">Save</button>
           <a href="adminmanageusers.php" class="btn btn-secondary">Cancel</a>
         </form>
       <?php else: ?>

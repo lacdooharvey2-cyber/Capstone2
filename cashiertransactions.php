@@ -87,7 +87,7 @@ $bookings = $conn->query("
                   <option <?= $row['payment_status'] === 'Pending' ? 'selected' : '' ?>>Pending</option>
                   <option <?= $row['payment_status'] === 'Paid' ? 'selected' : '' ?>>Paid</option>
                 </select>
-                <button class="btn btn-sm btn-danger">Save</button>
+                <button class="btn btn-sm btn-success">Save</button>
               </form>
             </td>
           </tr>

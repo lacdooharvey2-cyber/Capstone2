@@ -97,7 +97,7 @@ for ($i = 0; $i < 30; $i++) {
     .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
     .kpi-value { font-size: clamp(1.05rem, 1.8vw, 1.8rem); font-weight: 800; line-height: 1; margin-bottom: .55rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
+    .kpi-icon { align-items: center; background: #e5f8e9; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
     .chart-card { min-height:340px; padding:20px; }
     .chart-card canvas { height:245px !important; max-height:245px; }
     .chart-subtitle { color:#6c757d; font-size:.82rem; margin-bottom:18px; }
@@ -160,7 +160,7 @@ for ($i = 0; $i < 30; $i++) {
     });
     new Chart(document.getElementById('monthlyRevenueChart'), {
       type: 'line',
-      data: { labels: monthlyRevenue.map(row => row.month), datasets: [{ label: 'Revenue', data: monthlyRevenue.map(row => row.total), borderColor: '#dc3545', backgroundColor: 'rgba(220,53,69,.14)', tension: .4, fill: true, pointRadius: 4 }] },
+      data: { labels: monthlyRevenue.map(row => row.month), datasets: [{ label: 'Revenue', data: monthlyRevenue.map(row => row.total), borderColor: '#198754', backgroundColor: 'rgba(25,135,84,.14)', tension: .4, fill: true, pointRadius: 4 }] },
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true, ticks: { callback: value => 'PHP ' + Number(value).toLocaleString('en-PH') } } } }
     });
     new Chart(document.getElementById('dailyRevenueChart'), {

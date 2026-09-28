@@ -82,40 +82,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-    :root { --brand-red: #dc3545; --brand-dark: #1f2937; --brand-muted: #6c757d; }
+    :root { --brand-red: #198754; --brand-dark: #1f2937; --brand-muted: #6c757d; }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       min-height: 100vh;
       margin: 0;
       background:
-        linear-gradient(135deg, rgba(220, 53, 69, .08), rgba(255,255,255,.94)),
+        linear-gradient(135deg, rgba(229, 248, 233, .92), rgba(255,255,255,.94)),
         url("https://imgcdn.zigwheels.ph/large/gallery/exterior/154/3048/nwow-gb2-slant-front-view-full-image-859417.jpg") center/cover fixed;
       color: var(--brand-dark);
       font-family: "Segoe UI", Arial, sans-serif;
       overflow-x: hidden;
     }
-    .register-shell { min-height: 100vh; display: flex; align-items: center; padding: 28px 16px; }
+    .register-shell { min-height: 100vh; display: flex; align-items: stretch; padding: 0; }
     .register-panel {
       width: 100%;
-      max-width: 1160px;
-      margin: 0 auto;
+      max-width: none;
+      min-height: 100vh;
+      margin: 0;
       overflow: hidden;
       background: #fff;
-      border: 1px solid rgba(222,226,230,.85);
-      border-radius: 18px;
-      box-shadow: 0 24px 70px rgba(31,41,55,.18);
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
       animation: panelIn .7s cubic-bezier(.2,.8,.2,1) both;
     }
     .register-brand {
-      min-height: 700px;
-      padding: 42px;
+      min-height: 100vh;
+      padding: clamp(48px, 7vw, 110px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       color: #fff;
       background:
-        linear-gradient(160deg, rgba(132,32,41,.94), rgba(33,37,41,.86)),
+        linear-gradient(160deg, rgba(0,59,22,.94), rgba(20,108,67,.88)),
         url("https://filebroker-cdn.lazada.com.ph/kf/S5cc28fccabd645cf918dfee7f7a54fa7I.jpg") center/cover;
       position: relative;
       isolation: isolate;
@@ -157,7 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     .register-point:nth-child(2) { animation-delay: .12s; }
     .register-point:nth-child(3) { animation-delay: .2s; }
-    .register-form { padding: 42px 46px; animation: reveal .7s .15s both; }
+    .register-form { padding: clamp(44px, 7vw, 100px); animation: reveal .7s .15s both; }
     .register-form .form-section { animation: reveal .6s both; }
     .register-form .form-section:nth-child(2) { animation-delay: .08s; }
     .register-form .form-section:nth-child(3) { animation-delay: .16s; }
@@ -171,13 +172,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       padding-top: 18px;
       border-top: 1px solid #e9ecef;
     }
-    .form-section-title { color: #842029; font-size: .9rem; font-weight: 800; letter-spacing: .02em; margin-bottom: 14px; }
+    .form-section-title { color: #146c43; font-size: .9rem; font-weight: 800; letter-spacing: .02em; margin-bottom: 14px; }
     .form-label { color: #495057; font-size: .88rem; font-weight: 700; margin-bottom: 6px; }
     .form-control, .form-select { min-height: 44px; border-radius: 8px; }
     .form-control, .form-select { transition: border-color .28s ease, box-shadow .28s ease, transform .28s cubic-bezier(.22,1,.36,1); }
-    .form-control:focus, .form-select:focus { border-color: var(--brand-red); box-shadow: 0 0 0 .22rem rgba(220,53,69,.14); transform: translateY(-1px); }
-    .btn-danger { min-height: 46px; border-radius: 8px; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease; }
-    .btn-danger:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(220,53,69,.22); }
+    .form-control:focus, .form-select:focus { border-color: var(--brand-red); box-shadow: 0 0 0 .22rem rgba(25,135,84,.14); transform: translateY(-1px); }
+    .btn-success { min-height: 46px; border-radius: 8px; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease; }
+    .btn-success:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(25,135,84,.22); }
     .login-link { color: var(--brand-red); font-weight: 700; text-decoration: none; }
     .login-link:hover { text-decoration: underline; }
     @keyframes panelIn { from { opacity: 0; transform: translateY(18px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -189,8 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       .register-form { padding: 34px; }
     }
     @media (max-width: 575px) {
-      .register-shell { padding: 12px 8px; }
-      .register-panel { border-radius: 12px; }
+      .register-panel { border-radius: 0; }
       .register-brand { display: none; }
       .register-form { padding: 26px 20px; }
       .form-heading { font-size: 26px; }
@@ -312,7 +312,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="mt-4">
-          <button type="submit" class="btn btn-danger w-100"><i class="bi bi-person-plus me-1"></i>Create Customer Account</button>
+          <button type="submit" class="btn btn-success w-100"><i class="bi bi-person-plus me-1"></i>Create Customer Account</button>
         </div>
       </form>
 

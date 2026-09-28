@@ -98,7 +98,7 @@ $techBreakdowns = [
     .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
     .kpi-value { font-size: clamp(1.05rem, 1.8vw, 1.8rem); font-weight: 800; line-height: 1; margin-bottom: .55rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
+    .kpi-icon { align-items: center; background: #e5f8e9; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
     .kpi-button { background: transparent; border: 0; padding: 0; text-align: left; width: 100%; }
     .kpi-button .card { cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
     .kpi-button:hover .card { transform: translateY(-2px); box-shadow: 0 .7rem 1.4rem rgba(31,41,55,.12) !important; }
@@ -154,7 +154,7 @@ $techBreakdowns = [
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h5 class="mb-0">Active Work Queue</h5>
-              <a href="technicianrepair.php" class="btn btn-danger btn-sm">View Full Queue</a>
+              <a href="technicianrepair.php" class="btn btn-success btn-sm">View Full Queue</a>
             </div>
             <div class="table-responsive">
               <table class="table table-hover mb-0">
@@ -225,13 +225,13 @@ $techBreakdowns = [
         datasets: [{
           label: 'Assigned Repairs',
           data: weekCounts,
-          borderColor: '#d62828',
-          backgroundColor: 'rgba(214,40,40,.13)',
+          borderColor: '#198754',
+          backgroundColor: 'rgba(25,135,84,.13)',
           borderWidth: 3,
           pointRadius: 5,
           pointHoverRadius: 8,
           pointBackgroundColor: '#fff',
-          pointBorderColor: '#d62828',
+          pointBorderColor: '#198754',
           pointBorderWidth: 3,
           tension: .38,
           fill: true

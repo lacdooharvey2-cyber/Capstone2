@@ -31,7 +31,7 @@ $users = $conn->query("SELECT user_id, name, role FROM users WHERE user_id <> ".
     <form method="post">
       <div class="mb-3"><label class="form-label">Recipient</label><select class="form-select" name="receiver_id" required><?php while($u=$users->fetch_assoc()): ?><option value="<?= htmlspecialchars($u['user_id']) ?>"><?= htmlspecialchars($u['name'].' ('.$u['role'].')') ?></option><?php endwhile; ?></select></div>
       <div class="mb-3"><label class="form-label">Message</label><textarea class="form-control" name="content" rows="4" required></textarea></div>
-      <button class="btn btn-danger">Send</button>
+      <button class="btn btn-success">Send</button>
       <a href="adminmessages.php" class="btn btn-secondary">Cancel</a>
     </form>
   </div></div></div>

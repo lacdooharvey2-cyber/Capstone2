@@ -31,7 +31,7 @@ $warranty = $stmt->get_result()->fetch_assoc();
     <h3 class="mb-3">Delete Warranty</h3>
     <?php if ($warranty): ?>
       <p>Delete warranty #<?= htmlspecialchars($warranty['warranty_id']) ?> for <strong><?= htmlspecialchars($warranty['ebike_model']) ?></strong>?</p>
-      <form method="post"><input type="hidden" name="warranty_id" value="<?= htmlspecialchars($warranty['warranty_id']) ?>"><button class="btn btn-danger">Delete</button> <a href="adminwarranties.php" class="btn btn-secondary">Cancel</a></form>
+      <form method="post"><input type="hidden" name="warranty_id" value="<?= htmlspecialchars($warranty['warranty_id']) ?>"><button class="btn btn-success">Delete</button> <a href="adminwarranties.php" class="btn btn-secondary">Cancel</a></form>
     <?php else: ?>
       <p class="text-muted">Warranty not found.</p><a href="adminwarranties.php" class="btn btn-secondary">Back</a>
     <?php endif; ?>

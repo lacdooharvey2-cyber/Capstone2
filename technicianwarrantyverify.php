@@ -61,7 +61,7 @@ $warranty = $stmt->get_result()->fetch_assoc();
                 <?php endforeach; ?>
               </select>
             </div>
-            <button class="btn btn-danger">Save</button>
+            <button class="btn btn-success">Save</button>
             <a href="technicianrepair.php" class="btn btn-secondary">Cancel</a>
           </form>
         <?php else: ?>

@@ -12,6 +12,7 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Assista
 }
 
 ensureRepairAutomationSchema($conn);
+$isAssistantAdmin = ($_SESSION['role'] ?? '') === 'AssistantAdmin';
 
 function adminStatValue(mysqli $conn, string $sql, string $key = 'total')
 {
@@ -56,5 +57,9 @@ $stats = [
     "),
     'last_updated' => date('Y-m-d H:i:s'),
 ];
+
+if ($isAssistantAdmin) {
+    unset($stats['monthly_revenue']);
+}
 
 echo json_encode($stats);

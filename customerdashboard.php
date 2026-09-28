@@ -66,7 +66,7 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-    .dashboard-container { margin: 30px auto; max-width: 1180px; }
+    .dashboard-container { width: calc(100% - 64px); max-width: none; margin: 28px 32px 48px !important; padding-bottom: 0; }
     .page-hero { animation: portalRise .6s ease both; }
     .customer-kpis .kpi-card { animation: portalRise .55s ease both; }
     .customer-kpis > .col-md:nth-child(2) .kpi-card { animation-delay: .06s; }
@@ -78,17 +78,16 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
     .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
     .kpi-value { font-size: clamp(1.05rem, 1.8vw, 1.8rem); font-weight: 800; line-height: 1; margin-bottom: .55rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
+    .kpi-icon { align-items: center; background: #e5f8e9; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
     .section-title { margin-top: 30px; margin-bottom: 15px; font-weight: 800; color: var(--app-ink); }
     .portal-panel { background: var(--app-card); border: 1px solid var(--app-line); border-radius: 12px; box-shadow: 0 14px 36px rgba(31, 41, 55, .08); }
-    .portal-panel .table thead th { background: #fff1f2; color: #842029; border-color: #f5c2c7; }
-    .portal-panel .btn-danger { box-shadow: 0 8px 18px rgba(220, 53, 69, .14); }
-    .portal-panel .btn-danger:hover { transform: translateY(-1px); }
-    .map-container { height: 300px; border-radius: 12px; overflow: hidden; }
+    .portal-panel .table thead th { background: #f3f5f3; color: #374151; border-color: #e5e7eb; }
+    .portal-panel .btn-success { box-shadow: 0 8px 18px rgba(25, 135, 84, .14); }
+    .portal-panel .btn-success:hover { transform: translateY(-1px); }
     .repair-step { flex: 1; text-align: center; font-size: 0.9rem; color: #6c757d; }
     .repair-step .step-dot { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: 2px solid #dee2e6; background: #fff; font-weight: 700; margin-bottom: 6px; }
-    .repair-step.active { color: #dc3545; font-weight: 700; }
-    .repair-step.active .step-dot { border-color: #dc3545; background: #dc3545; color: #fff; }
+    .repair-step.active { color: #198754; font-weight: 700; }
+    .repair-step.active .step-dot { border-color: #198754; background: #198754; color: #fff; }
     @keyframes portalRise {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -176,7 +175,7 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
     <div class="portal-panel p-4 mb-4">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <p class="text-muted mb-0">E-bikes registered to your account</p>
-        <a href="customerbookrepair.php" class="btn btn-danger"><i class="bi bi-plus-circle me-1"></i>Book Repair</a>
+        <a href="customerbookrepair.php" class="btn btn-success"><i class="bi bi-plus-circle me-1"></i>Book Repair</a>
       </div>
       <div class="table-responsive">
         <table class="table table-hover mb-0">
@@ -214,7 +213,7 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
                   <?php if ((int)($repair['booking_id'] ?? 0) > 0 && (float)($repair['payable_amount'] ?? 0) > 0 && ($repair['payment_status'] ?? 'Pending') !== 'Paid'): ?>
                     <form action="create_netcorepay_payment.php" method="post" class="netcorepay-payment-form">
                       <input type="hidden" name="booking_id" value="<?= htmlspecialchars((string)$repair['booking_id']) ?>">
-                      <button class="btn btn-sm btn-danger" type="submit" data-payment-button>
+                      <button class="btn btn-sm btn-success" type="submit" data-payment-button>
                         <i class="bi bi-credit-card me-1"></i>Pay PHP <?= number_format((float)$repair['payable_amount'], 2) ?>
                       </button>
                     </form>
@@ -234,17 +233,6 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
       </div>
     </div>
 
-    <!-- Visit Our Shop -->
-    <h4 class="section-title">KDA/KUDA and NWOW Stores in Laguna</h4>
-    <div class="portal-panel p-4 mb-4">
-      <p class="text-muted">Find nearby KDA/KUDA and NWOW e-bike stores around Laguna.</p>
-      <div class="map-container mb-3">
-        <iframe 
-          src="https://www.google.com/maps?q=NWOW%20KUDA%20KDA%20E-bike%20Laguna%20Philippines&output=embed"
-          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-        </iframe>
-      </div>
-    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

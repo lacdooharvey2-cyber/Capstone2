@@ -113,7 +113,7 @@ if ($technicianOptions) {
     .schedule-panel { border: 0; overflow: hidden; }
     .schedule-header {
       align-items: center;
-      background: linear-gradient(135deg, #842029, #dc3545);
+      background: linear-gradient(135deg, #003b16, #198754);
       color: #fff;
       display: flex;
       flex-wrap: wrap;
@@ -152,15 +152,15 @@ if ($technicianOptions) {
       padding: .42rem .7rem;
       text-transform: capitalize;
     }
-    .fc .fc-button-primary { background: #dc3545; border-color: #dc3545; }
-    .fc .fc-button-primary:hover, .fc .fc-button-primary:focus { background: #a61e2e; border-color: #a61e2e; }
-    .fc .fc-button-primary:disabled { background: #f1aeb5; border-color: #f1aeb5; }
+    .fc .fc-button-primary { background: #198754; border-color: #198754; }
+    .fc .fc-button-primary:hover, .fc .fc-button-primary:focus { background: #003b16; border-color: #003b16; }
+    .fc .fc-button-primary:disabled { background: #b8e4c2; border-color: #b8e4c2; }
     .fc-theme-standard .fc-scrollgrid,
     .fc-theme-standard td,
     .fc-theme-standard th { border-color: #edf0f2; }
     .fc .fc-col-header-cell {
-      background: #fff1f2;
-      color: #842029;
+      background: #f3f5f3;
+      color: #146c43;
       font-size: .78rem;
       padding: 8px 0;
       text-transform: uppercase;
@@ -320,7 +320,7 @@ if ($technicianOptions) {
                         <option <?= $r['repair_status'] === 'Completed' ? 'selected' : '' ?>>Completed</option>
                         <option <?= $r['repair_status'] === 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
                       </select>
-                      <button class="btn btn-sm btn-danger">Save</button>
+                      <button class="btn btn-sm btn-success">Save</button>
                     </form>
                   </td>
                 </tr>

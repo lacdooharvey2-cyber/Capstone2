@@ -10,6 +10,7 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Assista
 }
 
 ensureRepairAutomationSchema($conn);
+$isAssistantAdmin = ($_SESSION['role'] ?? '') === 'AssistantAdmin';
 
 function dashboardValue(mysqli $conn, string $sql, string $key = 'total')
 {
@@ -182,6 +183,10 @@ $dashboardBreakdowns = [
         'fields' => ['repair_id', 'customer', 'ebike_model', 'updated_at', 'issue_description'],
     ],
 ];
+
+if ($isAssistantAdmin) {
+    unset($dashboardBreakdowns['monthly_revenue']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -199,7 +204,7 @@ $dashboardBreakdowns = [
     .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
     .kpi-value { font-size: clamp(1.1rem, 2vw, 1.8rem); font-weight: 800; line-height: 1.08; margin-bottom: .55rem; overflow-wrap: anywhere; }
     .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #fff1f2; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
+    .kpi-icon { align-items: center; background: #e5f8e9; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
     .kpi-button { background: transparent; border: 0; padding: 0; text-align: left; width: 100%; }
     .kpi-button .card { cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
     .kpi-button:hover .card { transform: translateY(-2px); box-shadow: 0 .7rem 1.4rem rgba(31,41,55,.12) !important; }
@@ -216,7 +221,7 @@ $dashboardBreakdowns = [
   <div class="container mt-4">
     <div class="page-hero">
       <h3 class="mb-1">Admin Dashboard</h3>
-      <p>Repair queue, revenue, turnaround, cancellation, and brand activity overview.</p>
+      <p><?= $isAssistantAdmin ? 'Repair queue, turnaround, cancellation, and brand activity overview.' : 'Repair queue, revenue, turnaround, cancellation, and brand activity overview.' ?></p>
     </div>
     <?php renderDashboardAlerts($conn, $_SESSION['role'], (int)$_SESSION['user_id']); ?>
 
@@ -230,10 +235,13 @@ $dashboardBreakdowns = [
         ['avg_turnaround', 'Avg Turnaround', number_format($avgTurnaround, 1) . ' days', 'Completed repair cycle', 'text-info', 'bi-speedometer2'],
         ['cancellations_this_month', 'Cancellations This Month', $cancellationsThisMonth, 'Cancelled repair tickets', 'text-secondary', 'bi-x-circle'],
       ];
+      if ($isAssistantAdmin) {
+        $cards = array_values(array_filter($cards, static fn (array $card): bool => $card[0] !== 'monthly_revenue'));
+      }
       foreach ($cards as $card):
       ?>
         <div>
-          <button type="button" class="kpi-button" data-bs-toggle="modal" data-bs-target="#kpiModal-<?= htmlspecialchars($card[0]) ?>">
+          <button type="button" class="kpi-button" <?= $isAssistantAdmin ? 'disabled aria-disabled="true"' : 'data-bs-toggle="modal" data-bs-target="#kpiModal-' . htmlspecialchars($card[0]) . '"' ?>>
           <div class="card kpi-card <?= $card[4] ?> shadow-sm h-100"><div class="card-body kpi-body">
             <div>
               <p class="kpi-label"><?= htmlspecialchars($card[1]) ?></p>
@@ -247,7 +255,7 @@ $dashboardBreakdowns = [
       <?php endforeach; ?>
     </div>
 
-    <?php foreach ($dashboardBreakdowns as $key => $breakdown): ?>
+    <?php if (!$isAssistantAdmin): foreach ($dashboardBreakdowns as $key => $breakdown): ?>
       <div class="modal fade" id="kpiModal-<?= htmlspecialchars($key) ?>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
           <div class="modal-content">
@@ -272,7 +280,7 @@ $dashboardBreakdowns = [
           </div>
         </div>
       </div>
-    <?php endforeach; ?>
+    <?php endforeach; endif; ?>
 
     <div class="row g-3 mb-4">
       <div class="col-lg-4"><div class="card chart-card">
@@ -300,7 +308,7 @@ $dashboardBreakdowns = [
     const repairStatus = <?= json_encode($repairStatus, JSON_NUMERIC_CHECK) ?>;
     const monthlyRepairs = <?= json_encode($monthlyRepairs, JSON_NUMERIC_CHECK) ?>;
     const brandRepairs = <?= json_encode($brandRepairs, JSON_NUMERIC_CHECK) ?>;
-    const colors = ['#d62828', '#0d6efd', '#198754', '#f77f00', '#6c757d', '#17a2b8'];
+    const colors = ['#003b16', '#146c43', '#198754', '#67b87a', '#b8e4c2', '#6c757d'];
     const gridStyle = { color: 'rgba(108,117,125,.28)', borderDash: [3, 3], drawTicks: false };
     const axisStyle = { grid: gridStyle, border: { color: 'rgba(108,117,125,.45)' }, ticks: { color: '#6c757d', padding: 8 } };
     const legendStyle = { labels: { boxWidth: 10, boxHeight: 10, color: '#495057', usePointStyle: true }, position: 'bottom' };
@@ -317,7 +325,7 @@ $dashboardBreakdowns = [
       type: 'line',
       data: {
         labels: monthlyRepairs.map(row => row.month),
-        datasets: [{ label: 'Total Repairs', data: monthlyRepairs.map(row => row.total), borderColor: '#d62828', backgroundColor: 'rgba(214,40,40,.12)', tension: .4, fill: true, pointRadius: 4 }]
+        datasets: [{ label: 'Total Repairs', data: monthlyRepairs.map(row => row.total), borderColor: '#198754', backgroundColor: 'rgba(25,135,84,.12)', tension: .4, fill: true, pointRadius: 4 }]
       },
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: legendStyle }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0 } } } }
     });
@@ -325,7 +333,7 @@ $dashboardBreakdowns = [
       type: 'bar',
       data: {
         labels: brandRepairs.map(row => row.brand),
-        datasets: [{ label: 'Repairs', data: brandRepairs.map(row => row.total), backgroundColor: ['#d62828', '#0d6efd', '#6c757d'], borderRadius: 8, maxBarThickness: 42 }]
+        datasets: [{ label: 'Repairs', data: brandRepairs.map(row => row.total), backgroundColor: ['#003b16', '#198754', '#6c757d'], borderRadius: 8, maxBarThickness: 42 }]
       },
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: axisStyle, y: { ...axisStyle, beginAtZero: true, ticks: { ...axisStyle.ticks, precision: 0 } } } }
     });

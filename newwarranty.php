@@ -88,7 +88,7 @@ $customers = $conn->query("SELECT user_id, name, custom_id FROM users WHERE role
               <option>Rejected</option>
             </select>
           </div>
-          <button class="btn btn-danger">Create Warranty</button>
+          <button class="btn btn-success">Create Warranty</button>
           <a href="adminwarranties.php" class="btn btn-secondary">Cancel</a>
         </form>
       </div>

@@ -42,7 +42,7 @@ $navbar = match ($role) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Activity Logs - FixTrack</title>
+  <title>Audit Trail - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/css/app-theme.css" rel="stylesheet">
@@ -50,7 +50,7 @@ $navbar = match ($role) {
     body { background: #f8f9fa; }
     .logs-wrap { max-width: 1180px; margin: 30px auto; padding: 0 16px 40px; }
     .logs-panel { background: #fff; border: 1px solid #dee2e6; border-radius: 12px; box-shadow: 0 .35rem 1rem rgba(31,41,55,.07); overflow: hidden; }
-    .logs-panel thead th { background: #fff1f2; color: #842029; white-space: nowrap; }
+    .logs-panel thead th { background: #f3f5f3; color: #374151; white-space: nowrap; }
     .logs-panel td { vertical-align: middle; }
     .log-description { max-width: 560px; }
   </style>
@@ -60,7 +60,7 @@ $navbar = match ($role) {
   <main class="logs-wrap">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
       <div>
-        <h1 class="h3 mb-1"><i class="bi bi-clock-history text-danger me-2"></i>Activity Logs</h1>
+        <h1 class="h3 mb-1"><i class="bi bi-clock-history text-danger me-2"></i>Audit Trail</h1>
         <p class="text-secondary mb-0"><?= $isAdmin ? 'System-wide activity history' : 'Your account activity history' ?></p>
       </div>
       <span class="badge text-bg-light border">Latest 100 records</span>
@@ -73,13 +73,13 @@ $navbar = match ($role) {
             <?php if ($logs): foreach ($logs as $log): ?>
               <tr>
                 <td><?= htmlspecialchars((string)$log['created_at']) ?></td>
-                <td><?= htmlspecialchars((string)($log['actor_role'] ?: 'Activity')) ?></td>
+                <td><?= htmlspecialchars(($log['actor_role'] ?? '') === 'AssistantAdmin' ? 'Assistant Admin' : (string)($log['actor_role'] ?: 'Activity')) ?></td>
                 <td><span class="badge bg-danger-subtle text-danger-emphasis"><?= htmlspecialchars((string)$log['action']) ?></span></td>
                 <td class="log-description"><?= htmlspecialchars((string)$log['description']) ?></td>
                 <td><?= !empty($log['entity_type']) && !empty($log['entity_id']) ? htmlspecialchars($log['entity_type'] . ' #' . $log['entity_id']) : '—' ?></td>
               </tr>
             <?php endforeach; else: ?>
-              <tr><td colspan="5" class="text-center text-muted py-4">No activity logs recorded yet.</td></tr>
+              <tr><td colspan="5" class="text-center text-muted py-4">No audit trail records yet.</td></tr>
             <?php endif; ?>
           </tbody>
         </table>

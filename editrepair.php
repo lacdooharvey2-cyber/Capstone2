@@ -9,6 +9,11 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Assista
     exit();
 }
 
+if (($_SESSION['role'] ?? '') === 'AssistantAdmin') {
+    header("Location: adminrepairs.php");
+    exit();
+}
+
 ensureRepairAutomationSchema($conn);
 
 $repair_id = intval($_GET['id'] ?? $_POST['repair_id'] ?? 0);
@@ -59,7 +64,7 @@ $technicians = $conn->query("SELECT user_id, name FROM users WHERE role IN ('Tec
         <div class="mb-3"><label class="form-label">Warranty Verification</label><select class="form-select" name="warranty_status"><option <?= $repair['warranty_status']==='Valid'?'selected':'' ?>>Valid</option><option <?= $repair['warranty_status']==='Invalid'?'selected':'' ?>>Invalid</option></select></div>
         <div class="mb-3"><label class="form-label">Amount</label><input class="form-control" type="number" min="0" step="0.01" name="amount" value="<?= htmlspecialchars($repair['amount']) ?>"></div>
         <div class="mb-3"><label class="form-label">Technician</label><select class="form-select" name="technician_id"><option value="">Unassigned</option><?php while($t=$technicians->fetch_assoc()): ?><option value="<?= htmlspecialchars($t['user_id']) ?>" <?= intval($repair['technician_id'])===intval($t['user_id'])?'selected':'' ?>><?= htmlspecialchars($t['name']) ?></option><?php endwhile; ?></select></div>
-        <button class="btn btn-danger">Save</button>
+        <button class="btn btn-success">Save</button>
         <a href="adminrepairs.php" class="btn btn-secondary">Cancel</a>
       </form>
     <?php else: ?>

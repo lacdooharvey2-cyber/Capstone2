@@ -34,7 +34,7 @@ $user = $stmt->get_result()->fetch_assoc();
       <?php if ($user_id === intval($_SESSION['user_id'])): ?>
         <div class="alert alert-warning">You cannot delete your own logged-in account.</div>
       <?php else: ?>
-        <form method="post"><input type="hidden" name="user_id" value="<?= htmlspecialchars($user['user_id']) ?>"><button class="btn btn-danger">Delete</button> <a href="adminmanageusers.php" class="btn btn-secondary">Cancel</a></form>
+        <form method="post"><input type="hidden" name="user_id" value="<?= htmlspecialchars($user['user_id']) ?>"><button class="btn btn-success">Delete</button> <a href="adminmanageusers.php" class="btn btn-secondary">Cancel</a></form>
       <?php endif; ?>
     <?php else: ?>
       <p class="text-muted">User not found.</p><a href="adminmanageusers.php" class="btn btn-secondary">Back</a>
