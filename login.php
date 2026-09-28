@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: cashierdashboard.php");
                     break;
                 default:
-                    header("Location: Homepage.php?error=invalidrole");
+                    header("Location: index.php?error=invalidrole");
             }
             exit();
         } else {
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     body {
       min-height: 100vh;
       background:
-        linear-gradient(135deg, rgba(229, 248, 233, 0.92), rgba(255, 255, 255, 0.94)),
+        linear-gradient(135deg, rgba(25, 135, 84, 0.08), rgba(255, 255, 255, 0.94)),
         url("https://imgcdn.zigwheels.ph/large/gallery/exterior/154/3048/nwow-gb2-slant-front-view-full-image-859417.jpg") center/cover fixed;
       color: var(--brand-dark);
       font-family: 'Segoe UI', sans-serif;
@@ -100,20 +100,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .auth-shell {
       min-height: 100vh;
       display: flex;
-      align-items: stretch;
-      padding: 0;
+      align-items: center;
+      padding: 32px 16px;
     }
 
     .auth-panel {
       width: 100%;
-      max-width: none;
-      min-height: 100vh;
-      margin: 0;
+      max-width: 1040px;
+      margin: 0 auto;
       background: #fff;
-      border: 0;
-      border-radius: 0;
+      border: 1px solid rgba(222, 226, 230, 0.85);
+      border-radius: 18px;
       overflow: hidden;
-      box-shadow: none;
+      box-shadow: 0 24px 70px rgba(31, 41, 55, 0.18);
       animation: fadeInUp 0.7s cubic-bezier(.2,.8,.2,1) both;
     }
 
@@ -123,10 +122,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .brand-side {
-      min-height: 100vh;
-      padding: clamp(48px, 8vw, 120px);
+      min-height: 620px;
+      padding: 48px;
       background:
-        linear-gradient(160deg, rgba(0, 59, 22, 0.94), rgba(20, 108, 67, 0.88)),
+        linear-gradient(160deg, rgba(0, 59, 22, 0.94), rgba(18, 63, 35, 0.88)),
         url("https://filebroker-cdn.lazada.com.ph/kf/S5cc28fccabd645cf918dfee7f7a54fa7I.jpg") center/cover;
       color: #fff;
       display: flex;
@@ -217,10 +216,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .login-side {
-      padding: clamp(48px, 8vw, 120px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      padding: 52px 46px;
       animation: contentReveal .7s .18s both;
     }
 
@@ -275,14 +271,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       color: var(--brand-red);
     }
 
-    .btn-success {
+    .btn-danger {
       font-weight: 700;
       background: var(--brand-red);
       border-color: var(--brand-red);
       transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
     }
 
-    .btn-success:hover {
+    .btn-danger:hover {
       transform: translateY(-1px);
       box-shadow: 0 12px 24px rgba(25,135,84,0.22);
     }
@@ -344,6 +340,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       text-decoration: underline;
     }
 
+    .auth-panel .badge.text-bg-danger-subtle {
+      background: #e5f8e9 !important;
+      color: #146c43 !important;
+      border-color: #b8e4c2 !important;
+    }
+
+    .auth-panel a.text-danger {
+      color: var(--brand-red) !important;
+    }
+
     @media (max-width: 991px) {
       .brand-side {
         min-height: auto;
@@ -360,12 +366,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     @media (max-width: 575px) {
+      .auth-shell {
+        padding: 16px 10px;
+      }
+
       .brand-side {
         display: none;
       }
 
       .auth-panel {
-        border-radius: 0;
+        border-radius: 12px;
       }
 
       .login-side {
@@ -394,7 +404,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="col-lg-6 login-side">
-          <a href="Homepage.php" class="small-link d-inline-flex align-items-center gap-1 mb-4"><i class="bi bi-arrow-left"></i>Back to homepage</a>
           <div class="mb-4">
             <span class="badge text-bg-danger-subtle text-danger border border-danger-subtle mb-3">FixTrack Portal</span>
             <h2 class="login-heading">Welcome back</h2>
@@ -427,7 +436,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </div>
             </div>
 
-            <button type="submit" class="btn btn-success w-100 mb-3">
+            <button type="submit" class="btn btn-danger w-100 mb-3">
               <i class="bi bi-box-arrow-in-right me-1"></i> Login
             </button>
           </form>
