@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
-    body { min-height: 100vh; display: grid; place-items: stretch; padding: 0; background: #f7f8f7; font-family: 'Segoe UI', sans-serif; }
+    body { min-height: 100vh; display: grid; place-items: stretch; padding: 0; background: #f7f8f7; font-family: system-ui, "Segoe UI", Roboto, sans-serif; }
     .reset-card { width: 100%; max-width: none; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; background: #fff; border: 0; border-radius: 0; padding: clamp(40px, 9vw, 140px); box-shadow: none; animation: resetRise .6s cubic-bezier(.2,.8,.2,1) both; }
     .reset-card > * { width: 100%; max-width: 520px; margin-left: auto; margin-right: auto; }
     .reset-card > * { animation: resetReveal .5s both; }
@@ -97,3 +97,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
   </main>
 </body>
 </html>
+

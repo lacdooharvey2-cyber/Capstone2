@@ -8,10 +8,7 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Assista
     exit();
 }
 
-// Adjust query to match your actual table structure
-$sql = "SELECT user_id, custom_id, name, email, contact_number, role, account_status 
-        FROM users ORDER BY role, name";
-$result = $conn->query($sql);
+$result = $conn->query("SELECT user_id, custom_id, name, email, contact_number, role, account_status FROM users ORDER BY role, name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +40,7 @@ $result = $conn->query($sql);
           <th>Contact Number</th>
           <th>Role</th>
           <th>Status</th>
-          <th style="width:150px;">Actions</th>
+          <th style="width:170px;">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -66,7 +63,7 @@ $result = $conn->query($sql);
               <td>
                 <a href="edituser.php?id=<?= urlencode($row['user_id']) ?>" class="btn btn-sm btn-primary">Edit</a>
                 <a href="deleteuser.php?id=<?= urlencode($row['user_id']) ?>" 
-                   class="btn btn-sm btn-success"
+                   class="btn btn-sm btn-danger ms-1"
                    onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
               </td>
             </tr>

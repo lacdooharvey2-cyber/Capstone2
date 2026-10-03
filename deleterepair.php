@@ -29,14 +29,14 @@ $repair = $stmt->get_result()->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>Delete Repair - FixTrack</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Delete Repair - FixTrack</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></head>
 <body class="bg-light">
   <?php include("navbaradmin.php"); ?>
   <div class="container mt-4"><div class="card shadow-sm"><div class="card-body">
     <h3 class="mb-3">Delete Repair</h3>
     <?php if ($repair): ?>
       <p>Delete repair #<?= htmlspecialchars($repair['repair_id']) ?> for <strong><?= htmlspecialchars($repair['ebike_model']) ?></strong>?</p>
-      <form method="post"><input type="hidden" name="repair_id" value="<?= htmlspecialchars($repair['repair_id']) ?>"><button class="btn btn-success">Delete</button> <a href="adminrepairs.php" class="btn btn-secondary">Cancel</a></form>
+      <form method="post"><input type="hidden" name="repair_id" value="<?= htmlspecialchars($repair['repair_id']) ?>"><button class="btn btn-danger">Delete</button> <a href="adminrepairs.php" class="btn btn-secondary">Cancel</a></form>
     <?php else: ?>
       <p class="text-muted">Repair not found.</p><a href="adminrepairs.php" class="btn btn-secondary">Back</a>
     <?php endif; ?>

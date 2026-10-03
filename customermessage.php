@@ -30,6 +30,7 @@ $contacts = $conn->query("
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Messages - FixTrack Customer</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -47,7 +48,7 @@ $contacts = $conn->query("
           <?php while($c = $contacts->fetch_assoc()): ?>
             <li class="list-group-item d-flex align-items-center">
               <!-- Avatar initials -->
-              <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center me-2" style="width:35px; height:35px;">
+              <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center me-2" style="width:35px; height:35px;">
                 <?= strtoupper(substr($c['name'],0,1)) ?>
               </div>
               <div class="flex-grow-1">
@@ -110,3 +111,6 @@ $contacts = $conn->query("
   </div>
 </body>
 </html>
+
+
+

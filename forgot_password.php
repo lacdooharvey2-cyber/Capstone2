@@ -69,10 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-    :root { --brand-red: #198754; --brand-dark: #1f2937; }
+    :root { --app-primary: #198754; --app-primary-dark: #1f2937; }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { min-height: 100vh; margin: 0; background: #f7f8f7; color: var(--brand-dark); font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
+    body { min-height: 100vh; margin: 0; background: #f7f8f7; color: var(--app-primary-dark); font-family: system-ui, "Segoe UI", Roboto, sans-serif; overflow-x: hidden; }
     .auth-shell { min-height: 100vh; display: flex; align-items: stretch; padding: 0; }
     .auth-panel { width: 100%; max-width: none; min-height: 100vh; margin: 0; background: #fff; border: 0; border-radius: 0; overflow: hidden; box-shadow: none; animation: fadeInUp .7s cubic-bezier(.2,.8,.2,1) both; }
     .brand-side { min-height: 100vh; padding: clamp(48px, 8vw, 120px); background: #f7f8f7; border-right: 1px solid #e4e9e5; color: #17221a; display: flex; flex-direction: column; justify-content: center; position: relative; }
@@ -97,11 +97,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
     .input-group .form-control { border-left: 0; }
     .input-group-text { background: #fff; color: #6c757d; }
     .form-control { transition: border-color .28s ease, box-shadow .28s ease, transform .28s cubic-bezier(.22,1,.36,1); }
-    .form-control:focus { border-color: var(--brand-red); box-shadow: 0 0 0 .22rem rgba(25,135,84,.14); transform: translateY(-1px); }
-    .input-group:focus-within .input-group-text { border-color: var(--brand-red); color: var(--brand-red); }
-    .btn-success { font-weight: 700; background: var(--brand-red); border-color: var(--brand-red); transition: transform .2s ease, box-shadow .2s ease; }
+    .form-control:focus { border-color: var(--app-primary); box-shadow: 0 0 0 .22rem rgba(25,135,84,.14); transform: translateY(-1px); }
+    .input-group:focus-within .input-group-text { border-color: var(--app-primary); color: var(--app-primary); }
+    .btn-success { font-weight: 700; background: var(--app-primary); border-color: var(--app-primary); transition: transform .2s ease, box-shadow .2s ease; }
     .btn-success:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(25,135,84,.22); }
-    .small-link { color: var(--brand-red); font-weight: 700; text-decoration: none; }
+    .small-link { color: var(--app-primary); font-weight: 700; text-decoration: none; }
     .small-link:hover { text-decoration: underline; }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes contentReveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -144,3 +144,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
   </main>
 </body>
 </html>
+

@@ -43,7 +43,7 @@ if (isset($_SESSION['role'])) {
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; background: var(--canvas); color: var(--ink); font-family: "Segoe UI", Arial, sans-serif; }
+    body { margin: 0; background: var(--canvas); color: var(--ink); font-family: system-ui, "Segoe UI", Roboto, sans-serif; }
     a { color: inherit; text-decoration: none; }
 
     .site-shell { width: 100%; margin: 0; background: var(--surface); min-height: 100vh; }
@@ -169,14 +169,12 @@ if (isset($_SESSION['role'])) {
       <section class="hero" id="platform">
         <div class="hero-grid">
           <div>
-            <span class="eyebrow"><i class="bi bi-circle-fill"></i> REPAIR MANAGEMENT</span>
-            <h1>Built for smoother E-bike service.</h1>
-            <p class="hero-copy">FixTrack brings repair requests, technician schedules, warranties, payments, and customer updates into one clear workspace for your entire service team.</p>
+            <h1>Built for smoother</h1>
+            <h1>E-bike service.</h1>
             <div class="hero-actions">
               <a class="btn btn-primary" href="login.php">Get started</a>
               <a class="btn btn-outline" href="login.php">Login</a>
             </div>
-            <p class="trust-line"><i class="bi bi-check2-circle"></i>Built for service teams, technicians, cashiers, and customers.</p>
           </div>
 
           <div class="product-preview" aria-label="KDA, KUDA, and NWOW store locations in Laguna">
@@ -196,7 +194,8 @@ if (isset($_SESSION['role'])) {
       </section>
     </main>
 
-    <footer class="footer"><span>&copy; <?= date('Y') ?> FixTrack</span><span>E-bike repair management made clear.</span></footer>
+    <footer class="footer"><span>&copy; <?= date('Y') ?> FixTrack</span><span></span></footer>
   </div>
 </body>
 </html>
+

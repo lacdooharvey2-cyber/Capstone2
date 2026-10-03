@@ -77,8 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     :root {
-      --brand-red: #198754;
-      --brand-dark: #1f2937;
+      --app-primary: #198754;
+      --app-primary-dark: #1f2937;
     }
 
     * {
@@ -90,8 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     body {
       min-height: 100vh;
       background: #f7f8f7;
-      color: var(--brand-dark);
-      font-family: 'Segoe UI', sans-serif;
+      color: var(--app-primary-dark);
+      font-family: system-ui, "Segoe UI", Roboto, sans-serif;
       overflow-x: hidden;
     }
 
@@ -246,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .form-control:focus {
-      border-color: var(--brand-red);
+      border-color: var(--app-primary);
       box-shadow: 0 0 0 .22rem rgba(25, 135, 84, .14);
     }
 
@@ -259,14 +259,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .input-group:focus-within .input-group-text {
-      border-color: var(--brand-red);
-      color: var(--brand-red);
+      border-color: var(--app-primary);
+      color: var(--app-primary);
     }
 
     .btn-danger {
       font-weight: 700;
-      background: var(--brand-red);
-      border-color: var(--brand-red);
+      background: var(--app-primary);
+      border-color: var(--app-primary);
       transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
     }
 
@@ -323,7 +323,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .small-link {
-      color: var(--brand-red);
+      color: var(--app-primary);
       font-weight: 700;
       text-decoration: none;
     }
@@ -339,7 +339,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .auth-panel a.text-danger {
-      color: var(--brand-red) !important;
+      color: var(--app-primary) !important;
     }
 
     @media (max-width: 991px) {
@@ -481,3 +481,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </script>
 </body>
 </html>
+

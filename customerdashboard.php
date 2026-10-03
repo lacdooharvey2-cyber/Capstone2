@@ -15,7 +15,7 @@ $customerIdSql = intval($customer_id);
 $ebikesOwned = $conn->query("SELECT COUNT(*) AS total FROM warranty_records WHERE customer_id=$customerIdSql")->fetch_assoc()['total'];
 $activeRepairs = $conn->query("SELECT COUNT(*) AS total FROM repairs WHERE customer_id=$customerIdSql AND repair_status IN ('Pending','In Progress')")->fetch_assoc()['total'];
 $completedRepairs = $conn->query("SELECT COUNT(*) AS total FROM repairs WHERE customer_id=$customerIdSql AND repair_status='Completed'")->fetch_assoc()['total'];
-$activeWarranties = $conn->query("SELECT COUNT(*) AS total FROM warranty_records WHERE customer_id=$customerIdSql AND warranty_status='Active'")->fetch_assoc()['total'];
+$activeWarranties = $conn->query("SELECT COUNT(*) AS total FROM warranty_records WHERE customer_id=$customerIdSql AND warranty_status='Active' AND DATE_ADD(purchase_date, INTERVAL warranty_period MONTH) > DATE_ADD(CURDATE(), INTERVAL 30 DAY)")->fetch_assoc()['total'];
 $expiringSoon = $conn->query("
   SELECT COUNT(*) AS total
   FROM warranty_records
@@ -23,9 +23,16 @@ $expiringSoon = $conn->query("
     AND warranty_status='Active'
     AND DATE_ADD(purchase_date, INTERVAL warranty_period MONTH) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)
 ")->fetch_assoc()['total'];
+$expiringWarranties = $conn->query("
+  SELECT ebike_model, DATE_ADD(purchase_date, INTERVAL warranty_period MONTH) AS expires_on
+  FROM warranty_records
+  WHERE customer_id=$customerIdSql AND warranty_status='Active'
+    AND DATE_ADD(purchase_date, INTERVAL warranty_period MONTH) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)
+  ORDER BY expires_on ASC LIMIT 3
+");
 
 $myEbikes = $conn->query("
-  SELECT ebike_model, purchase_date, warranty_period, warranty_status
+  SELECT ebike_model, ebike_image_url, purchase_date, warranty_period, warranty_status
   FROM warranty_records
   WHERE customer_id=$customerIdSql
   ORDER BY created_at DESC
@@ -62,6 +69,7 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Customer Dashboard - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -111,6 +119,10 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
     </div>
     <?php renderDashboardAlerts($conn, $_SESSION['role'], (int)$_SESSION['user_id']); ?>
 
+    <?php if ($expiringWarranties && $expiringWarranties->num_rows > 0): ?>
+      <div class="alert alert-warning d-flex gap-2 align-items-start" role="alert"><i class="bi bi-exclamation-triangle-fill"></i><div><strong>Warranty reminder</strong><br><?php while ($warranty = $expiringWarranties->fetch_assoc()): ?><?= htmlspecialchars($warranty['ebike_model']) ?> expires on <?= htmlspecialchars($warranty['expires_on']) ?>.<br><?php endwhile; ?></div></div>
+    <?php endif; ?>
+
     <?php if (($_GET['payment'] ?? '') === 'success'): ?>
       <div class="alert alert-success d-flex align-items-center gap-2" role="alert"><i class="bi bi-check-circle-fill"></i> Payment received. Your repair booking is now marked as paid.</div>
     <?php elseif (($_GET['payment'] ?? '') === 'cancelled'): ?>
@@ -123,11 +135,11 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
     <div class="row g-3 customer-kpis">
       <?php
       $cards = [
-        ['E-bikes Owned', $ebikesOwned, 'Registered to account', 'text-danger', 'bi-bicycle'],
-        ['Active Repairs', $activeRepairs, 'Pending or in progress', 'text-primary', 'bi-tools'],
+        ['E-bikes Owned', $ebikesOwned, 'Registered to account', 'text-primary', 'bi-bicycle'],
+        ['Active Repairs', $activeRepairs, 'Pending or in progress', 'text-info', 'bi-tools'],
         ['Completed Repairs', $completedRepairs, 'Finished service jobs', 'text-success', 'bi-check2-circle'],
-        ['Active Warranties', $activeWarranties, 'Currently covered', 'text-warning', 'bi-shield-check'],
-        ['Expiring Soon', $expiringSoon, 'Within 30 days', 'text-danger', 'bi-calendar-x'],
+        ['Active Warranties', $activeWarranties, 'Currently covered', 'text-success', 'bi-shield-check'],
+        ['Expiring Soon', $expiringSoon, 'Within 30 days', 'text-warning', 'bi-calendar-x'],
       ];
       foreach ($cards as $card):
       ?>
@@ -155,7 +167,7 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
           <span class="badge bg-<?= $activeRepair['repair_status'] === 'Completed' ? 'success' : ($activeRepair['repair_status'] === 'In Progress' ? 'primary' : 'warning') ?> align-self-start"><?= htmlspecialchars($activeRepair['repair_status']) ?></span>
         </div>
         <div class="progress my-4" style="height: 10px;">
-          <div class="progress-bar bg-danger" style="width: <?= $progressWidth ?>%"></div>
+          <div class="progress-bar bg-success" style="width: <?= $progressWidth ?>%"></div>
         </div>
         <div class="d-flex">
           <?php foreach (array_keys($statusSteps) as $label): $isActive = $statusSteps[$label] <= $currentStep; ?>
@@ -179,17 +191,18 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
       </div>
       <div class="table-responsive">
         <table class="table table-hover mb-0">
-          <thead><tr><th>E-bike</th><th>Purchase Date</th><th>Period</th><th>Status</th></tr></thead>
+          <thead><tr><th>Photo</th><th>E-bike</th><th>Purchase Date</th><th>Period</th><th>Status</th></tr></thead>
           <tbody>
             <?php if ($myEbikes && $myEbikes->num_rows > 0): while($bike = $myEbikes->fetch_assoc()): ?>
               <tr>
+                <td><?php if (!empty($bike['ebike_image_url'])): ?><img src="<?= htmlspecialchars($bike['ebike_image_url']) ?>" alt="<?= htmlspecialchars($bike['ebike_model']) ?>" width="52" height="40" style="object-fit:cover;border-radius:4px"><?php else: ?><i class="bi bi-bicycle text-secondary"></i><?php endif; ?></td>
                 <td><?= htmlspecialchars($bike['ebike_model']) ?></td>
                 <td><?= htmlspecialchars($bike['purchase_date']) ?></td>
                 <td><?= htmlspecialchars($bike['warranty_period']) ?> months</td>
                 <td><span class="badge bg-<?= $bike['warranty_status'] === 'Active' ? 'success' : 'secondary' ?>"><?= htmlspecialchars($bike['warranty_status']) ?></span></td>
               </tr>
             <?php endwhile; else: ?>
-              <tr><td colspan="4" class="text-center text-muted">No e-bikes registered yet.</td></tr>
+              <tr><td colspan="5" class="text-center text-muted">No e-bikes registered yet.</td></tr>
             <?php endif; ?>
           </tbody>
         </table>

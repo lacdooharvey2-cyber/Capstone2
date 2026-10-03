@@ -59,6 +59,10 @@ function ensureRepairAutomationSchema(mysqli $conn): void
         $conn->query("ALTER TABLE repairs ADD COLUMN proof_file VARCHAR(255) NULL AFTER issue_description");
     }
 
+    if (!columnExists($conn, 'warranty_records', 'ebike_image_url')) {
+        $conn->query("ALTER TABLE warranty_records ADD COLUMN ebike_image_url VARCHAR(500) NULL AFTER ebike_model");
+    }
+
     $conn->query("CREATE TABLE IF NOT EXISTS technician_repair_reports (
         report_id INT AUTO_INCREMENT PRIMARY KEY,
         repair_id INT NOT NULL UNIQUE,
@@ -212,6 +216,18 @@ function normalizePaymentMethod(string $method): string
 function normalizePaymentStatus(string $status): string
 {
     return in_array($status, ['Pending', 'Paid', 'Cancelled'], true) ? $status : 'Pending';
+}
+
+function statusBadgeClass(string $status): string
+{
+    return match ($status) {
+        'Pending' => 'warning',
+        'In Progress' => 'primary',
+        'Completed', 'Paid', 'Valid', 'Active' => 'success',
+        'Cancelled', 'Expired', 'Inactive' => 'secondary',
+        'Rejected', 'Invalid' => 'danger',
+        default => 'secondary',
+    };
 }
 
 function syncPaymentRecord(mysqli $conn, int $repairId, int $customerId, float $amount, string $method, string $status): bool

@@ -79,7 +79,7 @@ $bookings = $conn->query("
             <td>PHP <?= number_format($displayAmount, 2) ?></td>
             <td><?= htmlspecialchars($row['booking_status']) ?></td>
             <td><span class="badge bg-<?= $displayStatus === 'Paid' ? 'success' : ($displayStatus === 'Cancelled' ? 'danger' : 'warning') ?>"><?= htmlspecialchars($displayStatus) ?></span></td>
-            <td><?= !empty($row['repair_id']) ? '<a href="repairdetails.php?id=' . urlencode((string)$row['repair_id']) . '" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye me-1"></i>View Details</a>' : '<span class="text-muted">No repair</span>' ?></td>
+            <td><?php if (!empty($row['repair_id'])): ?><a href="cashierpaymentbreakdown.php?repair_id=<?= urlencode((string)$row['repair_id']) ?>" class="btn btn-sm btn-outline-success mb-1"><i class="bi bi-receipt me-1"></i>Payment Summary</a><br><a href="repairdetails.php?id=<?= urlencode((string)$row['repair_id']) ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye me-1"></i>View</a><?php else: ?><span class="text-muted">No repair</span><?php endif; ?></td>
             <td>
               <form method="post" class="d-flex gap-2">
                 <input type="hidden" name="booking_id" value="<?= htmlspecialchars($row['booking_id']) ?>">

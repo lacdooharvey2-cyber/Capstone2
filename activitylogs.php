@@ -60,7 +60,7 @@ $navbar = match ($role) {
   <main class="logs-wrap">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
       <div>
-        <h1 class="h3 mb-1"><i class="bi bi-clock-history text-danger me-2"></i>Audit Trail</h1>
+        <h1 class="h3 mb-1"><i class="bi bi-clock-history text-success me-2"></i>Audit Trail</h1>
         <p class="text-secondary mb-0"><?= $isAdmin ? 'System-wide activity history' : 'Your account activity history' ?></p>
       </div>
       <span class="badge text-bg-light border">Latest 100 records</span>

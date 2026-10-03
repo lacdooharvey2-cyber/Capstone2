@@ -74,7 +74,6 @@ $orderBy = match ($sort) {
     default => 'r.created_at DESC',
 };
 $whereSql = $where ? 'WHERE ' . implode(' AND ', $where) : '';
-
 // Fetch all repair bookings
 $sql = "SELECT r.repair_id, r.customer_id, u.name AS customer_name, r.ebike_model,
                r.issue_description, r.proof_file, r.warranty_status, r.amount, r.repair_status, r.created_at
@@ -111,6 +110,9 @@ $repairBreakdowns = [
     .repair-kpi-button:hover .card { transform: translateY(-2px); box-shadow: 0 .7rem 1.4rem rgba(31,41,55,.12) !important; }
     .repair-live-label { color: #6c757d; font-size: .8rem; font-weight: 700; margin-bottom: 6px; }
     .repair-live-value { font-size: 1.55rem; font-weight: 800; margin-bottom: 0; }
+    .record-actions { display:flex; flex-wrap:wrap; gap:6px; min-width:210px; }
+    .record-actions .btn { min-width:76px; }
+    .record-actions .btn:first-child { min-width:104px; }
     @media (max-width: 900px) { .repair-live-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 575px) { .repair-live-grid { grid-template-columns: 1fr; } }
   </style>
@@ -126,7 +128,7 @@ $repairBreakdowns = [
     </div>
 
     <div class="repair-live-grid" aria-live="polite">
-      <div class="<?= $isAssistantAdmin ? '' : 'repair-kpi-button' ?>" <?= $isAssistantAdmin ? '' : 'data-bs-toggle="modal" data-bs-target="#repairKpi-total_repairs"' ?>><div class="card repair-live-card text-danger shadow-sm"><div class="card-body">
+      <div class="<?= $isAssistantAdmin ? '' : 'repair-kpi-button' ?>" <?= $isAssistantAdmin ? '' : 'data-bs-toggle="modal" data-bs-target="#repairKpi-total_repairs"' ?>><div class="card repair-live-card text-primary shadow-sm"><div class="card-body">
         <p class="repair-live-label">Total Repairs</p>
         <p class="repair-live-value" data-stat="total_repairs"><?= htmlspecialchars((string)$totalRepairs) ?></p>
       </div></div></div>
@@ -191,7 +193,7 @@ $repairBreakdowns = [
           <th>Status</th>
           <th>Proof</th>
           <th>Date Created</th>
-          <th style="width:150px;">Actions</th>
+          <th style="width:230px;">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -227,15 +229,15 @@ $repairBreakdowns = [
                 <?php endif; ?>
               </td>
               <td><?= htmlspecialchars($row['created_at']) ?></td>
-              <td>
+              <td><div class="record-actions">
                 <a href="repairdetails.php?id=<?= urlencode($row['repair_id']) ?>" class="btn btn-sm btn-outline-secondary">View Details</a>
                 <?php if (!$isAssistantAdmin): ?>
                   <a href="editrepair.php?id=<?= urlencode($row['repair_id']) ?>" class="btn btn-sm btn-primary">Edit</a>
                   <a href="deleterepair.php?id=<?= urlencode($row['repair_id']) ?>"
-                     class="btn btn-sm btn-success"
+                     class="btn btn-sm btn-danger"
                      onclick="return confirm('Are you sure you want to delete this booking?');">Delete</a>
                 <?php endif; ?>
-              </td>
+              </div></td>
             </tr>
           <?php endwhile; ?>
         <?php else: ?>

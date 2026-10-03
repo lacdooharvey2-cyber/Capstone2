@@ -288,14 +288,14 @@ if ($isAssistantAdmin) {
     <div class="kpi-row mb-4">
       <?php
       $cards = [
-        ['total_revenue', 'Total Revenue', 'PHP ' . number_format($totalRevenue, 0), 'Completed repairs', 'text-primary', 'bi-cash-stack'],
-        ['monthly_revenue', 'Monthly Revenue', 'PHP ' . number_format($monthlyRevenue, 0), 'Current month', 'text-info', 'bi-calendar3'],
-        ['average_revenue', 'Avg Revenue / Repair', 'PHP ' . number_format($averageRevenue, 0), 'Priced completed jobs', 'text-dark', 'bi-receipt'],
+        ['total_revenue', 'Total Revenue', 'PHP ' . number_format($totalRevenue, 0), 'Completed repairs', 'text-success', 'bi-cash-stack'],
+        ['monthly_revenue', 'Monthly Revenue', 'PHP ' . number_format($monthlyRevenue, 0), 'Current month', 'text-success', 'bi-calendar3'],
+        ['average_revenue', 'Avg Revenue / Repair', 'PHP ' . number_format($averageRevenue, 0), 'Priced completed jobs', 'text-primary', 'bi-receipt'],
         ['completion_rate', 'Completion Rate', $completionRate . '%', $completedRepairs . ' completed', 'text-success', 'bi-check2-circle'],
         ['pending_payments', 'Pending Payments', $pendingPayments, 'Bookings awaiting payment', 'text-warning', 'bi-clock-history'],
-        ['brand_users', 'KUDA vs NWOW Users', $kudaUsers . ' / ' . $nwowUsers, 'KUDA/KDA vs NWOW', 'text-danger', 'bi-bicycle'],
+        ['brand_users', 'KUDA vs NWOW Users', $kudaUsers . ' / ' . $nwowUsers, 'KUDA/KDA vs NWOW', 'text-primary', 'bi-bicycle'],
         ['warranty_claims', 'Warranty Claims', $warrantyClaims, 'Claimed warranty records', 'text-warning', 'bi-shield-exclamation'],
-        ['warranty_claim_rate', 'Warranty Claim Rate', $warrantyClaimRate . '%', $warrantyClaims . ' of ' . $totalWarranties . ' warranties', 'text-secondary', 'bi-shield-check'],
+        ['warranty_claim_rate', 'Warranty Claim Rate', $warrantyClaimRate . '%', $warrantyClaims . ' of ' . $totalWarranties . ' warranties', 'text-info', 'bi-shield-check'],
       ];
       if ($isAssistantAdmin) {
         $restrictedKpis = ['total_revenue', 'monthly_revenue', 'average_revenue', 'pending_payments'];

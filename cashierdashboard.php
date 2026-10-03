@@ -51,10 +51,10 @@ $recentRepairs = $conn->query("
       <?php
       $cards = [
         ["Today's Revenue", 'PHP ' . number_format((float)$todayRevenue, 2), 'Collected today', 'text-success', 'bi-cash-stack'],
-        ['Total Revenue', 'PHP ' . number_format((float)$totalRevenue, 2), 'Completed repairs', 'text-danger', 'bi-graph-up'],
+        ['Total Revenue', 'PHP ' . number_format((float)$totalRevenue, 2), 'Completed repairs', 'text-success', 'bi-graph-up'],
         ['Pending Payments', $pendingPayments, 'Awaiting collection', 'text-warning', 'bi-clock-history'],
-        ['Paid Bookings', $paidBookings, 'Marked as paid', 'text-primary', 'bi-check-circle'],
-        ['Overdue/Unpaid', $overdueUnpaid, 'Pending > ' . $overdueDays . ' days', 'text-secondary', 'bi-exclamation-circle'],
+        ['Paid Bookings', $paidBookings, 'Marked as paid', 'text-success', 'bi-check-circle'],
+        ['Overdue/Unpaid', $overdueUnpaid, 'Pending > ' . $overdueDays . ' days', 'text-danger', 'bi-exclamation-circle'],
       ];
       foreach ($cards as $card):
       ?>

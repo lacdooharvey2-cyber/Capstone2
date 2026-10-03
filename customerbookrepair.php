@@ -41,6 +41,7 @@ $slotCapacity = 3;
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Repair Request Form - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -184,7 +185,7 @@ $slotCapacity = 3;
       <div class="mb-3">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <label class="form-label mb-0">Date Availability</label>
-          <span class="small"><span class="badge bg-danger">Red</span> Not available</span>
+          <span class="small"><span class="badge bg-secondary"><i class="bi bi-slash-circle me-1"></i>Not available</span> Fully booked dates cannot be selected</span>
         </div>
         <div class="availability-calendar">
           <div class="calendar-grid" id="availabilityCalendar"></div>
@@ -310,3 +311,5 @@ $slotCapacity = 3;
   </script>
 </body>
 </html>
+
+

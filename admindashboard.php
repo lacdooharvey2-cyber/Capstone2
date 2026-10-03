@@ -228,11 +228,11 @@ if ($isAssistantAdmin) {
     <div class="admin-kpi-grid mb-4">
       <?php
       $cards = [
-        ['total_repairs', 'Total Repairs', $totalRepairs, 'All repair tickets', 'text-danger', 'bi-tools'],
+        ['total_repairs', 'Total Repairs', $totalRepairs, 'All repair tickets', 'text-primary', 'bi-tools'],
         ['open_queue', 'Open Queue', $openQueue, $pendingRepairs . ' pending, ' . $inProgressRepairs . ' in progress', 'text-warning', 'bi-hourglass-split'],
-        ['active_customers', 'Active Customers', $activeCustomers, 'With repair or e-bike record', 'text-success', 'bi-people'],
-        ['monthly_revenue', 'Monthly Revenue', 'PHP ' . number_format($monthlyRevenue, 0), 'Completed this month', 'text-primary', 'bi-cash-stack'],
-        ['avg_turnaround', 'Avg Turnaround', number_format($avgTurnaround, 1) . ' days', 'Completed repair cycle', 'text-info', 'bi-speedometer2'],
+        ['active_customers', 'Active Customers', $activeCustomers, 'With repair or e-bike record', 'text-primary', 'bi-people'],
+        ['monthly_revenue', 'Monthly Revenue', 'PHP ' . number_format($monthlyRevenue, 0), 'Completed this month', 'text-success', 'bi-cash-stack'],
+        ['avg_turnaround', 'Avg Turnaround', number_format($avgTurnaround, 1) . ' days', 'Completed repair cycle', 'text-danger', 'bi-speedometer2'],
         ['cancellations_this_month', 'Cancellations This Month', $cancellationsThisMonth, 'Cancelled repair tickets', 'text-secondary', 'bi-x-circle'],
       ];
       if ($isAssistantAdmin) {

@@ -82,15 +82,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-    :root { --brand-red: #198754; --brand-dark: #1f2937; --brand-muted: #6c757d; }
+    :root { --app-primary: #198754; --app-primary-dark: #1f2937; --brand-muted: #6c757d; }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       min-height: 100vh;
       margin: 0;
       background: #f7f8f7;
-      color: var(--brand-dark);
-      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--app-primary-dark);
+      font-family: system-ui, "Segoe UI", Roboto, sans-serif;
       overflow-x: hidden;
     }
     .register-shell { min-height: 100vh; display: flex; align-items: stretch; padding: 0; }
@@ -167,10 +167,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .form-label { color: #495057; font-size: .88rem; font-weight: 700; margin-bottom: 6px; }
     .form-control, .form-select { min-height: 44px; border-radius: 8px; }
     .form-control, .form-select { transition: border-color .28s ease, box-shadow .28s ease, transform .28s cubic-bezier(.22,1,.36,1); }
-    .form-control:focus, .form-select:focus { border-color: var(--brand-red); box-shadow: 0 0 0 .22rem rgba(25,135,84,.14); transform: translateY(-1px); }
+    .form-control:focus, .form-select:focus { border-color: var(--app-primary); box-shadow: 0 0 0 .22rem rgba(25,135,84,.14); transform: translateY(-1px); }
     .btn-success { min-height: 46px; border-radius: 8px; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease; }
     .btn-success:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(25,135,84,.22); }
-    .login-link { color: var(--brand-red); font-weight: 700; text-decoration: none; }
+    .login-link { color: var(--app-primary); font-weight: 700; text-decoration: none; }
     .login-link:hover { text-decoration: underline; }
     @keyframes panelIn { from { opacity: 0; transform: translateY(18px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -317,3 +317,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </main>
 </body>
 </html>
+

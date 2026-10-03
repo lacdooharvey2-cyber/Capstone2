@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("db.php");
+include_once("schema_helpers.php");
 
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'Customer') {
     header("Location: login.php");
@@ -27,16 +28,6 @@ if ($tracking_number !== '') {
     $booking = $stmt->get_result()->fetch_assoc();
 }
 
-function statusBadgeClass(string $status): string
-{
-    return match ($status) {
-        'Completed', 'Paid', 'Valid' => 'success',
-        'In Progress' => 'primary',
-        'Pending' => 'warning',
-        'Cancelled', 'Rejected', 'Invalid' => 'danger',
-        default => 'secondary',
-    };
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
