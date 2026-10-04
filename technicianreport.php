@@ -4,6 +4,8 @@ require 'db.php';
 require_once 'schema_helpers.php';
 require_once 'activity_log_helper.php';
 if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Technician', 'HeadTechnician'], true)) { header('Location: login.php'); exit(); }
+header('Location: technicianrepair.php');
+exit();
 ensureRepairAutomationSchema($conn);
 $repairId = (int)($_GET['repair_id'] ?? $_POST['repair_id'] ?? 0);
 $userId = (int)$_SESSION['user_id'];

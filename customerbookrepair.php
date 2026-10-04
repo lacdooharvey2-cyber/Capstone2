@@ -36,6 +36,7 @@ while ($bike = $bikeResult->fetch_assoc()) {
 }
 
 $slotCapacity = 3;
+$timeSlots = ['10:00 AM - 11:30 AM', '11:30 AM - 1:00 PM', '1:00 PM - 2:30 PM', '2:30 PM - 4:00 PM', '4:00 PM - 5:00 PM'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,8 +100,6 @@ $slotCapacity = 3;
       <div class="alert alert-danger">Please complete all required repair booking fields.</div>
     <?php elseif (($_GET['error'] ?? '') === 'past_date'): ?>
       <div class="alert alert-danger">Please choose today or a future service date.</div>
-    <?php elseif (($_GET['error'] ?? '') === 'upload'): ?>
-      <div class="alert alert-danger">The proof file could not be uploaded. Please use an image, PDF, DOC, or DOCX file up to 5MB.</div>
     <?php elseif (($_GET['error'] ?? '') === 'invalid_ebike'): ?>
       <div class="alert alert-danger">Please choose an e-bike linked to your account.</div>
     <?php endif; ?>
@@ -111,20 +110,16 @@ $slotCapacity = 3;
       </div>
       <a href="customerdashboard.php" class="btn btn-secondary">Back to Dashboard</a>
     <?php else: ?>
-    <form action="process_repair.php" method="POST" enctype="multipart/form-data">
+    <form action="process_repair.php" method="POST">
       <div class="summary-box mb-3">
         <div class="row g-3">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="summary-label">Customer</div>
             <p class="summary-value"><?= htmlspecialchars($customer['name'] ?? 'Customer') ?></p>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="summary-label">Phone</div>
             <p class="summary-value"><?= htmlspecialchars($customer['contact_number'] ?? 'Not set') ?></p>
-          </div>
-          <div class="col-md-4">
-            <div class="summary-label">Address</div>
-            <p class="summary-value"><?= htmlspecialchars($customer['province_address'] ?? 'Not set') ?></p>
           </div>
         </div>
       </div>
@@ -154,9 +149,12 @@ $slotCapacity = 3;
         <textarea class="form-control" name="issue_description" id="issue_description" rows="4" placeholder="Describe the E-Bike issue..." required></textarea>
       </div>
       <div class="mb-3">
-        <label class="form-label">Proof Image or File</label>
-        <input type="file" class="form-control" name="proof_file" accept="image/*,.pdf,.doc,.docx">
-        <div class="form-text">Upload a photo or document that shows the issue. Accepted: image, PDF, DOC, DOCX.</div>
+        <label class="form-label">Service Address</label>
+        <div class="input-group">
+          <input type="text" class="form-control" name="detected_address" id="detected_address" value="<?= htmlspecialchars($customer['province_address'] ?? '') ?>" placeholder="Allow location or enter your service address">
+          <button class="btn btn-outline-success" type="button" id="detectLocation">Use current location</button>
+        </div>
+        <div class="form-text" id="locationStatus">We will use your saved account address unless you allow current location detection.</div>
       </div>
       <div class="row mb-3">
         <div class="col-md-6">
@@ -167,18 +165,25 @@ $slotCapacity = 3;
           </select>
         </div>
         <div class="col-md-6">
-          <label class="form-label">Preferred Service Date *</label>
-          <input type="date" class="form-control" name="preferred_date" id="preferred_date" min="<?= htmlspecialchars(date('Y-m-d')) ?>" required>
+          <label class="form-label">Service Option *</label>
+          <select class="form-select" name="service_location" id="service_location" required>
+            <option value="To The Store">To The Store</option>
+            <option value="Home Service">Home Service</option>
+          </select>
         </div>
       </div>
       <div class="row mb-3">
         <div class="col-md-6">
+          <label class="form-label">Preferred Service Date *</label>
+          <input type="date" class="form-control" name="preferred_date" id="preferred_date" min="<?= htmlspecialchars(date('Y-m-d')) ?>" required>
+        </div>
+        <div class="col-md-6">
           <label class="form-label">Time Slot *</label>
           <select class="form-select" name="time_slot" id="time_slot" required>
             <option value="">Choose a time...</option>
-            <option value="Morning">Morning</option>
-            <option value="Afternoon">Afternoon</option>
-            <option value="Evening">Evening</option>
+            <?php foreach ($timeSlots as $slot): ?>
+              <option value="<?= htmlspecialchars($slot) ?>"><?= htmlspecialchars($slot) ?></option>
+            <?php endforeach; ?>
           </select>
         </div>
       </div>
@@ -190,14 +195,14 @@ $slotCapacity = 3;
         <div class="availability-calendar">
           <div class="calendar-grid" id="availabilityCalendar"></div>
         </div>
-        <div class="form-text">Blank dates are available. A date turns red only when Morning, Afternoon, and Evening are all fully booked. Full time slots are disabled after you pick a date.</div>
+        <div class="form-text">Blank dates are available. A date turns red only when all 10:00 AM to 5:00 PM slots are fully booked. Full time slots are disabled after you pick a date.</div>
       </div>
 
       <!-- Agreement -->
       <div class="form-check mb-3">
         <input class="form-check-input" type="checkbox" name="consent" id="consent" required>
         <label class="form-check-label" for="consent">
-          I agree that FixTrack E-bike Service may collect and process my personal information, valid ID, receipt proof, and E-Bike photos for repair booking, warranty verification, service updates, and customer support in accordance with the Data Privacy Act of 2012.
+          I agree that FixTrack E-bike Service may collect and process my personal information and service address for repair booking, warranty verification, service updates, and customer support in accordance with the Data Privacy Act of 2012.
         </label>
       </div>
 
@@ -217,6 +222,9 @@ $slotCapacity = 3;
     const preferredDate = document.getElementById('preferred_date');
     const timeSlot = document.getElementById('time_slot');
     const availabilityCalendar = document.getElementById('availabilityCalendar');
+    const detectedAddress = document.getElementById('detected_address');
+    const detectLocation = document.getElementById('detectLocation');
+    const locationStatus = document.getElementById('locationStatus');
     let availabilityPayload = { full_dates: [], full_slots: {}, slot_counts: {}, slot_capacity: <?= (int)$slotCapacity ?> };
 
     function refreshWarrantyStatus() {
@@ -308,6 +316,41 @@ $slotCapacity = 3;
 
     preferredDate?.addEventListener('change', loadAvailability);
     loadAvailability();
+
+    async function fillCurrentLocation() {
+      if (!navigator.geolocation || !detectedAddress) {
+        if (locationStatus) locationStatus.textContent = 'Location detection is not available in this browser.';
+        return;
+      }
+
+      detectLocation.disabled = true;
+      if (locationStatus) locationStatus.textContent = 'Getting your current location...';
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        detectedAddress.value = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+        try {
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`, {
+            headers: { 'Accept': 'application/json' }
+          });
+          if (response.ok) {
+            const payload = await response.json();
+            if (payload.display_name) {
+              detectedAddress.value = payload.display_name;
+            }
+          }
+          if (locationStatus) locationStatus.textContent = 'Current location added to the service address.';
+        } catch (error) {
+          if (locationStatus) locationStatus.textContent = 'Coordinates added. Address lookup was unavailable.';
+        } finally {
+          detectLocation.disabled = false;
+        }
+      }, () => {
+        if (locationStatus) locationStatus.textContent = 'Location permission was not allowed. You can type the address manually.';
+        detectLocation.disabled = false;
+      }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
+    }
+
+    detectLocation?.addEventListener('click', fillCurrentLocation);
   </script>
 </body>
 </html>

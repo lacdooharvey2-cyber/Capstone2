@@ -23,17 +23,7 @@ if ($bookingId <= 0) {
     exit();
 }
 
-$stmt = $conn->prepare("SELECT rb.booking_id, rb.payment_status,
-        COALESCE(NULLIF(rb.estimated_amount, 0), r.amount, 0) AS payable_amount,
-        r.repair_id, r.ebike_model, u.name AS customer_name, u.email AS customer_email
-    FROM repair_bookings rb
-    LEFT JOIN repairs r ON r.booking_id = rb.booking_id
-    LEFT JOIN users u ON u.user_id = rb.customer_id
-    WHERE rb.booking_id = ? AND rb.customer_id = ?
-    LIMIT 1");
-$stmt->bind_param('ii', $bookingId, $customerId);
-$stmt->execute();
-$booking = $stmt->get_result()->fetch_assoc();
+$booking = paymentEligibleBooking($conn, $bookingId, $customerId);
 
 $amount = (float)($booking['payable_amount'] ?? 0);
 if (!$booking || $amount <= 0 || ($booking['payment_status'] ?? '') === 'Paid') {
@@ -81,7 +71,7 @@ try {
     }
 
     $update = $conn->prepare("UPDATE repair_bookings
-        SET xendit_payment_request_id = ?, payment_status = 'Pending'
+        SET xendit_payment_request_id = ?, payment_status = 'Payment Submitted'
         WHERE booking_id = ? AND customer_id = ?");
     $update->bind_param('sii', $paymentRequestId, $bookingId, $customerId);
     $update->execute();

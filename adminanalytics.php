@@ -50,7 +50,7 @@ $monthlyRevenue = (float)analyticsValue($conn, "
 ");
 $averageRevenue = (float)analyticsValue($conn, "SELECT COALESCE(AVG(NULLIF(amount,0)),0) AS total FROM repairs WHERE repair_status='Completed'");
 $completionRate = analyticsPct($completedRepairs, $totalRepairs);
-$pendingPayments = (int)analyticsValue($conn, "SELECT COUNT(*) AS total FROM repair_bookings WHERE payment_status='Pending'");
+$pendingPayments = (int)analyticsValue($conn, "SELECT COUNT(*) AS total FROM repair_bookings WHERE payment_status IN ('Pending Payment','Payment Submitted')");
 $kudaUsers = (int)analyticsValue($conn, "SELECT COUNT(DISTINCT customer_id) AS total FROM warranty_records WHERE UPPER(ebike_model) LIKE '%KUDA%' OR UPPER(ebike_model) LIKE '%KDA%'");
 $nwowUsers = (int)analyticsValue($conn, "SELECT COUNT(DISTINCT customer_id) AS total FROM warranty_records WHERE UPPER(ebike_model) LIKE '%NWOW%'");
 $warrantyClaims = (int)analyticsValue($conn, "SELECT COUNT(*) AS total FROM warranty_records WHERE warranty_status='Claimed'");
@@ -203,7 +203,7 @@ $analyticsBreakdowns = [
         'rows' => analyticsRows($conn, "
             SELECT rb.booking_id, COALESCE(u.name, CONCAT('Customer #', rb.customer_id)) AS customer, CONCAT('PHP ', FORMAT(rb.estimated_amount, 2)) AS amount, CONCAT(rb.preferred_date, ' ', rb.preferred_time) AS schedule
             FROM repair_bookings rb LEFT JOIN users u ON u.user_id = rb.customer_id
-            WHERE rb.payment_status='Pending'
+            WHERE rb.payment_status IN ('Pending Payment','Payment Submitted')
             ORDER BY rb.preferred_date DESC LIMIT 50
         "),
         'fields' => ['booking_id', 'customer', 'amount', 'schedule'],

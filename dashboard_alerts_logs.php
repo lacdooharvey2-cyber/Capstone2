@@ -15,7 +15,7 @@ function renderDashboardAlerts(mysqli $conn, string $role, int $userId): void
     $alerts = [];
     if (in_array($role, ['Admin', 'SuperAdmin'], true)) {
         $open = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM repairs WHERE repair_status IN ('Pending','In Progress')");
-        $pendingPayments = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM repair_bookings rb LEFT JOIN repairs r ON r.booking_id = rb.booking_id WHERE rb.payment_status='Pending' AND COALESCE(NULLIF(rb.estimated_amount,0), r.amount, 0) > 0");
+        $pendingPayments = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM repair_bookings rb LEFT JOIN repairs r ON r.booking_id = rb.booking_id WHERE rb.payment_status IN ('Pending Payment','Payment Submitted') AND COALESCE(NULLIF(rb.estimated_amount,0), r.amount, 0) > 0");
         $expired = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM warranty_records WHERE warranty_status='Expired'");
         $alerts[] = ['danger', 'Open repair queue', $open . ' repair ticket(s) still need attention.', 'adminrepairs.php'];
         $alerts[] = ['warning', 'Pending payments', $pendingPayments . ' priced booking(s) are waiting for payment.', 'adminanalytics.php'];
@@ -26,13 +26,13 @@ function renderDashboardAlerts(mysqli $conn, string $role, int $userId): void
         $alerts[] = ['warning', 'Pending assigned repairs', $pending . ' assigned repair(s) are waiting to start.', 'technicianrepair.php'];
         $alerts[] = ['danger', 'Overdue jobs', $overdue . ' open assigned job(s) are older than 7 days.', 'technicianrepair.php'];
     } elseif ($role === 'Cashier') {
-        $pending = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM repair_bookings rb LEFT JOIN repairs r ON r.booking_id = rb.booking_id WHERE rb.payment_status='Pending' AND COALESCE(NULLIF(rb.estimated_amount,0), r.amount, 0) > 0");
-        $overdue = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM repair_bookings rb LEFT JOIN repairs r ON r.booking_id = rb.booking_id WHERE rb.payment_status='Pending' AND COALESCE(NULLIF(rb.estimated_amount,0), r.amount, 0) > 0 AND rb.created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+        $pending = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM repair_bookings rb LEFT JOIN repairs r ON r.booking_id = rb.booking_id WHERE rb.payment_status IN ('Pending Payment','Payment Submitted') AND COALESCE(NULLIF(rb.estimated_amount,0), r.amount, 0) > 0");
+        $overdue = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM repair_bookings rb LEFT JOIN repairs r ON r.booking_id = rb.booking_id WHERE rb.payment_status IN ('Pending Payment','Payment Submitted') AND COALESCE(NULLIF(rb.estimated_amount,0), r.amount, 0) > 0 AND rb.created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
         $alerts[] = ['warning', 'Payments awaiting collection', $pending . ' booking(s) have an unpaid repair balance.', 'cashiertransactions.php'];
         $alerts[] = ['danger', 'Overdue unpaid bookings', $overdue . ' unpaid booking(s) are older than 7 days.', 'cashiertransactions.php'];
     } elseif ($role === 'Customer') {
         $active = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM repairs WHERE customer_id={$userId} AND repair_status IN ('Pending','In Progress')");
-        $unpaid = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM repair_bookings rb LEFT JOIN repairs r ON r.booking_id = rb.booking_id WHERE rb.customer_id={$userId} AND rb.payment_status='Pending' AND COALESCE(NULLIF(rb.estimated_amount,0), r.amount, 0) > 0");
+        $unpaid = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM repair_bookings rb LEFT JOIN repairs r ON r.booking_id = rb.booking_id WHERE rb.customer_id={$userId} AND rb.payment_status IN ('Pending Payment','Payment Submitted') AND COALESCE(NULLIF(rb.estimated_amount,0), r.amount, 0) > 0");
         $expiring = dashboardWidgetCount($conn, "SELECT COUNT(*) AS total FROM warranty_records WHERE customer_id={$userId} AND warranty_status='Active' AND DATE_ADD(purchase_date, INTERVAL warranty_period MONTH) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)");
         $alerts[] = ['info', 'Active repairs', $active . ' repair(s) are currently pending or in progress.', 'customerdashboard.php'];
         $alerts[] = ['warning', 'Payment reminder', $unpaid . ' repair payment(s) are waiting for payment.', 'customerdashboard.php'];

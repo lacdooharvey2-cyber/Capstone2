@@ -390,7 +390,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a class="brand-lockup" href="Homepage.php">
               <span class="brand-mark"><i class="bi bi-wrench-adjustable"></i></span> FixTrack
             </a>
-            <h1 class="brand-title">Built for smoother E-bike service.</h1>
+            <h1 class="brand-title">Built for smoother<br>E-bike service.</h1>
             <p class="brand-copy">Book repairs, track service progress, and manage warranty coverage in one clear workspace.</p>
           </div>
         </div>

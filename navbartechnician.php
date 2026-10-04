@@ -9,6 +9,9 @@
   <nav class="app-sidebar-nav">
     <a class="app-side-button <?= $currentPage === 'techniciandashboard.php' ? 'is-active' : '' ?>" href="techniciandashboard.php"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
     <a class="app-side-button <?= $currentPage === 'technicianrepair.php' ? 'is-active' : '' ?>" href="technicianrepair.php"><i class="bi bi-clipboard2-check"></i><span>Repairs</span></a>
+    <?php if (($_SESSION['role'] ?? '') === 'HeadTechnician'): ?>
+    <a class="app-side-button <?= $currentPage === 'technicianperformance.php' ? 'is-active' : '' ?>" href="technicianperformance.php"><i class="bi bi-bar-chart-line"></i><span>Performance</span></a>
+    <?php endif; ?>
     <a class="app-side-button <?= $currentPage === 'technicianmessage.php' ? 'is-active' : '' ?>" href="technicianmessage.php"><i class="bi bi-chat-dots"></i><span>Messages</span></a>
     <a class="app-side-button <?= $currentPage === 'activitylogs.php' ? 'is-active' : '' ?>" href="activitylogs.php"><i class="bi bi-clock-history"></i><span>Audit Trail</span></a>
     <a class="app-side-button app-logout" href="logout.php"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a>

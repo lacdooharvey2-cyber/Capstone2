@@ -22,19 +22,11 @@ if ($bookingId <= 0) {
     exit();
 }
 
-$stmt = $conn->prepare("SELECT rb.booking_id, rb.payment_status,
-        COALESCE(NULLIF(rb.estimated_amount, 0), r.amount, 0) AS payable_amount,
-        r.repair_id, r.ebike_model
-    FROM repair_bookings rb
-    LEFT JOIN repairs r ON r.booking_id = rb.booking_id
-    WHERE rb.booking_id = ? AND rb.customer_id = ? LIMIT 1");
-$stmt->bind_param('ii', $bookingId, $customerId);
-$stmt->execute();
-$booking = $stmt->get_result()->fetch_assoc();
+$booking = paymentEligibleBooking($conn, $bookingId, $customerId);
 $amount = (float)($booking['payable_amount'] ?? 0);
 
 if (!$booking || $amount <= 0 || ($booking['payment_status'] ?? '') === 'Paid') {
-    header('Location: customerdashboard.php?payment=not_required');
+    header('Location: repairdetails.php?id=' . (int)($_POST['repair_id'] ?? 0) . '&payment=not_ready');
     exit();
 }
 

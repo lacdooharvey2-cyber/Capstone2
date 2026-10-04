@@ -121,7 +121,7 @@ $techBreakdowns = [
         ['completed', $isHeadTechnician ? 'Completed Repairs' : 'My Completed Repairs', $completedRepairs, $isHeadTechnician ? 'Across all technicians' : 'Filtered by technician', 'text-success', 'bi-check2-circle'],
         ['progress', $isHeadTechnician ? 'In-Progress Repairs' : 'My In-Progress Repairs', $inProgressRepairs, 'Currently being repaired', 'text-info', 'bi-arrow-repeat'],
         ['pending', $isHeadTechnician ? 'Pending Repairs' : 'My Pending Repairs', $pendingRepairs, 'Waiting to start', 'text-warning', 'bi-hourglass-split'],
-        ['turnaround', $isHeadTechnician ? 'Avg Team Turnaround' : 'My Avg Turnaround', number_format($avgTurnaround, 1) . ' days', 'Completed repair cycle', 'text-primary', 'bi-speedometer2'],
+        ['turnaround', $isHeadTechnician ? 'Avg Team Turnaround' : 'My Avg Turnaround', number_format($avgTurnaround, 1) . ' days', 'Completed repair cycle', 'text-danger', 'bi-speedometer2'],
         ['overdue', $isHeadTechnician ? 'Overdue Jobs' : 'My Overdue Jobs', $overdueJobs, 'Open longer than ' . $overdueDays . ' days', 'text-danger', 'bi-exclamation-triangle'],
       ];
       foreach ($cards as $card):

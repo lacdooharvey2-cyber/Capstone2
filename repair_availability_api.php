@@ -19,7 +19,7 @@ if ($year < 2000 || $year > 2100 || $month < 1 || $month > 12) {
 }
 
 $slotCapacity = 3;
-$timeSlots = ['Morning', 'Afternoon', 'Evening'];
+$timeSlots = ['10:00 AM - 11:30 AM', '11:30 AM - 1:00 PM', '1:00 PM - 2:30 PM', '2:30 PM - 4:00 PM', '4:00 PM - 5:00 PM'];
 $start = sprintf('%04d-%02d-01', $year, $month);
 $end = date('Y-m-t', strtotime($start));
 

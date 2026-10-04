@@ -24,8 +24,8 @@ try {
     }
 
     $stmt = $conn->prepare("SELECT rb.xendit_payment_session_id, rb.xendit_payment_request_id,
-           rb.estimated_amount, rb.receipt_email_sent_at,
-           r.ebike_model, u.name AS customer_name, u.email AS customer_email
+           rb.receipt_email_sent_at, r.repair_id, r.ebike_model,
+           u.name AS customer_name, u.email AS customer_email
         FROM repair_bookings rb
         LEFT JOIN repairs r ON r.booking_id = rb.booking_id
         LEFT JOIN users u ON u.user_id = rb.customer_id
@@ -57,14 +57,17 @@ try {
     }
 
     $paymentId = (string)($payment['payment_id'] ?? $payment['payment_request_id'] ?? $paymentRequestId);
-    $update = $conn->prepare("UPDATE repair_bookings SET payment_status = 'Paid', paid_at = NOW(), xendit_payment_id = ? WHERE booking_id = ? AND customer_id = ?");
+    $update = $conn->prepare("UPDATE repair_bookings SET payment_status = 'Payment Submitted', xendit_payment_id = ? WHERE booking_id = ? AND customer_id = ?");
     $update->bind_param('sii', $paymentId, $bookingId, $customerId);
     $update->execute();
-    syncBookingPaymentToPayments($conn, $bookingId, 'GCash', 'Paid');
+    $receipt = markBookingPaidWithReceipt($conn, $bookingId, 'GCash', $customerId);
+    if (!$receipt) {
+        throw new RuntimeException('This repair is not ready for payment.');
+    }
     logActivity($conn, $customerId, 'Customer', 'Xendit payment completed', 'Completed Xendit payment for booking #' . $bookingId . '.', 'booking', $bookingId);
 
     if (empty($booking['receipt_email_sent_at']) && filter_var($booking['customer_email'] ?? '', FILTER_VALIDATE_EMAIL)) {
-        $amount = number_format((float)$booking['estimated_amount'], 2);
+        $amount = number_format((float)$receipt['amount'], 2);
         $safeName = htmlspecialchars($booking['customer_name'] ?? 'Customer', ENT_QUOTES, 'UTF-8');
         $safeModel = htmlspecialchars($booking['ebike_model'] ?? 'Registered e-bike', ENT_QUOTES, 'UTF-8');
         $safePaymentId = htmlspecialchars($paymentId ?: 'Pending', ENT_QUOTES, 'UTF-8');
@@ -81,7 +84,7 @@ try {
             $receiptStmt->execute();
         }
     }
-    header('Location: customerdashboard.php?payment=success');
+    header('Location: repairdetails.php?id=' . (int)$booking['repair_id'] . '&payment=success');
     exit();
 } catch (Throwable $exception) {
     error_log('Xendit payment verification error: ' . $exception->getMessage());

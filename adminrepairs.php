@@ -176,8 +176,7 @@ $repairBreakdowns = [
             </select>
           </div>
           <div class="col-md-2 d-flex gap-2">
-            <button class="btn btn-success flex-fill">Apply</button>
-            <a href="adminrepairs.php" class="btn btn-outline-secondary">Reset</a>
+            <button class="btn btn-success flex-fill"><i class="bi bi-search me-1"></i>Search</button>
           </div>
         </form>
         <div class="table-responsive">

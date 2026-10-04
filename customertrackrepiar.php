@@ -8,6 +8,9 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'Customer') {
     exit();
 }
 
+header("Location: customerdashboard.php");
+exit();
+
 $customer_id = (int)$_SESSION['user_id'];
 $tracking_number = trim($_GET['tracking_number'] ?? '');
 $booking = null;

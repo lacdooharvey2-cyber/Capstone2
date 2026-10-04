@@ -14,7 +14,7 @@ $user_id = intval($_SESSION['user_id']);
 $isHeadTechnician = ($_SESSION['role'] ?? '') === 'HeadTechnician';
 $repairScope = $isHeadTechnician ? '1=1' : "(r.technician_id = $user_id OR r.technician_id IS NULL)";
 $repairs = $conn->query("
-  SELECT r.repair_id, r.created_at, r.customer_id, u.name AS customer_name, u.contact_number,
+  SELECT r.repair_id, r.created_at, r.customer_id, u.name AS customer_name, u.contact_number, u.province_address,
          r.ebike_model, r.issue_description, r.proof_file, r.warranty_status, r.amount, r.repair_status,
          r.technician_id, tech.name AS technician_name,
          rb.preferred_date, rb.preferred_time
@@ -105,7 +105,7 @@ if ($technicianOptions) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
-    .technician-workspace { margin: 30px auto 0; max-width: min(1240px, calc(100% - 24px)); animation: fadeInUp 0.6s ease; }
+    .technician-workspace { margin: 30px auto 0; max-width: min(1400px, calc(100% - 24px)); animation: fadeInUp 0.6s ease; }
     @keyframes fadeInUp { from { opacity:0; transform:translateY(20px);} to { opacity:1; transform:translateY(0);} }
     .card { border-radius: 8px; }
     .badge { font-size: 0.9em; }
@@ -206,17 +206,33 @@ if ($technicianOptions) {
     .repair-ticket-table { table-layout: fixed; font-size: .76rem; width: 100%; }
     .repair-ticket-table th,
     .repair-ticket-table td { padding: .45rem .35rem; vertical-align: middle; }
+    .repair-ticket-table.is-head-technician { font-size: .68rem; }
+    .repair-ticket-table.is-head-technician th,
+    .repair-ticket-table.is-head-technician td { padding: .32rem .25rem; }
     .repair-ticket-table .col-id { width: 42px; }
     .repair-ticket-table .col-date { width: 78px; }
     .repair-ticket-table .col-schedule { width: 82px; }
     .repair-ticket-table .col-customer { width: 106px; }
     .repair-ticket-table .col-contact { width: 92px; }
+    .repair-ticket-table .col-address { width: 140px; }
     .repair-ticket-table .col-bike { width: 108px; }
     .repair-ticket-table .col-issue { width: 160px; }
     .repair-ticket-table .col-warranty { width: 78px; }
     .repair-ticket-table .col-cost { width: 88px; }
     .repair-ticket-table .col-status { width: 92px; }
     .repair-ticket-table .col-action { width: 132px; }
+    .repair-ticket-table.is-head-technician .col-id { width: 38px; }
+    .repair-ticket-table.is-head-technician .col-date { width: 64px; }
+    .repair-ticket-table.is-head-technician .col-schedule { width: 74px; }
+    .repair-ticket-table.is-head-technician .col-customer { width: 88px; }
+    .repair-ticket-table.is-head-technician .col-contact { width: 76px; }
+    .repair-ticket-table.is-head-technician .col-address { width: 116px; }
+    .repair-ticket-table.is-head-technician .col-bike { width: 88px; }
+    .repair-ticket-table.is-head-technician .col-issue { width: 124px; }
+    .repair-ticket-table.is-head-technician .col-warranty { width: 66px; }
+    .repair-ticket-table.is-head-technician .col-cost { width: 72px; }
+    .repair-ticket-table.is-head-technician .col-status { width: 76px; }
+    .repair-ticket-table.is-head-technician .col-action { width: 104px; }
     .repair-ticket-table .text-truncate-cell {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -249,9 +265,9 @@ if ($technicianOptions) {
     </div>
 
     <?php if (isset($_GET['updated'])): ?>
-      <div class="alert alert-success">Repair status updated.</div>
+      <div class="alert alert-success">Repair updated.</div>
     <?php elseif (isset($_GET['error'])): ?>
-      <div class="alert alert-danger">Unable to update repair status.</div>
+      <div class="alert alert-danger">Unable to update repair.</div>
     <?php endif; ?>
 
     <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
@@ -268,8 +284,12 @@ if ($technicianOptions) {
 
     <div class="tab-content">
       <div class="tab-pane fade show active" id="repairs" role="tabpanel">
-        <div class="card shadow-sm"><div class="card-body p-2 p-lg-3"><div class="table-responsive repair-table-wrap">
-        <table class="table table-hover table-bordered mb-0 repair-ticket-table">
+        <div class="card shadow-sm"><div class="card-body p-2 p-lg-3">
+        <div class="d-flex justify-content-end mb-3">
+          <input type="search" class="form-control" id="repairSearch" style="max-width: 360px;" placeholder="Search repair tickets">
+        </div>
+        <div class="table-responsive repair-table-wrap">
+        <table class="table table-hover table-bordered mb-0 repair-ticket-table <?= $isHeadTechnician ? 'is-head-technician' : '' ?>" id="repairTicketsTable">
           <thead class="table-danger">
             <tr>
               <th class="col-id">ID</th>
@@ -277,6 +297,7 @@ if ($technicianOptions) {
               <th class="col-schedule">Schedule</th>
               <th class="col-customer">Customer</th>
               <th class="col-contact">Contact</th>
+              <?php if ($isHeadTechnician): ?><th class="col-address">Address</th><?php endif; ?>
               <th class="col-bike">E-Bike</th>
               <th class="col-issue">Issue</th>
               <?php if ($isHeadTechnician): ?><th class="col-customer">Technician</th><?php endif; ?>
@@ -295,6 +316,7 @@ if ($technicianOptions) {
                   <td class="text-truncate-cell" title="<?= htmlspecialchars(trim(($r['preferred_date'] ?? '') . ' ' . ($r['preferred_time'] ?? '')) ?: 'Not set') ?>"><?= htmlspecialchars(shortSchedule($r['preferred_date'] ?? null, $r['preferred_time'] ?? null)) ?></td>
                   <td class="text-truncate-cell" title="<?= htmlspecialchars($r['customer_name'] ?? 'Customer #'.$r['customer_id']) ?>"><?= htmlspecialchars($r['customer_name'] ?? 'Customer #'.$r['customer_id']) ?></td>
                   <td class="text-truncate-cell" title="<?= htmlspecialchars($r['contact_number'] ?? '') ?>"><?= htmlspecialchars($r['contact_number'] ?? '') ?></td>
+                  <?php if ($isHeadTechnician): ?><td class="text-truncate-cell" title="<?= htmlspecialchars($r['province_address'] ?? 'Not set') ?>"><?= htmlspecialchars($r['province_address'] ?? 'Not set') ?></td><?php endif; ?>
                   <td class="text-truncate-cell" title="<?= htmlspecialchars($r['ebike_model']) ?>"><?= htmlspecialchars($r['ebike_model']) ?></td>
                   <td class="text-truncate-cell" title="<?= htmlspecialchars($r['issue_description']) ?>"><?= htmlspecialchars($r['issue_description']) ?></td>
                   <?php if ($isHeadTechnician): ?><td class="text-truncate-cell" title="<?= htmlspecialchars($r['technician_name'] ?? 'Unassigned') ?>"><?= htmlspecialchars($r['technician_name'] ?? 'Unassigned') ?></td><?php endif; ?>
@@ -303,7 +325,6 @@ if ($technicianOptions) {
                   <td><span class="badge bg-<?php echo $r['repair_status']=='Completed'?'success':($r['repair_status']=='In Progress'?'primary':'warning'); ?>"><?= htmlspecialchars($r['repair_status']) ?></span></td>
                   <td>
                     <a href="repairdetails.php?id=<?= urlencode($r['repair_id']) ?>" class="btn btn-sm btn-outline-secondary w-100 mb-1">View</a>
-                    <a href="technicianreport.php?repair_id=<?= urlencode($r['repair_id']) ?>" class="btn btn-sm btn-outline-success w-100 mb-1">Report</a>
                     <form method="post" action="technicianupdaterepair.php" class="repair-action-form">
                       <input type="hidden" name="repair_id" value="<?= htmlspecialchars($r['repair_id']) ?>">
                       <?php if ($isHeadTechnician): ?>
@@ -314,20 +335,21 @@ if ($technicianOptions) {
                           <?php endforeach; ?>
                         </select>
                       <?php endif; ?>
-                      <input type="number" class="form-control form-control-sm" name="amount" min="0" step="0.01" value="<?= htmlspecialchars($r['amount']) ?>" aria-label="Repair cost">
-                      <select name="status" class="form-select form-select-sm">
-                        <option <?= $r['repair_status'] === 'Pending' ? 'selected' : '' ?>>Pending</option>
-                        <option <?= $r['repair_status'] === 'In Progress' ? 'selected' : '' ?>>In Progress</option>
-                        <option <?= $r['repair_status'] === 'Completed' ? 'selected' : '' ?>>Completed</option>
-                        <option <?= $r['repair_status'] === 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
-                      </select>
+                      <?php if (!$isHeadTechnician): ?>
+                        <select name="status" class="form-select form-select-sm">
+                          <option <?= $r['repair_status'] === 'Pending' ? 'selected' : '' ?>>Pending</option>
+                          <option <?= $r['repair_status'] === 'In Progress' ? 'selected' : '' ?>>In Progress</option>
+                          <option <?= $r['repair_status'] === 'Completed' ? 'selected' : '' ?>>Completed</option>
+                          <option <?= $r['repair_status'] === 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
+                        </select>
+                      <?php endif; ?>
                       <button class="btn btn-sm btn-success">Save</button>
                     </form>
                   </td>
                 </tr>
               <?php endwhile; ?>
             <?php else: ?>
-              <tr><td colspan="<?= $isHeadTechnician ? 12 : 11 ?>" class="text-center text-muted">No repair tickets found.</td></tr>
+              <tr><td colspan="<?= $isHeadTechnician ? 13 : 11 ?>" class="text-center text-muted">No repair tickets found.</td></tr>
             <?php endif; ?>
           </tbody>
         </table>
@@ -355,8 +377,12 @@ if ($technicianOptions) {
       </div>
 
       <div class="tab-pane fade" id="warranty" role="tabpanel">
-        <div class="card shadow-sm"><div class="card-body"><div class="table-responsive">
-        <table class="table table-hover table-bordered mb-0 warranty-table">
+        <div class="card shadow-sm"><div class="card-body">
+        <div class="d-flex justify-content-end mb-3">
+          <input type="search" class="form-control" id="warrantySearch" style="max-width: 360px;" placeholder="Search warranty records">
+        </div>
+        <div class="table-responsive">
+        <table class="table table-hover table-bordered mb-0 warranty-table" id="warrantyRecordsTable">
           <thead class="table-danger">
             <tr>
               <th>ID</th><th>Customer</th><th>E-Bike</th><th>Coverage</th><th>Status</th><th>Claim Date</th><th>Action</th>
@@ -442,6 +468,22 @@ if ($technicianOptions) {
       document.getElementById('schedule-tab')?.addEventListener('shown.bs.tab', () => {
         repairCalendar.updateSize();
       });
+
+      function bindTableSearch(inputId, tableId) {
+        const input = document.getElementById(inputId);
+        const table = document.getElementById(tableId);
+        if (!input || !table) return;
+        input.addEventListener('input', () => {
+          const query = input.value.trim().toLowerCase();
+          table.querySelectorAll('tbody tr').forEach((row) => {
+            if (row.cells.length <= 1) return;
+            row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+          });
+        });
+      }
+
+      bindTableSearch('repairSearch', 'repairTicketsTable');
+      bindTableSearch('warrantySearch', 'warrantyRecordsTable');
     });
   </script>
 </body>

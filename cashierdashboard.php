@@ -10,10 +10,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Cashier') {
 
 $todayRevenue = $conn->query("SELECT COALESCE(SUM(amount),0) AS total FROM repairs WHERE repair_status='Completed' AND DATE(updated_at)=CURDATE()")->fetch_assoc()['total'];
 $totalRevenue = $conn->query("SELECT COALESCE(SUM(amount),0) AS total FROM repairs WHERE repair_status='Completed'")->fetch_assoc()['total'];
-$pendingPayments = $conn->query("SELECT COUNT(*) AS total FROM repair_bookings WHERE payment_status='Pending'")->fetch_assoc()['total'];
+$pendingPayments = $conn->query("SELECT COUNT(*) AS total FROM repair_bookings WHERE payment_status IN ('Pending Payment','Payment Submitted')")->fetch_assoc()['total'];
 $paidBookings = $conn->query("SELECT COUNT(*) AS total FROM repair_bookings WHERE payment_status='Paid'")->fetch_assoc()['total'];
 $overdueDays = 7;
-$overdueUnpaid = $conn->query("SELECT COUNT(*) AS total FROM repair_bookings WHERE payment_status='Pending' AND created_at < DATE_SUB(NOW(), INTERVAL $overdueDays DAY)")->fetch_assoc()['total'];
+$overdueUnpaid = $conn->query("SELECT COUNT(*) AS total FROM repair_bookings WHERE payment_status IN ('Pending Payment','Payment Submitted') AND created_at < DATE_SUB(NOW(), INTERVAL $overdueDays DAY)")->fetch_assoc()['total'];
 $recentRepairs = $conn->query("
   SELECT r.repair_id, u.name AS customer_name, r.ebike_model, r.amount, r.repair_status, r.updated_at
   FROM repairs r

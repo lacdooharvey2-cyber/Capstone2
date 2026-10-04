@@ -37,17 +37,20 @@ try {
     $invoiceId = is_string($session->invoice) ? $session->invoice : null;
     $update = $conn->prepare("
         UPDATE repair_bookings
-        SET payment_status = 'Paid', paid_at = NOW(),
+        SET payment_status = 'Payment Submitted',
             stripe_payment_intent_id = ?, stripe_checkout_session_id = ?, stripe_invoice_id = ?
         WHERE booking_id = ? AND customer_id = ?
     ");
     $update->bind_param('sssii', $paymentIntentId, $session->id, $invoiceId, $bookingId, $customerId);
     $update->execute();
-    syncBookingPaymentToPayments($conn, $bookingId, 'PayPal', 'Paid');
+    $receipt = markBookingPaidWithReceipt($conn, $bookingId, 'PayPal', $customerId);
+    if (!$receipt) {
+        throw new RuntimeException('This repair is not ready for payment.');
+    }
     logActivity($conn, $customerId, 'Customer', 'Stripe payment completed', 'Completed Stripe payment for booking #' . $bookingId . '.', 'booking', $bookingId);
 
     $bookingStmt = $conn->prepare("
-        SELECT rb.estimated_amount, rb.receipt_email_sent_at,
+        SELECT rb.receipt_email_sent_at, r.repair_id,
                r.ebike_model, u.name AS customer_name, u.email AS customer_email
         FROM repair_bookings rb
         LEFT JOIN repairs r ON r.booking_id = rb.booking_id
@@ -91,7 +94,7 @@ try {
         }
     }
 
-    header('Location: customerdashboard.php?payment=success');
+    header('Location: repairdetails.php?id=' . (int)($booking['repair_id'] ?? 0) . '&payment=success');
     exit();
 } catch (Throwable $exception) {
     error_log('Stripe payment verification error: ' . $exception->getMessage());

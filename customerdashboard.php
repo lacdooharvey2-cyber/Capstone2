@@ -2,6 +2,7 @@
 session_start();
 include("db.php");
 include_once("dashboard_alerts_logs.php");
+include_once("schema_helpers.php");
 
 // Guard: only allow Customers
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Customer') {
@@ -41,8 +42,7 @@ $myEbikes = $conn->query("
 
 $recentRepairs = $conn->query("
   SELECT r.ebike_model, r.issue_description, r.repair_status, r.created_at,
-         r.repair_id, rb.booking_id, rb.payment_status,
-         COALESCE(NULLIF(rb.estimated_amount, 0), r.amount, 0) AS payable_amount
+         r.repair_id, rb.booking_id, rb.payment_status
   FROM repairs r
   LEFT JOIN repair_bookings rb ON rb.booking_id = r.booking_id
   WHERE r.customer_id=$customerIdSql
@@ -139,7 +139,7 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
         ['Active Repairs', $activeRepairs, 'Pending or in progress', 'text-info', 'bi-tools'],
         ['Completed Repairs', $completedRepairs, 'Finished service jobs', 'text-success', 'bi-check2-circle'],
         ['Active Warranties', $activeWarranties, 'Currently covered', 'text-success', 'bi-shield-check'],
-        ['Expiring Soon', $expiringSoon, 'Within 30 days', 'text-warning', 'bi-calendar-x'],
+        ['Expiring Soon', $expiringSoon, 'Within 30 days', 'text-danger', 'bi-calendar-x'],
       ];
       foreach ($cards as $card):
       ?>
@@ -223,17 +223,10 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
                 <td><span class="badge bg-<?= $repair['repair_status'] === 'Completed' ? 'success' : ($repair['repair_status'] === 'In Progress' ? 'primary' : 'warning') ?>"><?= htmlspecialchars($repair['repair_status']) ?></span></td>
                 <td><?= htmlspecialchars($repair['created_at']) ?></td>
                 <td>
-                  <?php if ((int)($repair['booking_id'] ?? 0) > 0 && (float)($repair['payable_amount'] ?? 0) > 0 && ($repair['payment_status'] ?? 'Pending') !== 'Paid'): ?>
-                    <form action="create_netcorepay_payment.php" method="post" class="netcorepay-payment-form">
-                      <input type="hidden" name="booking_id" value="<?= htmlspecialchars((string)$repair['booking_id']) ?>">
-                      <button class="btn btn-sm btn-success" type="submit" data-payment-button>
-                        <i class="bi bi-credit-card me-1"></i>Pay PHP <?= number_format((float)$repair['payable_amount'], 2) ?>
-                      </button>
-                    </form>
-                  <?php elseif ((float)($repair['payable_amount'] ?? 0) > 0): ?>
+                  <?php if (($repair['payment_status'] ?? '') === 'Paid'): ?>
                     <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Paid</span>
                   <?php else: ?>
-                    <span class="badge bg-info text-dark"><i class="bi bi-shield-check me-1"></i>Covered</span>
+                    <span class="badge bg-<?= statusBadgeClass((string)($repair['payment_status'] ?? 'Pending Summary')) ?>"><?= htmlspecialchars($repair['payment_status'] ?? 'View details') ?></span>
                   <?php endif; ?>
                 </td>
                 <td><a href="repairdetails.php?id=<?= urlencode((string)$repair['repair_id']) ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye me-1"></i>View Details</a></td>
@@ -249,15 +242,5 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.querySelectorAll('.netcorepay-payment-form').forEach((form) => {
-      form.addEventListener('submit', () => {
-        const button = form.querySelector('[data-payment-button]');
-        if (!button) return;
-        button.disabled = true;
-                        button.innerHTML = '<span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>Redirecting to NetCorePay...';
-      });
-    });
-  </script>
 </body>
 </html>

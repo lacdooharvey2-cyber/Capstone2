@@ -50,20 +50,29 @@ if (!$repair) {
     $pageError = 'Repair record not found or you do not have access to it.';
 }
 
-$serviceReport = null;
 $chargeItems = [];
+$itemizedTotal = 0.0;
+$receipt = null;
 if ($repair) {
-    $reportStmt = $conn->prepare('SELECT tr.*, u.name AS report_technician_name FROM technician_repair_reports tr LEFT JOIN users u ON u.user_id=tr.technician_id WHERE tr.repair_id=? LIMIT 1');
-    $reportStmt->bind_param('i', $repairId);
-    $reportStmt->execute();
-    $serviceReport = $reportStmt->get_result()->fetch_assoc();
-    if ($serviceReport) {
-        $itemStmt = $conn->prepare('SELECT item_type, item_name, quantity, unit_price FROM repair_charge_items WHERE report_id=? ORDER BY item_id');
-        $itemStmt->bind_param('i', $serviceReport['report_id']);
-        $itemStmt->execute();
-        $chargeItems = $itemStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $itemStmt = $conn->prepare('SELECT item_type, item_name, quantity, unit_price FROM repair_charge_items WHERE repair_id=? ORDER BY item_id');
+    $itemStmt->bind_param('i', $repairId);
+    $itemStmt->execute();
+    $chargeItems = $itemStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    foreach ($chargeItems as $item) {
+        $itemizedTotal += (float)$item['quantity'] * (float)$item['unit_price'];
+    }
+    if (!empty($repair['booking_id'])) {
+        $receiptStmt = $conn->prepare('SELECT * FROM payment_receipts WHERE booking_id = ? LIMIT 1');
+        $receiptStmt->bind_param('i', $repair['booking_id']);
+        $receiptStmt->execute();
+        $receipt = $receiptStmt->get_result()->fetch_assoc();
     }
 }
+$paymentReady = $repair
+    && $itemizedTotal > 0
+    && !empty($chargeItems)
+    && in_array((string)($repair['payment_status'] ?? ''), ['Pending Payment', 'Payment Submitted'], true);
+$canPayOnline = $role === 'Customer' && $paymentReady && !empty($repair['booking_id']);
 
 function detailValue(array $row, string $key, string $fallback = 'Not recorded'): string
 {
@@ -93,6 +102,7 @@ $backUrl = match ($role) {
     .detail-label { color: #6c757d; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
     .detail-value { color: #212529; margin-bottom: 0; overflow-wrap: anywhere; }
     .issue-box { white-space: pre-wrap; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 14px; }
+    @media print { .app-topbar, .app-sidebar, .btn, .no-print { display: none !important; } body { background: #fff; } .details-wrap { max-width: none; margin: 0; } .details-card { box-shadow: none; } }
   </style>
 </head>
 <body>
@@ -117,6 +127,7 @@ include $navbar;
   <?php if (isset($pageError)): ?>
     <div class="details-card p-4 alert alert-danger mb-0"><?= htmlspecialchars($pageError) ?></div>
   <?php else: ?>
+    <?php if (($_GET['payment'] ?? '') === 'success'): ?><div class="alert alert-success"><i class="bi bi-check-circle me-1"></i>Payment confirmed. Your receipt is ready below.</div><?php elseif (($_GET['payment'] ?? '') === 'not_ready'): ?><div class="alert alert-warning">Payment becomes available after the cashier saves the itemized breakdown.</div><?php endif; ?>
     <div class="details-card p-4 mb-4">
       <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
         <div>
@@ -172,33 +183,44 @@ include $navbar;
       <div class="col-lg-6">
         <section class="details-card p-4 h-100">
           <h2 class="h5 mb-4"><i class="bi bi-receipt text-danger me-2"></i>Cost & Payment</h2>
-          <p class="detail-label">Technician repair cost</p><p class="detail-value mb-3"><?= (float)$repair['amount'] > 0 ? 'PHP ' . number_format((float)$repair['amount'], 2) : 'Pending assessment' ?></p>
-          <p class="detail-label">Booking estimate</p><p class="detail-value mb-3"><?= (float)$repair['estimated_amount'] > 0 ? 'PHP ' . number_format((float)$repair['estimated_amount'], 2) : 'Not recorded' ?></p>
+          <p class="detail-label">Final itemized amount</p><p class="detail-value mb-3 fw-semibold <?= $itemizedTotal > 0 ? 'text-success' : '' ?>"><?= $itemizedTotal > 0 ? 'PHP ' . number_format($itemizedTotal, 2) : 'Awaiting cashier payment summary' ?></p>
+          <p class="detail-label">Booking estimate</p><p class="detail-value mb-3 text-secondary"><?= (float)$repair['estimated_amount'] > 0 ? 'PHP ' . number_format((float)$repair['estimated_amount'], 2) : 'Not recorded' ?></p>
           <p class="detail-label">Booking status</p><p class="detail-value mb-3"><?= htmlspecialchars(detailValue($repair, 'booking_status', 'No booking')) ?></p>
           <p class="detail-label">Tracking number</p><p class="detail-value"><?= htmlspecialchars(detailValue($repair, 'tracking_number')) ?></p>
+          <?php if ($canPayOnline): ?>
+            <form action="create_netcorepay_payment.php" method="post" class="mt-4"><input type="hidden" name="booking_id" value="<?= (int)$repair['booking_id'] ?>"><input type="hidden" name="repair_id" value="<?= (int)$repair['repair_id'] ?>"><button class="btn btn-success w-100"><i class="bi bi-credit-card me-1"></i>Pay Now - PHP <?= number_format($itemizedTotal, 2) ?></button></form>
+          <?php elseif ($role === 'Customer' && $itemizedTotal > 0 && ($repair['payment_status'] ?? '') === 'Paid'): ?>
+            <p class="small text-success mt-3 mb-0"><i class="bi bi-check-circle me-1"></i>Payment has been confirmed.</p>
+          <?php endif; ?>
         </section>
       </div>
     </div>
     <section class="details-card p-4 mt-4">
       <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-4">
         <div>
-          <h2 class="h5 mb-1"><i class="bi bi-receipt-cutoff text-success me-2"></i>Itemized Service Report</h2>
-          <p class="text-secondary mb-0">Work completed and a transparent breakdown of the customer payment.</p>
+          <h2 class="h5 mb-1"><i class="bi bi-receipt-cutoff text-success me-2"></i>Itemized Payment Summary</h2>
+          <p class="text-secondary mb-0">Cashier-prepared, transparent breakdown of the customer payment.</p>
         </div>
-        <?php if ($serviceReport): ?><span class="badge bg-success">Reported by <?= htmlspecialchars($serviceReport['report_technician_name'] ?? 'Technician') ?></span><?php endif; ?>
       </div>
-      <?php if ($serviceReport): ?>
-        <?php if (trim((string)$serviceReport['work_performed']) !== ''): ?><p class="detail-label">Work performed</p><div class="issue-box mb-3"><?= htmlspecialchars($serviceReport['work_performed']) ?></div><?php endif; ?>
-        <?php if (trim((string)$serviceReport['technician_notes']) !== ''): ?><p class="detail-label">Technician notes</p><div class="issue-box mb-3"><?= htmlspecialchars($serviceReport['technician_notes']) ?></div><?php endif; ?>
+      <?php if ($chargeItems): ?>
         <div class="table-responsive"><table class="table align-middle mb-0"><thead class="table-light"><tr><th>Type</th><th>Part or service</th><th class="text-end">Qty</th><th class="text-end">Unit price</th><th class="text-end">Line total</th></tr></thead><tbody>
-          <?php $itemizedTotal = 0; foreach ($chargeItems as $item): $lineTotal = (float)$item['quantity'] * (float)$item['unit_price']; $itemizedTotal += $lineTotal; ?>
+          <?php foreach ($chargeItems as $item): $lineTotal = (float)$item['quantity'] * (float)$item['unit_price']; ?>
           <tr><td><?= htmlspecialchars($item['item_type']) ?></td><td><?= htmlspecialchars($item['item_name']) ?></td><td class="text-end"><?= number_format((float)$item['quantity'], 2) ?></td><td class="text-end">PHP <?= number_format((float)$item['unit_price'], 2) ?></td><td class="text-end">PHP <?= number_format($lineTotal, 2) ?></td></tr>
           <?php endforeach; ?>
         </tbody><tfoot><tr><th colspan="4" class="text-end">Total payable</th><th class="text-end text-success">PHP <?= number_format($itemizedTotal, 2) ?></th></tr></tfoot></table></div>
       <?php else: ?>
-        <div class="alert alert-info mb-0"><i class="bi bi-info-circle me-1"></i>The technician has not submitted an itemized service report yet. The final payment amount will appear here after assessment.</div>
+        <div class="alert alert-info mb-0"><i class="bi bi-info-circle me-1"></i>The cashier has not prepared the itemized payment summary yet.</div>
       <?php endif; ?>
     </section>
+    <?php if ($receipt): ?>
+      <section class="details-card p-4 mt-4" id="receipt">
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+          <div><h2 class="h5 mb-1"><i class="bi bi-receipt text-success me-2"></i>Payment Receipt</h2><p class="text-secondary mb-0">Receipt <?= htmlspecialchars($receipt['receipt_number']) ?></p></div>
+          <button class="btn btn-outline-secondary no-print" type="button" onclick="window.print()"><i class="bi bi-printer me-1"></i>Print or Save</button>
+        </div>
+        <div class="row g-3 mt-2"><div class="col-sm-4"><p class="detail-label">Amount paid</p><p class="detail-value fw-semibold text-success">PHP <?= number_format((float)$receipt['amount'], 2) ?></p></div><div class="col-sm-4"><p class="detail-label">Payment method</p><p class="detail-value"><?= htmlspecialchars($receipt['payment_method']) ?></p></div><div class="col-sm-4"><p class="detail-label">Paid on</p><p class="detail-value"><?= htmlspecialchars($receipt['paid_at']) ?></p></div></div>
+      </section>
+    <?php endif; ?>
   <?php endif; ?>
 </main>
 </body>

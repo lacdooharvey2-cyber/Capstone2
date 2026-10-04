@@ -18,10 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $customer_id = intval($_SESSION['user_id']);
     $service = trim($_POST['service_type'] ?? 'Repair');
     $service = in_array($service, ['Repair', 'Maintenance'], true) ? $service : 'Repair';
+    $service_location = trim($_POST['service_location'] ?? 'To The Store');
+    $service_location = in_array($service_location, ['To The Store', 'Home Service'], true) ? $service_location : 'To The Store';
     $preferred_date = $_POST['preferred_date'] ?? null;
     $time_slot = $_POST['time_slot'] ?? '';
     $issue = trim($_POST['issue_description'] ?? '');
     $warranty_id = intval($_POST['warranty_id'] ?? 0);
+    $detectedAddress = trim($_POST['detected_address'] ?? '');
 
     if ($warranty_id <= 0 || $issue === '' || empty($preferred_date) || $time_slot === '') {
         header("Location: customerbookrepair.php?error=incomplete");
@@ -34,7 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $slotCapacity = 3;
-    if (!in_array($time_slot, ['Morning', 'Afternoon', 'Evening'], true)) {
+    $allowedTimeSlots = ['10:00 AM - 11:30 AM', '11:30 AM - 1:00 PM', '1:00 PM - 2:30 PM', '2:30 PM - 4:00 PM', '4:00 PM - 5:00 PM'];
+    if (!in_array($time_slot, $allowedTimeSlots, true)) {
         header("Location: customerbookrepair.php?error=incomplete");
         exit();
     }
@@ -72,44 +76,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $model = $bike['ebike_model'];
     $warranty_status = warrantyCoverageStatus($bike);
     $amount = 0.00;
-    $payment_status = 'Pending';
+    $payment_status = 'Pending Summary';
     $tracking = 'RS-' . date('YmdHis') . '-' . $customer_id;
     $proofFile = null;
 
-    if (isset($_FILES['proof_file']) && ($_FILES['proof_file']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
-        if ($_FILES['proof_file']['error'] !== UPLOAD_ERR_OK || (int)($_FILES['proof_file']['size'] ?? 0) > 5 * 1024 * 1024) {
-            header("Location: customerbookrepair.php?error=upload");
-            exit();
-        }
-
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf', 'doc', 'docx'];
-        $originalName = (string)($_FILES['proof_file']['name'] ?? '');
-        $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
-        if (!in_array($extension, $allowedExtensions, true)) {
-            header("Location: customerbookrepair.php?error=upload");
-            exit();
-        }
-
-        $uploadDir = __DIR__ . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'repair_proofs';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0775, true);
-        }
-
-        $filename = 'repair-proof-' . $customer_id . '-' . date('YmdHis') . '-' . bin2hex(random_bytes(4)) . '.' . $extension;
-        $target = $uploadDir . DIRECTORY_SEPARATOR . $filename;
-        if (!move_uploaded_file($_FILES['proof_file']['tmp_name'], $target)) {
-            header("Location: customerbookrepair.php?error=upload");
-            exit();
-        }
-        $proofFile = 'uploads/repair_proofs/' . $filename;
+    if ($detectedAddress !== '') {
+        $addressStmt = $conn->prepare("UPDATE users SET province_address = ? WHERE user_id = ?");
+        $addressStmt->bind_param("si", $detectedAddress, $customer_id);
+        $addressStmt->execute();
     }
 
     $description = trim(
         "E-bike: " . $model .
         "\nIssue: " . $issue .
+        "\nService option: " . $service_location .
+        ($detectedAddress !== '' ? "\nService address: " . $detectedAddress : '') .
         "\nPreferred time: " . $time_slot .
         "\nWarranty: " . $warranty_status .
-        "\nRepair cost: Pending technician assessment"
+        "\nRepair cost: Pending cashier payment summary"
     );
 
     $customerStmt = $conn->prepare("SELECT name, email FROM users WHERE user_id = ? LIMIT 1");
@@ -119,10 +103,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $stmt = $conn->prepare("
         INSERT INTO repair_bookings
-        (customer_id, warranty_id, service_type, preferred_date, preferred_time, description, proof_file, booking_status, tracking_number, warranty_status, estimated_amount, payment_status)
-        VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', ?, ?, ?, ?)
+        (customer_id, warranty_id, service_type, service_location, preferred_date, preferred_time, description, proof_file, booking_status, tracking_number, warranty_status, estimated_amount, payment_status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pending', ?, ?, ?, ?)
     ");
-    $stmt->bind_param("iisssssssds", $customer_id, $warranty_id, $service, $preferred_date, $time_slot, $description, $proofFile, $tracking, $warranty_status, $amount, $payment_status);
+    $stmt->bind_param("iissssssssds", $customer_id, $warranty_id, $service, $service_location, $preferred_date, $time_slot, $description, $proofFile, $tracking, $warranty_status, $amount, $payment_status);
     $stmt->execute();
     $booking_id = $conn->insert_id;
 
@@ -151,8 +135,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $customer['email'],
             (string)($customer['name'] ?? 'Customer'),
             'FixTrack booking confirmation #' . $booking_id,
-            "<h2>Repair booking received</h2><p>Hello {$safeName},</p><p>Your FixTrack repair booking has been received.</p><table cellpadding='6'><tr><td><strong>Booking</strong></td><td>#{$booking_id}</td></tr><tr><td><strong>Tracking</strong></td><td>{$tracking}</td></tr><tr><td><strong>E-bike</strong></td><td>{$safeModel}</td></tr><tr><td><strong>Issue</strong></td><td>{$safeIssue}</td></tr><tr><td><strong>Preferred schedule</strong></td><td>{$safeDate} - {$safeTime}</td></tr><tr><td><strong>Warranty check</strong></td><td>{$safeWarranty}</td></tr><tr><td><strong>Payment</strong></td><td>Pending technician assessment</td></tr></table><p>We will notify you when the technician sets the repair price.</p>",
-            "Repair booking #{$booking_id}\nTracking: {$tracking}\nE-bike: {$model}\nIssue: {$issue}\nSchedule: {$preferred_date} - {$time_slot}\nWarranty: {$warranty_status}\nPayment: Pending technician assessment"
+            "<h2>Repair booking received</h2><p>Hello {$safeName},</p><p>Your FixTrack repair booking has been received.</p><table cellpadding='6'><tr><td><strong>Booking</strong></td><td>#{$booking_id}</td></tr><tr><td><strong>Tracking</strong></td><td>{$tracking}</td></tr><tr><td><strong>E-bike</strong></td><td>{$safeModel}</td></tr><tr><td><strong>Issue</strong></td><td>{$safeIssue}</td></tr><tr><td><strong>Preferred schedule</strong></td><td>{$safeDate} - {$safeTime}</td></tr><tr><td><strong>Warranty check</strong></td><td>{$safeWarranty}</td></tr><tr><td><strong>Payment</strong></td><td>Pending cashier payment summary</td></tr></table><p>We will notify you when the cashier prepares the payment summary.</p>",
+            "Repair booking #{$booking_id}\nTracking: {$tracking}\nE-bike: {$model}\nIssue: {$issue}\nSchedule: {$preferred_date} - {$time_slot}\nWarranty: {$warranty_status}\nPayment: Pending cashier payment summary"
         );
         if ($emailSent) {
             $emailStmt = $conn->prepare("UPDATE repair_bookings SET booking_email_sent_at = NOW() WHERE booking_id = ?");

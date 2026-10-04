@@ -9,7 +9,6 @@
   <nav class="app-sidebar-nav">
     <a class="app-side-button <?= $currentPage === 'customerdashboard.php' ? 'is-active' : '' ?>" href="customerdashboard.php"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
     <a class="app-side-button <?= $currentPage === 'customerbookrepair.php' ? 'is-active' : '' ?>" href="customerbookrepair.php"><i class="bi bi-tools"></i><span>Book Repair</span></a>
-    <a class="app-side-button <?= $currentPage === 'customertrackrepiar.php' ? 'is-active' : '' ?>" href="customertrackrepiar.php"><i class="bi bi-search"></i><span>Track Repair</span></a>
     <a class="app-side-button <?= $currentPage === 'customermessage.php' ? 'is-active' : '' ?>" href="customermessage.php"><i class="bi bi-chat-dots"></i><span>Messages</span></a>
     <a class="app-side-button <?= $currentPage === 'activitylogs.php' ? 'is-active' : '' ?>" href="activitylogs.php"><i class="bi bi-clock-history"></i><span>Audit Trail</span></a>
     <a class="app-side-button app-logout" href="logout.php"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a>
