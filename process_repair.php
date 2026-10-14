@@ -76,7 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $model = $bike['ebike_model'];
     $warranty_status = warrantyCoverageStatus($bike);
     $amount = 0.00;
-    $payment_status = 'Pending Summary';
+    $payment_status = $warranty_status === 'Valid' ? 'Paid' : 'Pending Summary';
+    $booking_status = $warranty_status === 'Valid' ? 'Payment Verified' : 'Pending';
     $tracking = 'RS-' . date('YmdHis') . '-' . $customer_id;
     $proofFile = null;
 
@@ -93,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ($detectedAddress !== '' ? "\nService address: " . $detectedAddress : '') .
         "\nPreferred time: " . $time_slot .
         "\nWarranty: " . $warranty_status .
-        "\nRepair cost: Pending cashier payment summary"
+        "\nRepair cost: " . ($warranty_status === 'Valid' ? 'Warranty covered - paid' : 'Pending cashier payment summary')
     );
 
     $customerStmt = $conn->prepare("SELECT name, email FROM users WHERE user_id = ? LIMIT 1");
@@ -104,9 +105,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $conn->prepare("
         INSERT INTO repair_bookings
         (customer_id, warranty_id, service_type, service_location, preferred_date, preferred_time, description, proof_file, booking_status, tracking_number, warranty_status, estimated_amount, payment_status)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pending', ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
-    $stmt->bind_param("iissssssssds", $customer_id, $warranty_id, $service, $service_location, $preferred_date, $time_slot, $description, $proofFile, $tracking, $warranty_status, $amount, $payment_status);
+    $stmt->bind_param("iisssssssssds", $customer_id, $warranty_id, $service, $service_location, $preferred_date, $time_slot, $description, $proofFile, $booking_status, $tracking, $warranty_status, $amount, $payment_status);
     $stmt->execute();
     $booking_id = $conn->insert_id;
 
@@ -116,7 +117,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     ");
     $repairStmt->bind_param("iissssd", $booking_id, $customer_id, $model, $issue, $proofFile, $warranty_status, $amount);
     $repairStmt->execute();
-    logActivity($conn, $customer_id, 'Customer', 'Repair booked', 'Created repair booking #' . $booking_id . ' for ' . $model . '.', 'repair', (int)$conn->insert_id);
+    $repairId = (int)$conn->insert_id;
+
+    if ($warranty_status === 'Valid') {
+        markWarrantyBookingPaidWithReceipt($conn, (int)$booking_id, $repairId, $customer_id);
+    }
+
+    logActivity($conn, $customer_id, 'Customer', 'Repair booked', 'Created repair booking #' . $booking_id . ' for ' . $model . '.', 'repair', $repairId);
 
     if ($warranty_status === 'Invalid' && $bike['warranty_status'] === 'Active') {
         $expireStmt = $conn->prepare("UPDATE warranty_records SET warranty_status = 'Expired' WHERE warranty_id = ?");
@@ -131,12 +138,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $safeDate = htmlspecialchars((string)$preferred_date, ENT_QUOTES, 'UTF-8');
         $safeTime = htmlspecialchars($time_slot, ENT_QUOTES, 'UTF-8');
         $safeWarranty = htmlspecialchars($warranty_status, ENT_QUOTES, 'UTF-8');
+        $safePayment = $warranty_status === 'Valid' ? 'Paid - warranty covered' : 'Pending cashier payment summary';
+        $safePaymentNote = $warranty_status === 'Valid' ? 'Your warranty-covered repair is already marked as paid.' : 'We will notify you when the cashier prepares the payment summary.';
         $emailSent = sendFixTrackEmail(
             $customer['email'],
             (string)($customer['name'] ?? 'Customer'),
             'FixTrack booking confirmation #' . $booking_id,
-            "<h2>Repair booking received</h2><p>Hello {$safeName},</p><p>Your FixTrack repair booking has been received.</p><table cellpadding='6'><tr><td><strong>Booking</strong></td><td>#{$booking_id}</td></tr><tr><td><strong>Tracking</strong></td><td>{$tracking}</td></tr><tr><td><strong>E-bike</strong></td><td>{$safeModel}</td></tr><tr><td><strong>Issue</strong></td><td>{$safeIssue}</td></tr><tr><td><strong>Preferred schedule</strong></td><td>{$safeDate} - {$safeTime}</td></tr><tr><td><strong>Warranty check</strong></td><td>{$safeWarranty}</td></tr><tr><td><strong>Payment</strong></td><td>Pending cashier payment summary</td></tr></table><p>We will notify you when the cashier prepares the payment summary.</p>",
-            "Repair booking #{$booking_id}\nTracking: {$tracking}\nE-bike: {$model}\nIssue: {$issue}\nSchedule: {$preferred_date} - {$time_slot}\nWarranty: {$warranty_status}\nPayment: Pending cashier payment summary"
+            "<h2>Repair booking received</h2><p>Hello {$safeName},</p><p>Your FixTrack repair booking has been received.</p><table cellpadding='6'><tr><td><strong>Booking</strong></td><td>#{$booking_id}</td></tr><tr><td><strong>Tracking</strong></td><td>{$tracking}</td></tr><tr><td><strong>E-bike</strong></td><td>{$safeModel}</td></tr><tr><td><strong>Issue</strong></td><td>{$safeIssue}</td></tr><tr><td><strong>Preferred schedule</strong></td><td>{$safeDate} - {$safeTime}</td></tr><tr><td><strong>Warranty check</strong></td><td>{$safeWarranty}</td></tr><tr><td><strong>Payment</strong></td><td>{$safePayment}</td></tr></table><p>{$safePaymentNote}</p>",
+            "Repair booking #{$booking_id}\nTracking: {$tracking}\nE-bike: {$model}\nIssue: {$issue}\nSchedule: {$preferred_date} - {$time_slot}\nWarranty: {$warranty_status}\nPayment: {$safePayment}"
         );
         if ($emailSent) {
             $emailStmt = $conn->prepare("UPDATE repair_bookings SET booking_email_sent_at = NOW() WHERE booking_id = ?");

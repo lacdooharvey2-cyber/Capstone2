@@ -7,6 +7,17 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Assista
     header("Location: login.php");
     exit();
 }
+
+function messageRoleLabel(string $role): string
+{
+    return match ($role) {
+        'SuperAdmin' => 'Super Admin',
+        'AssistantSuperAdmin' => 'Assistant Super Admin',
+        'AssistantAdmin' => 'Assistant Admin',
+        'HeadTechnician' => 'Head Technician',
+        default => $role,
+    };
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +65,7 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Assista
             </div>
             <div class="flex-grow-1">
               <a href="adminmessages.php?contact=<?= $c['user_id'] ?>" class="text-decoration-none fw-bold">
-                <?= htmlspecialchars($c['name']) ?> (<?= $c['role'] ?>)
+                <?= htmlspecialchars($c['name']) ?> ( <?= htmlspecialchars(messageRoleLabel($c['role'])) ?> )
               </a>
               <div class="small text-muted"><?= htmlspecialchars($c['last_msg']) ?></div>
             </div>
@@ -75,7 +86,9 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Assista
             <?php
             $contact_id = intval($_GET['contact']);
             $msgs = $conn->query("
-              SELECT * FROM messages 
+              SELECT m.*, u.name AS sender_name, u.role AS sender_role
+              FROM messages m
+              LEFT JOIN users u ON u.user_id = m.sender_id
               WHERE (sender_id={$_SESSION['user_id']} AND receiver_id=$contact_id) 
                  OR (sender_id=$contact_id AND receiver_id={$_SESSION['user_id']}) 
               ORDER BY sent_at ASC
@@ -84,7 +97,7 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Assista
               while($m = $msgs->fetch_assoc()):
             ?>
               <div class="<?= $m['sender_id']==$_SESSION['user_id'] ? 'text-end' : 'text-start' ?>">
-                <p class="mb-1"><strong><?= $m['sender_id']==$_SESSION['user_id'] ? 'You' : 'Contact' ?>:</strong> 
+                <p class="mb-1"><strong><?= $m['sender_id']==$_SESSION['user_id'] ? 'You' : htmlspecialchars(($m['sender_name'] ?? 'Contact') . ' ( ' . messageRoleLabel($m['sender_role'] ?? '') . ' )') ?>:</strong> 
                 <?= htmlspecialchars($m['content']) ?></p>
                 <small class="text-muted"><?= $m['sent_at'] ?></small>
               </div>

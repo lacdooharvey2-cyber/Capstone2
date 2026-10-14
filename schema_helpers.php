@@ -67,6 +67,10 @@ function ensureRepairAutomationSchema(mysqli $conn): void
         $conn->query("ALTER TABLE repair_bookings MODIFY booking_status VARCHAR(40) NOT NULL DEFAULT 'Pending'");
     }
 
+    if (columnExists($conn, 'repair_bookings', 'preferred_time')) {
+        $conn->query("ALTER TABLE repair_bookings MODIFY preferred_time VARCHAR(40) NULL");
+    }
+
     if (columnExists($conn, 'repairs', 'repair_status')) {
         $conn->query("ALTER TABLE repairs MODIFY repair_status VARCHAR(40) NOT NULL DEFAULT 'Pending'");
     }
@@ -256,6 +260,30 @@ function markBookingPaidWithReceipt(mysqli $conn, int $bookingId, string $method
 
     syncPaymentRecord($conn, (int)$booking['repair_id'], (int)$booking['customer_id'], $amount, $method, 'Paid');
     return createPaymentReceipt($conn, (int)$booking['repair_id'], $bookingId, (int)$booking['customer_id'], $amount, $method);
+}
+
+function markWarrantyBookingPaidWithReceipt(mysqli $conn, int $bookingId, int $repairId, int $customerId): ?array
+{
+    if ($bookingId <= 0 || $repairId <= 0 || $customerId <= 0) {
+        return null;
+    }
+
+    $amount = 0.00;
+    $update = $conn->prepare("
+        UPDATE repair_bookings
+        SET payment_status = 'Paid',
+            booking_status = 'Payment Verified',
+            paid_at = COALESCE(paid_at, NOW()),
+            estimated_amount = 0.00
+        WHERE booking_id = ?
+    ");
+    $update->bind_param('i', $bookingId);
+    if (!$update->execute()) {
+        return null;
+    }
+
+    syncPaymentRecord($conn, $repairId, $customerId, $amount, 'Cashier', 'Paid');
+    return createPaymentReceipt($conn, $repairId, $bookingId, $customerId, $amount, 'Warranty');
 }
 
 function repairCanStart(?string $paymentStatus, ?string $warrantyStatus): bool

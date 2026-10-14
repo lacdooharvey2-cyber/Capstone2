@@ -433,7 +433,8 @@ h2, h3 {
   body > .app-topbar ~ .warranty-wrap,
   body > .app-topbar ~ .tracking-shell,
   body > .app-topbar ~ .details-wrap,
-  body > .app-topbar ~ .technician-workspace {
+  body > .app-topbar ~ .technician-workspace,
+  body > .app-topbar ~ .performance-wrap {
     width: calc(100% - 64px);
     max-width: none;
     margin: 28px 32px 48px !important;
@@ -473,7 +474,8 @@ h2, h3 {
   body > .app-topbar ~ .warranty-wrap,
   body > .app-topbar ~ .tracking-shell,
   body > .app-topbar ~ .details-wrap,
-  body > .app-topbar ~ .technician-workspace {
+  body > .app-topbar ~ .technician-workspace,
+  body > .app-topbar ~ .performance-wrap {
     width: calc(100% - 24px);
     max-width: none;
     margin: 18px 12px 32px !important;

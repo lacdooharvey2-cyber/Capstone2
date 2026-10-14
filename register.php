@@ -195,16 +195,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="row g-0">
         <div class="col-lg-3 register-brand">
           <div>
-            <a class="brand-lockup" href="Homepage.php"><span class="brand-mark"><i class="bi bi-wrench-adjustable"></i></span> FixTrack</a>
-            <h1 class="brand-title">Built for smoother E-bike service.</h1>
-            <p class="brand-copy">Create your account to book repairs, track service progress, and manage warranty coverage in one place.</p>
           </div>
         </div>
         <div class="col-lg-9 register-form">
           <div>
-            <span class="badge text-bg-danger-subtle text-danger border border-danger-subtle mb-3">FixTrack Portal</span>
-            <h2 class="form-heading">Create your account</h2>
-            <p class="form-subtitle">Register as a customer to access the e-bike repair portal.</p>
           </div>
 
       <?php if (!empty($error)): ?>

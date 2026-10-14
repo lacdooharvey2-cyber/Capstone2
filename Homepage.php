@@ -155,12 +155,11 @@ if (isset($_SESSION['role'])) {
     <header class="site-nav">
       <a class="brand" href="Homepage.php"><span class="brand-mark"><i class="bi bi-wrench-adjustable"></i></span>FixTrack</a>
       <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#platform">Platform</a>
-        <a href="#features">Features</a>
-        <a href="#about">About</a>
+        <a href="#platform"></a>
+        <a href="#features"></a>
+        <a href="#about"></a>
       </nav>
       <div class="nav-actions">
-        <a class="btn btn-outline" href="login.php">Get started</a>
         <a class="btn btn-primary" href="login.php">Login</a>
       </div>
     </header>
@@ -173,7 +172,6 @@ if (isset($_SESSION['role'])) {
             <h1>E-bike service.</h1>
             <div class="hero-actions">
               <a class="btn btn-primary" href="login.php">Get started</a>
-              <a class="btn btn-outline" href="login.php">Login</a>
             </div>
           </div>
 

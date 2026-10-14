@@ -8,6 +8,18 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Cashier') {
 }
 
 $user_id = intval($_SESSION['user_id']);
+
+function messageRoleLabel(string $role): string
+{
+    return match ($role) {
+        'SuperAdmin' => 'Super Admin',
+        'AssistantSuperAdmin' => 'Assistant Super Admin',
+        'AssistantAdmin' => 'Assistant Admin',
+        'HeadTechnician' => 'Head Technician',
+        default => $role,
+    };
+}
+
 $contacts = $conn->query("
   SELECT DISTINCT u.user_id, u.name, u.role,
          (SELECT content FROM messages
@@ -45,7 +57,7 @@ $contacts = $conn->query("
               </div>
               <div class="flex-grow-1">
                 <a href="cashiermessage.php?contact=<?= $c['user_id'] ?>" class="text-decoration-none fw-bold">
-                  <?= htmlspecialchars($c['name']) ?> (<?= htmlspecialchars($c['role']) ?>)
+                  <?= htmlspecialchars($c['name']) ?> ( <?= htmlspecialchars(messageRoleLabel($c['role'])) ?> )
                 </a>
                 <div class="small text-muted"><?= htmlspecialchars($c['last_msg'] ?? '') ?></div>
               </div>
@@ -62,7 +74,9 @@ $contacts = $conn->query("
               <?php
               $contact_id = intval($_GET['contact']);
               $msgs = $conn->query("
-                SELECT * FROM messages
+                SELECT m.*, u.name AS sender_name, u.role AS sender_role
+                FROM messages m
+                LEFT JOIN users u ON u.user_id = m.sender_id
                 WHERE (sender_id=$user_id AND receiver_id=$contact_id)
                    OR (sender_id=$contact_id AND receiver_id=$user_id)
                 ORDER BY sent_at ASC
@@ -71,7 +85,7 @@ $contacts = $conn->query("
                 while($m = $msgs->fetch_assoc()):
               ?>
                 <div class="<?= $m['sender_id']==$user_id ? 'text-end' : 'text-start' ?>">
-                  <p class="mb-1"><strong><?= $m['sender_id']==$user_id ? 'You' : 'Contact' ?>:</strong> <?= htmlspecialchars($m['content']) ?></p>
+                  <p class="mb-1"><strong><?= $m['sender_id']==$user_id ? 'You' : htmlspecialchars(($m['sender_name'] ?? 'Contact') . ' ( ' . messageRoleLabel($m['sender_role'] ?? '') . ' )') ?>:</strong> <?= htmlspecialchars($m['content']) ?></p>
                   <small class="text-muted"><?= $m['sent_at'] ?></small>
                 </div>
               <?php endwhile; else: ?>

@@ -7,6 +7,17 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'] ?? '', ['Admin',
     exit();
 }
 
+function messageRoleLabel(string $role): string
+{
+    return match ($role) {
+        'SuperAdmin' => 'Super Admin',
+        'AssistantSuperAdmin' => 'Assistant Super Admin',
+        'AssistantAdmin' => 'Assistant Admin',
+        'HeadTechnician' => 'Head Technician',
+        default => $role,
+    };
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $receiver_id = intval($_POST['receiver_id'] ?? 0);
     $content = trim($_POST['content'] ?? '');
@@ -30,7 +41,7 @@ $users = $conn->query("SELECT user_id, name, role FROM users WHERE user_id <> ".
   <div class="container mt-4"><div class="card shadow-sm"><div class="card-body">
     <h3 class="mb-3">New Message</h3>
     <form method="post">
-      <div class="mb-3"><label class="form-label">Recipient</label><select class="form-select" name="receiver_id" required><?php while($u=$users->fetch_assoc()): ?><option value="<?= htmlspecialchars($u['user_id']) ?>"><?= htmlspecialchars($u['name'].' ('.$u['role'].')') ?></option><?php endwhile; ?></select></div>
+      <div class="mb-3"><label class="form-label">Recipient</label><select class="form-select" name="receiver_id" required><?php while($u=$users->fetch_assoc()): ?><option value="<?= htmlspecialchars($u['user_id']) ?>"><?= htmlspecialchars($u['name'].' ( '.messageRoleLabel($u['role']).' )') ?></option><?php endwhile; ?></select></div>
       <div class="mb-3"><label class="form-label">Message</label><textarea class="form-control" name="content" rows="4" required></textarea></div>
       <button class="btn btn-success">Send</button>
       <a href="adminmessages.php" class="btn btn-secondary">Cancel</a>
