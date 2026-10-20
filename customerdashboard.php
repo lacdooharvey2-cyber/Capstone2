@@ -73,41 +73,6 @@ $progressWidth = $activeRepair ? ($currentStep === 0 ? 33 : ($currentStep === 1 
   <title>Customer Dashboard - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    .dashboard-container { width: calc(100% - 64px); max-width: none; margin: 28px 32px 48px !important; padding-bottom: 0; }
-    .page-hero { animation: portalRise .6s ease both; }
-    .customer-kpis .kpi-card { animation: portalRise .55s ease both; }
-    .customer-kpis > .col-md:nth-child(2) .kpi-card { animation-delay: .06s; }
-    .customer-kpis > .col-md:nth-child(3) .kpi-card { animation-delay: .12s; }
-    .customer-kpis > .col-md:nth-child(4) .kpi-card { animation-delay: .18s; }
-    .customer-kpis > .col-md:nth-child(5) .kpi-card { animation-delay: .24s; }
-    .kpi-card { min-height: 128px; }
-    .kpi-body { align-items: flex-start; height: 100%; padding: 18px; position: relative; }
-    .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
-    .kpi-value { font-size: clamp(1.05rem, 1.8vw, 1.8rem); font-weight: 800; line-height: 1; margin-bottom: .55rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #e5f8e9; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
-    .section-title { margin-top: 30px; margin-bottom: 15px; font-weight: 800; color: var(--app-ink); }
-    .portal-panel { background: var(--app-card); border: 1px solid var(--app-line); border-radius: 12px; box-shadow: 0 14px 36px rgba(31, 41, 55, .08); }
-    .portal-panel .table thead th { background: #f3f5f3; color: #374151; border-color: #e5e7eb; }
-    .portal-panel .btn-success { box-shadow: 0 8px 18px rgba(25, 135, 84, .14); }
-    .portal-panel .btn-success:hover { transform: translateY(-1px); }
-    .repair-step { flex: 1; text-align: center; font-size: 0.9rem; color: #6c757d; }
-    .repair-step .step-dot { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: 2px solid #dee2e6; background: #fff; font-weight: 700; margin-bottom: 6px; }
-    .repair-step.active { color: #198754; font-weight: 700; }
-    .repair-step.active .step-dot { border-color: #198754; background: #198754; color: #fff; }
-    @keyframes portalRise {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
 </head>
 <body>
   <?php include("navbarcustomer.php"); ?>

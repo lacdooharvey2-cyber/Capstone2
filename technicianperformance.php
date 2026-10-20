@@ -14,7 +14,7 @@ $techniciansResult = $conn->query("
          SUM(CASE WHEN r.repair_status = 'In Progress' THEN 1 ELSE 0 END) AS in_progress_repairs,
          SUM(CASE WHEN r.repair_status = 'Pending' THEN 1 ELSE 0 END) AS pending_repairs,
          SUM(CASE WHEN r.repair_status = 'Cancelled' THEN 1 ELSE 0 END) AS cancelled_repairs,
-         COALESCE(AVG(CASE WHEN r.repair_status = 'Completed' THEN TIMESTAMPDIFF(DAY, r.created_at, r.updated_at) END), 0) AS avg_turnaround,
+         COALESCE(AVG(CASE WHEN r.repair_status = 'Completed' AND r.updated_at >= r.created_at THEN GREATEST(TIMESTAMPDIFF(DAY, r.created_at, r.updated_at), 0) END), 0) AS avg_turnaround,
          MAX(r.updated_at) AS last_activity
   FROM users u
   LEFT JOIN repairs r ON r.technician_id = u.user_id
@@ -61,31 +61,7 @@ $teamAvgTurnaround = $turnaroundCount > 0 ? $turnaroundSum / $turnaroundCount : 
   <title>Technician Performance - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    .performance-wrap { margin: 30px auto 48px; max-width: min(1280px, calc(100% - 24px)); }
-    .owner-summary { display: grid; gap: 14px; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 18px; }
-    .owner-metric { border-left: 4px solid #198754 !important; min-height: 116px; }
-    .owner-metric.primary { border-left-color: #0d6efd !important; }
-    .owner-metric.warning { border-left-color: #ffc107 !important; }
-    .owner-metric.danger { border-left-color: #dc3545 !important; }
-    .metric-label { color: #6c757d; font-size: .78rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; }
-    .metric-value { font-size: 1.7rem; font-weight: 900; margin-bottom: 3px; }
-    .metric-note { color: #6c757d; font-size: .82rem; margin-bottom: 0; }
-    .tech-grid { display: grid; gap: 14px; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-bottom: 18px; }
-    .tech-card { height: 100%; }
-    .tech-rank { align-items: center; background: #e5f8e9; border-radius: 8px; color: #146c43; display: inline-flex; font-weight: 900; height: 34px; justify-content: center; width: 34px; }
-    .tech-name { font-size: .96rem; font-weight: 900; line-height: 1.2; min-height: 2.4em; }
-    .progress { height: 9px; }
-    .performance-table { table-layout: fixed; }
-    .performance-table th, .performance-table td { vertical-align: middle; }
-    @media (max-width: 1100px) {
-      .tech-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .owner-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 640px) {
-      .tech-grid, .owner-summary { grid-template-columns: 1fr; }
-    }
-  </style>
+  <link href="assets/css/app-theme.css?v=20261014" rel="stylesheet">
 </head>
 <body>
   <?php include("navbartechnician.php"); ?>

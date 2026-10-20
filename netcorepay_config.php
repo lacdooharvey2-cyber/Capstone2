@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . '/stripe_config.php';
+require_once __DIR__ . '/app_config.php';
 
 function netcorepaySecretKey(): string
 {
-    loadStripeEnvironment();
+    loadAppEnvironment();
     $key = trim((string)(getenv('NETCOREPAY_SECRET_KEY') ?: ''));
     if ($key === '') {
         throw new RuntimeException('NetCorePay secret key is not configured.');
@@ -15,13 +15,13 @@ function netcorepaySecretKey(): string
 
 function netcorepayBaseUrl(): string
 {
-    loadStripeEnvironment();
+    loadAppEnvironment();
     return rtrim((string)(getenv('NETCOREPAY_API_URL') ?: 'https://netcorepay.com'), '/');
 }
 
 function netcorepayReturnUrl(): string
 {
-    loadStripeEnvironment();
+    loadAppEnvironment();
     $url = rtrim((string)(getenv('NETCOREPAY_RETURN_URL') ?: 'http://localhost/RedStar'), '/');
     if ($url === '') {
         throw new RuntimeException('NetCorePay return URL is not configured.');

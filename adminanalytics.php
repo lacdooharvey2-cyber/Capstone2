@@ -246,35 +246,6 @@ if ($isAssistantAdmin) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .kpi-card { min-height: 150px; }
-    .kpi-row { display: grid; gap: 22px; grid-template-columns: repeat(1, minmax(0, 1fr)); }
-    .kpi-col { min-width: 0; }
-    .kpi-card { min-width: 0; }
-    .kpi-body { align-items: flex-start; height: 100%; padding: 24px 28px; position: relative; }
-    .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: 1rem; max-width: calc(100% - 58px); min-height: 1.2em; }
-    .kpi-value { font-size: clamp(1.45rem, 2.4vw, 2.1rem); font-weight: 800; line-height: 1.08; margin-bottom: .8rem; max-width: calc(100% - 54px); overflow-wrap: anywhere; }
-    .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #e5f8e9; border-radius: 8px; display: inline-flex; height: 52px; justify-content: center; position: absolute; right: 22px; top: 22px; width: 52px; }
-    .kpi-button { background: transparent; border: 0; padding: 0; text-align: left; width: 100%; }
-    .kpi-button .card { cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
-    .kpi-button:hover .card { transform: translateY(-2px); box-shadow: 0 .7rem 1.4rem rgba(31,41,55,.12) !important; }
-    .chart-card { min-height: 350px; padding: 20px; }
-    .chart-card h6 { font-size: .95rem; margin-bottom: 4px; }
-    .chart-subtitle { color: #6c757d; font-size: .78rem; margin-bottom: 18px; }
-    .chart-card canvas { height: 255px !important; max-height: 255px; }
-    .chart-card.small-chart { min-height: 300px; }
-    .chart-card.small-chart canvas { height: 205px !important; max-height: 205px; }
-    @media (min-width: 576px) {
-      .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (min-width: 992px) { .kpi-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    @media (min-width: 1200px) {
-      .kpi-row { grid-template-columns: repeat(12, minmax(0, 1fr)); }
-      .kpi-col:nth-child(-n+4) { grid-column: span 3; }
-      .kpi-col:nth-child(n+5) { grid-column: span 4; }
-    }
-  </style>
 </head>
 <body>
   <?php include("navbaradmin.php"); ?>

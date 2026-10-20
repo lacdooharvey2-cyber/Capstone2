@@ -10,7 +10,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Cashier') {
 }
 
 ensureRepairAutomationSchema($conn);
-ensureStripeSchema($conn);
 ensureNetcorepaySchema($conn);
 syncAllBookingPaymentsToPayments($conn);
 
@@ -40,28 +39,9 @@ $bookings = $conn->query("
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Payment Transactions - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .cashier-payments { max-width: min(1320px, calc(100% - 24px)); }
-    .payment-table { font-size: .86rem; min-width: 1180px; table-layout: fixed; }
-    .payment-table th,
-    .payment-table td { padding: .6rem .55rem; vertical-align: middle; }
-    .payment-table .col-id { width: 86px; }
-    .payment-table .col-payment { width: 94px; }
-    .payment-table .col-customer { width: 150px; }
-    .payment-table .col-service { width: 105px; }
-    .payment-table .col-date { width: 112px; }
-    .payment-table .col-warranty { width: 95px; }
-    .payment-table .col-method { width: 95px; }
-    .payment-table .col-amount { width: 112px; }
-    .payment-table .col-status { width: 126px; }
-    .payment-table .col-details { width: 160px; }
-    .payment-table .col-action { width: 142px; }
-    .payment-table .text-truncate-cell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .payment-actions { display: grid; gap: 6px; }
-    .payment-actions .btn { width: 100%; }
-  </style>
+  <link href="assets/css/app-theme.css?v=20261014" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body>
   <?php include("navbarcashier.php"); ?>
   <div class="container mt-4 cashier-payments">
     <div class="page-hero">

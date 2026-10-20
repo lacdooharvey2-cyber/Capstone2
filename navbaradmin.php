@@ -4,7 +4,7 @@ $canMaintainSystem = in_array($currentAdminRole, ['SuperAdmin', 'AssistantSuperA
 $currentPage = basename($_SERVER['PHP_SELF'] ?? '');
 ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-<link href="assets/css/app-theme.css?v=20260928-2" rel="stylesheet">
+<link href="assets/css/app-theme.css?v=20261014" rel="stylesheet">
 <header class="app-topbar">
   <a class="app-logo" href="admindashboard.php"><i class="bi bi-shield-lock"></i><span>FixTrack Admin</span></a>
   <span class="app-account-dot" aria-hidden="true"></span>

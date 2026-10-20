@@ -94,16 +94,8 @@ $backUrl = match ($role) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Repair Details - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    body { background: #f8f9fa; color: #212529; font-family: 'Segoe UI', sans-serif; }
-    .details-wrap { max-width: 1050px; margin: 30px auto; padding: 0 16px 40px; }
-    .details-card { background: #fff; border: 1px solid #dee2e6; border-radius: 12px; box-shadow: 0 .35rem 1rem rgba(31,41,55,.08); }
-    .detail-label { color: #6c757d; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
-    .detail-value { color: #212529; margin-bottom: 0; overflow-wrap: anywhere; }
-    .issue-box { white-space: pre-wrap; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 14px; }
-    @media print { .app-topbar, .app-sidebar, .btn, .no-print { display: none !important; } body { background: #fff; } .details-wrap { max-width: none; margin: 0; } .details-card { box-shadow: none; } }
-  </style>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+   <link href="assets/css/app-theme.css?v=20261014" rel="stylesheet">
 </head>
 <body>
 <?php
@@ -203,7 +195,7 @@ include $navbar;
         </div>
       </div>
       <?php if ($chargeItems): ?>
-        <div class="table-responsive"><table class="table align-middle mb-0"><thead class="table-light"><tr><th>Type</th><th>Part or service</th><th class="text-end">Qty</th><th class="text-end">Unit price</th><th class="text-end">Line total</th></tr></thead><tbody>
+        <div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Type</th><th>Part or service</th><th class="text-end">Qty</th><th class="text-end">Unit price</th><th class="text-end">Line total</th></tr></thead><tbody>
           <?php foreach ($chargeItems as $item): $lineTotal = (float)$item['quantity'] * (float)$item['unit_price']; ?>
           <tr><td><?= htmlspecialchars($item['item_type']) ?></td><td><?= htmlspecialchars($item['item_name']) ?></td><td class="text-end"><?= number_format((float)$item['quantity'], 2) ?></td><td class="text-end">PHP <?= number_format((float)$item['unit_price'], 2) ?></td><td class="text-end">PHP <?= number_format($lineTotal, 2) ?></td></tr>
           <?php endforeach; ?>

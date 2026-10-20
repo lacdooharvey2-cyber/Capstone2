@@ -57,27 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $error === '') {
   <title>Reset Password - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    html { scroll-behavior: smooth; }
-    body { min-height: 100vh; display: grid; place-items: stretch; padding: 0; background: #f7f8f7; font-family: system-ui, "Segoe UI", Roboto, sans-serif; }
-    .reset-card { width: 100%; max-width: none; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; background: #fff; border: 0; border-radius: 0; padding: clamp(40px, 9vw, 140px); box-shadow: none; animation: resetRise .6s cubic-bezier(.2,.8,.2,1) both; }
-    .reset-card > * { width: 100%; max-width: 520px; margin-left: auto; margin-right: auto; }
-    .reset-card > * { animation: resetReveal .5s both; }
-    .reset-card > *:nth-child(2) { animation-delay: .08s; }
-    .reset-card > *:nth-child(3) { animation-delay: .16s; }
-    .reset-card > *:nth-child(4) { animation-delay: .24s; }
-    .reset-card .form-control { transition: border-color .28s ease, box-shadow .28s ease, transform .28s cubic-bezier(.22,1,.36,1); }
-    .reset-card .form-control:focus { border-color: #198754; box-shadow: 0 0 0 .22rem rgba(25,135,84,.14); transform: translateY(-1px); }
-    .reset-card .btn-success { transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease; }
-    .reset-card .btn-success:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(25,135,84,.22); }
-    @keyframes resetRise { from { opacity: 0; transform: translateY(18px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-    @keyframes resetReveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
-  </style>
+  <link href="assets/css/auth-theme.css?v=20261014" rel="stylesheet">
 </head>
-<body>
-  <main class="reset-card">
-    <div class="text-danger fs-2 mb-2"><i class="bi bi-key"></i></div>
+<body class="auth-page">
+  <main class="reset-main">
+    <div class="text-success fs-2 mb-2"><i class="bi bi-key"></i></div>
     <h1 class="h3 fw-bold mb-2">Create a new password</h1>
     <?php if ($error !== ''): ?><div class="alert alert-danger"><?= htmlspecialchars($error) ?></div><?php endif; ?>
     <?php if ($message !== ''): ?><div class="alert alert-success"><?= htmlspecialchars($message) ?></div><a href="login.php" class="btn btn-success w-100">Back to login</a><?php endif; ?>

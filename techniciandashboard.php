@@ -41,9 +41,9 @@ $completedRepairs = (int)techValue($conn, "SELECT COUNT(*) AS total FROM repairs
 $inProgressRepairs = (int)techValue($conn, "SELECT COUNT(*) AS total FROM repairs WHERE $repairScope AND repair_status='In Progress'");
 $pendingRepairs = (int)techValue($conn, "SELECT COUNT(*) AS total FROM repairs WHERE $repairScope AND repair_status='Pending'");
 $avgTurnaround = (float)techValue($conn, "
-  SELECT COALESCE(AVG(TIMESTAMPDIFF(DAY, created_at, updated_at)),0) AS total
+  SELECT COALESCE(AVG(GREATEST(TIMESTAMPDIFF(DAY, created_at, updated_at), 0)),0) AS total
   FROM repairs
-  WHERE $repairScope AND repair_status='Completed' AND updated_at IS NOT NULL
+  WHERE $repairScope AND repair_status='Completed' AND updated_at IS NOT NULL AND updated_at >= created_at
 ");
 $overdueJobs = (int)techValue($conn, "
   SELECT COUNT(*) AS total
@@ -79,7 +79,7 @@ $techBreakdowns = [
     'completed' => ['title' => $isHeadTechnician ? 'Completed Repairs by Team' : 'My Completed Repairs', 'rows' => techRows($conn, "SELECT r.repair_id, COALESCE(u.name, 'Customer') AS customer, r.ebike_model, r.updated_at FROM repairs r LEFT JOIN users u ON u.user_id=r.customer_id WHERE $repairScopeWithAlias AND r.repair_status='Completed' ORDER BY r.updated_at DESC LIMIT 50")],
     'progress' => ['title' => $isHeadTechnician ? 'Team In-Progress Repairs' : 'My In-Progress Repairs', 'rows' => techRows($conn, "SELECT r.repair_id, COALESCE(u.name, 'Customer') AS customer, r.ebike_model, r.created_at FROM repairs r LEFT JOIN users u ON u.user_id=r.customer_id WHERE $repairScopeWithAlias AND r.repair_status='In Progress' ORDER BY r.created_at ASC LIMIT 50")],
     'pending' => ['title' => $isHeadTechnician ? 'Team Pending Repairs' : 'My Pending Repairs', 'rows' => techRows($conn, "SELECT r.repair_id, COALESCE(u.name, 'Customer') AS customer, r.ebike_model, r.created_at FROM repairs r LEFT JOIN users u ON u.user_id=r.customer_id WHERE $repairScopeWithAlias AND r.repair_status='Pending' ORDER BY r.created_at ASC LIMIT 50")],
-    'turnaround' => ['title' => 'Turnaround Breakdown', 'rows' => techRows($conn, "SELECT r.repair_id, COALESCE(u.name, 'Customer') AS customer, r.created_at, r.updated_at, TIMESTAMPDIFF(DAY, r.created_at, r.updated_at) AS days FROM repairs r LEFT JOIN users u ON u.user_id=r.customer_id WHERE $repairScopeWithAlias AND r.repair_status='Completed' ORDER BY r.updated_at DESC LIMIT 50")],
+    'turnaround' => ['title' => 'Turnaround Breakdown', 'rows' => techRows($conn, "SELECT r.repair_id, COALESCE(u.name, 'Customer') AS customer, r.created_at, r.updated_at, GREATEST(TIMESTAMPDIFF(DAY, r.created_at, r.updated_at), 0) AS days FROM repairs r LEFT JOIN users u ON u.user_id=r.customer_id WHERE $repairScopeWithAlias AND r.repair_status='Completed' AND r.updated_at IS NOT NULL AND r.updated_at >= r.created_at")],
     'overdue' => ['title' => 'Overdue Jobs Breakdown', 'rows' => techRows($conn, "SELECT r.repair_id, COALESCE(u.name, 'Customer') AS customer, r.ebike_model, r.created_at FROM repairs r LEFT JOIN users u ON u.user_id=r.customer_id WHERE $repairScopeWithAlias AND r.repair_status IN ('Pending','In Progress') AND r.created_at < DATE_SUB(NOW(), INTERVAL $overdueDays DAY) ORDER BY r.created_at ASC LIMIT 50")],
 ];
 ?>
@@ -92,19 +92,6 @@ $techBreakdowns = [
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .kpi-card { min-height: 128px; }
-    .kpi-body { align-items: flex-start; height: 100%; padding: 18px; position: relative; }
-    .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
-    .kpi-value { font-size: clamp(1.05rem, 1.8vw, 1.8rem); font-weight: 800; line-height: 1; margin-bottom: .55rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #e5f8e9; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
-    .kpi-button { background: transparent; border: 0; padding: 0; text-align: left; width: 100%; }
-    .kpi-button .card { cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
-    .kpi-button:hover .card { transform: translateY(-2px); box-shadow: 0 .7rem 1.4rem rgba(31,41,55,.12) !important; }
-    .chart-card { min-height: 330px; padding: 20px; }
-    .chart-card canvas { height: 240px !important; max-height: 240px; }
-  </style>
 </head>
 <body>
   <?php include("navbartechnician.php"); ?>

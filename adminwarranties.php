@@ -78,155 +78,7 @@ $result = $stmt->get_result();
   <title>Warranty Records - FixTrack Admin</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    body {
-      background: #f8f9fa;
-      color: #212529;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .warranty-wrap {
-      max-width: 1368px;
-      margin: 32px auto;
-      padding: 0 18px 40px;
-    }
-    .page-title {
-      font-size: 40px;
-      font-weight: 800;
-      letter-spacing: 0;
-      margin-bottom: 6px;
-    }
-    .page-subtitle {
-      color: #6c757d;
-      margin-bottom: 36px;
-    }
-    .kpi-card {
-      background: #fff;
-      border: 1px solid #dee2e6;
-      border-radius: 12px;
-      padding: 20px;
-      min-height: 102px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
-    }
-    .kpi-label {
-      color: #495057;
-      margin-bottom: 8px;
-      font-size: 15px;
-    }
-    .kpi-value {
-      font-size: 28px;
-      font-weight: 800;
-      line-height: 1;
-    }
-    .kpi-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 26px;
-    }
-    .icon-active { color: #20c997; border: 3px solid #20c997; }
-    .icon-expired { color: #7b8190; border: 3px solid #7b8190; }
-    .icon-claimed { color: #2f80ff; border: 3px solid #2f80ff; }
-    .toolbar {
-      display: grid;
-      grid-template-columns: minmax(280px, 1fr) 136px 186px;
-      gap: 16px;
-      margin: 36px 0 20px;
-    }
-    .searchbox {
-      position: relative;
-    }
-    .searchbox i {
-      position: absolute;
-      top: 50%;
-      left: 16px;
-      transform: translateY(-50%);
-      color: #a1a1aa;
-      font-size: 20px;
-    }
-    .search-input,
-    .status-select {
-      background: #fff;
-      color: #212529;
-      border: 1px solid #ced4da;
-      border-radius: 12px;
-      min-height: 48px;
-    }
-    .search-input {
-      padding-left: 48px;
-    }
-    .search-input::placeholder {
-      color: #6c757d;
-    }
-    .search-input:focus,
-    .status-select:focus {
-      background: #fff;
-      color: #212529;
-      border-color: #198754;
-      box-shadow: none;
-    }
-    .new-btn {
-      min-height: 48px;
-      border-radius: 12px;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: #198754;
-      color: #fff;
-      border: 0;
-      text-decoration: none;
-    }
-    .records-panel {
-      background: #fff;
-      border: 1px solid #dee2e6;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
-    }
-    .table {
-      margin-bottom: 0;
-      color: #212529;
-    }
-    .table thead th {
-      background: #f3f5f3;
-      color: #146c43;
-      border-color: #e5e7eb;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .table tbody td {
-      background: #fff;
-      color: #212529;
-      border-color: #dee2e6;
-      vertical-align: middle;
-    }
-    .muted-cell {
-      color: #6c757d;
-    }
-    .action-link {
-      color: #0d6efd;
-      text-decoration: none;
-      margin-right: 12px;
-      font-weight: 600;
-    }
-    .action-link.delete {
-      color: #ff6b6b;
-    }
-    @media (max-width: 900px) {
-      .toolbar {
-        grid-template-columns: 1fr;
-      }
-      .page-title {
-        font-size: 32px;
-      }
-    }
-  </style>
+  <link href="assets/css/app-theme.css?v=20261014" rel="stylesheet">
 </head>
 <body>
   <?php include("navbaradmin.php"); ?>
@@ -235,7 +87,7 @@ $result = $stmt->get_result();
     <h1 class="page-title">Warranty Records</h1>
     <p class="page-subtitle">Track and manage all repair warranties and coverage information</p>
 
-    <section class="row g-3">
+    <section class="row g-3 warranty-kpi">
       <div class="col-md-4">
         <div class="kpi-card">
           <div>
@@ -265,7 +117,7 @@ $result = $stmt->get_result();
       </div>
     </section>
 
-    <form class="toolbar" method="get">
+    <form class="warranty-toolbar" method="get">
       <div class="searchbox">
         <i class="bi bi-search"></i>
         <input class="form-control search-input" type="search" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Search by customer, warranty ID, or bike model...">
@@ -279,7 +131,7 @@ $result = $stmt->get_result();
     </form>
 
     <section class="records-panel">
-      <div class="table-responsive">
+      <div class="table-responsive warranty-table-wrap">
         <table class="table table-hover">
           <thead>
             <tr>

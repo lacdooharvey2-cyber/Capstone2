@@ -52,7 +52,7 @@ $contacts = $conn->query("
   <div class="container-fluid mt-3">
     <div class="row">
       <!-- Sidebar -->
-      <div class="col-3 border-end bg-light">
+      <div class="col-3 border-end bg-white">
         <h5 class="mt-3 mb-2">Messages</h5>
         <ul class="list-group">
           <?php while($c = $contacts->fetch_assoc()): ?>

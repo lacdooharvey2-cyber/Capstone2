@@ -364,59 +364,27 @@ function syncRepairWarrantyCoverage(mysqli $conn): int
     return $bookingUpdates + $repairUpdates;
 }
 
-function ensureStripeSchema(mysqli $conn): void
+function ensureNetcorepaySchema(mysqli $conn): void
 {
-    if (!columnExists($conn, 'repair_bookings', 'stripe_checkout_session_id')) {
-        $conn->query("ALTER TABLE repair_bookings ADD COLUMN stripe_checkout_session_id VARCHAR(255) NULL AFTER payment_status");
-    }
-
-    if (!columnExists($conn, 'repair_bookings', 'stripe_payment_intent_id')) {
-        $conn->query("ALTER TABLE repair_bookings ADD COLUMN stripe_payment_intent_id VARCHAR(255) NULL AFTER stripe_checkout_session_id");
-    }
-
     if (!columnExists($conn, 'repair_bookings', 'paid_at')) {
-        $conn->query("ALTER TABLE repair_bookings ADD COLUMN paid_at DATETIME NULL AFTER stripe_payment_intent_id");
-    }
-
-    if (!columnExists($conn, 'repair_bookings', 'stripe_invoice_id')) {
-        $conn->query("ALTER TABLE repair_bookings ADD COLUMN stripe_invoice_id VARCHAR(255) NULL AFTER paid_at");
+        $conn->query("ALTER TABLE repair_bookings ADD COLUMN paid_at DATETIME NULL AFTER payment_status");
     }
 
     if (!columnExists($conn, 'repair_bookings', 'booking_email_sent_at')) {
-        $conn->query("ALTER TABLE repair_bookings ADD COLUMN booking_email_sent_at DATETIME NULL AFTER stripe_invoice_id");
+        $conn->query("ALTER TABLE repair_bookings ADD COLUMN booking_email_sent_at DATETIME NULL AFTER paid_at");
     }
 
     if (!columnExists($conn, 'repair_bookings', 'receipt_email_sent_at')) {
         $conn->query("ALTER TABLE repair_bookings ADD COLUMN receipt_email_sent_at DATETIME NULL AFTER booking_email_sent_at");
     }
-}
-
-function ensureXenditSchema(mysqli $conn): void
-{
-    if (!columnExists($conn, 'repair_bookings', 'xendit_payment_session_id')) {
-        $conn->query("ALTER TABLE repair_bookings ADD COLUMN xendit_payment_session_id VARCHAR(255) NULL AFTER stripe_checkout_session_id");
-    }
-
-    if (!columnExists($conn, 'repair_bookings', 'xendit_payment_request_id')) {
-        $conn->query("ALTER TABLE repair_bookings ADD COLUMN xendit_payment_request_id VARCHAR(255) NULL AFTER xendit_payment_session_id");
-    }
-
-    if (!columnExists($conn, 'repair_bookings', 'xendit_payment_id')) {
-        $conn->query("ALTER TABLE repair_bookings ADD COLUMN xendit_payment_id VARCHAR(255) NULL AFTER xendit_payment_session_id");
-    }
-}
-
-function ensureNetcorepaySchema(mysqli $conn): void
-{
-    ensureXenditSchema($conn);
     if (!columnExists($conn, 'repair_bookings', 'netcorepay_payment_id')) {
-        $conn->query("ALTER TABLE repair_bookings ADD COLUMN netcorepay_payment_id VARCHAR(255) NULL AFTER xendit_payment_id");
+        $conn->query("ALTER TABLE repair_bookings ADD COLUMN netcorepay_payment_id VARCHAR(255) NULL AFTER receipt_email_sent_at");
     }
 }
 
 function normalizePaymentMethod(string $method): string
 {
-    return in_array($method, ['Cash', 'Cashier', 'GCash', 'Maya', 'PayPal', 'Warranty'], true) ? $method : 'Cashier';
+    return in_array($method, ['Cash', 'Cashier', 'GCash', 'Maya', 'Warranty'], true) ? $method : 'Cashier';
 }
 
 function normalizePaymentStatus(string $status): string
@@ -517,14 +485,12 @@ function syncAllBookingPaymentsToPayments(mysqli $conn): int
         return 0;
     }
 
-    ensureStripeSchema($conn);
     ensureNetcorepaySchema($conn);
 
     $result = $conn->query("
         SELECT rb.booking_id,
                CASE
-                 WHEN COALESCE(rb.netcorepay_payment_id, rb.xendit_payment_id, rb.xendit_payment_request_id, rb.xendit_payment_session_id, '') <> '' THEN 'GCash'
-                 WHEN COALESCE(rb.stripe_payment_intent_id, rb.stripe_checkout_session_id, '') <> '' THEN 'PayPal'
+                 WHEN COALESCE(rb.netcorepay_payment_id, '') <> '' THEN 'GCash'
                  ELSE 'Cashier'
                END AS payment_method
         FROM repair_bookings rb

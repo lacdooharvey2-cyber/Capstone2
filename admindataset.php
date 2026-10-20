@@ -24,7 +24,7 @@ $rows = $conn->query("
   <title>E-Bike Dataset - FixTrack Admin</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body>
   <?php include("navbaradmin.php"); ?>
   <div class="container mt-4">
     <h3 class="mb-4">NWOW / KUDA Dataset</h3>

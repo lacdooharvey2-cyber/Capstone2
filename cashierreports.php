@@ -91,19 +91,8 @@ for ($i = 0; $i < 30; $i++) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .kpi-card { min-height: 128px; }
-    .kpi-body { align-items: flex-start; height: 100%; padding: 18px; position: relative; }
-    .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
-    .kpi-value { font-size: clamp(1.05rem, 1.8vw, 1.8rem); font-weight: 800; line-height: 1; margin-bottom: .55rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #e5f8e9; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
-    .chart-card { min-height:340px; padding:20px; }
-    .chart-card canvas { height:245px !important; max-height:245px; }
-    .chart-subtitle { color:#6c757d; font-size:.82rem; margin-bottom:18px; }
-  </style>
 </head>
-<body class="bg-light">
+<body>
   <?php include("navbarcashier.php"); ?>
   <div class="container mt-4">
     <div class="page-hero">

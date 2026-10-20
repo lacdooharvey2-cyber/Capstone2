@@ -75,313 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>FixTrack - Login</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    :root {
-      --app-primary: #198754;
-      --app-primary-dark: #1f2937;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      min-height: 100vh;
-      background: #f7f8f7;
-      color: var(--app-primary-dark);
-      font-family: system-ui, "Segoe UI", Roboto, sans-serif;
-      overflow-x: hidden;
-    }
-
-    .auth-shell {
-      min-height: 100vh;
-      display: flex;
-      align-items: stretch;
-      padding: 0;
-    }
-
-    .auth-panel {
-      width: 100%;
-      max-width: none;
-      min-height: 100vh;
-      margin: 0;
-      background: #fff;
-      border: 0;
-      border-radius: 0;
-      overflow: hidden;
-      box-shadow: none;
-      animation: fadeInUp 0.7s cubic-bezier(.2,.8,.2,1) both;
-    }
-
-    .auth-panel > .row {
-      min-height: 100vh;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .brand-side {
-      min-height: 100vh;
-      padding: clamp(48px, 8vw, 120px);
-      background: #f7f8f7;
-      border-right: 1px solid #e4e9e5;
-      color: #17221a;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-    }
-
-    .brand-mark {
-      width: 38px;
-      height: 38px;
-      border-radius: 6px;
-      background: #003b16;
-      color: #fff;
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-    }
-
-    .brand-lockup {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: #003b16;
-      font-size: 1.25rem;
-      font-weight: 800;
-      text-decoration: none;
-    }
-
-    .brand-title {
-      max-width: 420px;
-      font-size: clamp(2.3rem, 4vw, 4rem);
-      font-weight: 800;
-      letter-spacing: 0;
-      line-height: 1.08;
-      margin: 42px 0 16px;
-    }
-
-    .brand-copy {
-      max-width: 390px;
-      color: #647068;
-      font-size: 16px;
-      line-height: 1.7;
-    }
-
-    .feature-row {
-      display: grid;
-      gap: 12px;
-    }
-
-    .feature-pill {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      background: #e5f8e9;
-      border: 1px solid #b8e4c2;
-      border-radius: 6px;
-      color: #146c43;
-      transition: transform .2s ease, background-color .2s ease;
-    }
-
-    .feature-pill:hover {
-      background: #d9f2df;
-      transform: translateX(5px);
-    }
-
-    .feature-pill:nth-child(2) { animation-delay: .12s; }
-    .feature-pill:nth-child(3) { animation-delay: .2s; }
-
-    @keyframes contentReveal {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .login-side {
-      min-height: 100vh;
-      padding: clamp(48px, 8vw, 120px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      animation: contentReveal .7s .18s both;
-    }
-
-    .login-side > * { animation: contentReveal .55s both; }
-    .login-side > *:nth-child(2) { animation-delay: .08s; }
-    .login-side > *:nth-child(3) { animation-delay: .16s; }
-    .login-side > *:nth-child(4) { animation-delay: .24s; }
-    .login-side > *:nth-child(5) { animation-delay: .32s; }
-    .login-side > *:nth-child(6) { animation-delay: .4s; }
-    .login-side form > div { animation: contentReveal .5s both; }
-    .login-side form > div:nth-child(2) { animation-delay: .08s; }
-    .login-side form > button { animation: contentReveal .5s .16s both; }
-
-    .login-heading {
-      font-size: 30px;
-      font-weight: 800;
-      letter-spacing: 0;
-      margin-bottom: 6px;
-    }
-
-    .form-control,
-    .input-group-text,
-    .btn {
-      min-height: 46px;
-      border-radius: 8px;
-    }
-
-    .input-group .form-control {
-      border-left: 0;
-    }
-
-    .input-group-text {
-      background: #fff;
-      color: #6c757d;
-    }
-
-    .form-control:focus {
-      border-color: var(--app-primary);
-      box-shadow: 0 0 0 .22rem rgba(25, 135, 84, .14);
-    }
-
-    .form-control,
-    .input-group-text,
-    .btn,
-    .small-link,
-    .google-login-btn {
-      transition: border-color .28s ease, color .28s ease, background-color .28s ease, box-shadow .28s ease, transform .28s cubic-bezier(.22,1,.36,1);
-    }
-
-    .input-group:focus-within .input-group-text {
-      border-color: var(--app-primary);
-      color: var(--app-primary);
-    }
-
-    .btn-danger {
-      font-weight: 700;
-      background: var(--app-primary);
-      border-color: var(--app-primary);
-      transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
-    }
-
-    .btn-danger:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 24px rgba(25,135,84,0.22);
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      color: #6c757d;
-      font-size: 14px;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: #dee2e6;
-    }
-
-    .google-login-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      min-height: 46px;
-      padding: 10px 15px;
-      border: 1px solid #dadce0;
-      border-radius: 8px;
-      background-color: #fff;
-      color: #3c4043;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 700;
-      transition: all 0.2s ease;
-    }
-
-    .google-login-btn:hover {
-      background-color: #f8f9fa;
-      border-color: #b8b8b8;
-      color: #3c4043;
-      text-decoration: none;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.10);
-    }
-
-    .google-login-btn img {
-      display: block;
-    }
-
-    .small-link {
-      color: var(--app-primary);
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .small-link:hover {
-      text-decoration: underline;
-    }
-
-    .auth-panel .badge.text-bg-danger-subtle {
-      background: #e5f8e9 !important;
-      color: #146c43 !important;
-      border-color: #b8e4c2 !important;
-    }
-
-    .auth-panel a.text-danger {
-      color: var(--app-primary) !important;
-    }
-
-    @media (max-width: 991px) {
-      .brand-side {
-        min-height: auto;
-        padding: 34px;
-      }
-
-      .login-side {
-        padding: 34px;
-      }
-
-      .brand-title {
-        font-size: 34px;
-      }
-    }
-
-    @media (max-width: 575px) {
-      .brand-side {
-        display: none;
-      }
-
-      .auth-panel {
-        border-radius: 0;
-      }
-
-      .login-side {
-        padding: 28px 20px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
+  <link href="assets/css/auth-theme.css?v=20261014" rel="stylesheet">
 </head>
-<body>
+<body class="auth-page">
   <main class="auth-shell">
     <section class="auth-panel">
       <div class="row g-0">
@@ -395,15 +91,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
         </div>
 
-        <div class="col-lg-6 login-side">
+        <div class="col-lg-6 auth-form-side">
           <div class="mb-4">
-            <a href="Homepage.php" class="small text-success text-decoration-none d-inline-flex align-items-center gap-2 mb-4">
+            <a href="Homepage.php" class="back-link d-inline-flex align-items-center gap-2 mb-4">
               <i class="bi bi-arrow-left"></i> Back to home
             </a>
-            <br>
-            <span class="badge text-bg-danger-subtle text-danger border border-danger-subtle mb-3">FixTrack Portal</span>
-            <h2 class="login-heading">Welcome back</h2>
-            <p class="text-muted mb-0">Login to book and track your e-bike repair.</p>
+            <span class="auth-badge">FixTrack Portal</span>
+            <h2 class="auth-heading">Welcome back</h2>
+            <p class="auth-subtext">Login to book and track your e-bike repair.</p>
           </div>
 
           <?php if (!empty($error)): ?>
@@ -432,13 +127,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </div>
             </div>
 
-            <button type="submit" class="btn btn-danger w-100 mb-3">
+            <button type="submit" class="btn btn-success w-100 mb-3">
               <i class="bi bi-box-arrow-in-right me-1"></i> Login
             </button>
           </form>
 
           <div class="text-center mb-2">
-            <a href="forgot_password.php" class="small text-danger text-decoration-none">Forgot password?</a>
+            <a href="forgot_password.php" class="small-link">Forgot password?</a>
           </div>
 
           <div class="divider my-3">
@@ -464,6 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </section>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     function togglePassword(fieldId, btn) {
       const input = document.getElementById(fieldId);
@@ -481,4 +177,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </script>
 </body>
 </html>
-

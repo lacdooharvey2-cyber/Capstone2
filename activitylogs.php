@@ -45,15 +45,7 @@ $navbar = match ($role) {
   <title>Audit Trail - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/css/app-theme.css" rel="stylesheet">
-  <style>
-    body { background: #f8f9fa; }
-    .logs-wrap { max-width: 1180px; margin: 30px auto; padding: 0 16px 40px; }
-    .logs-panel { background: #fff; border: 1px solid #dee2e6; border-radius: 12px; box-shadow: 0 .35rem 1rem rgba(31,41,55,.07); overflow: hidden; }
-    .logs-panel thead th { background: #f3f5f3; color: #374151; white-space: nowrap; }
-    .logs-panel td { vertical-align: middle; }
-    .log-description { max-width: 560px; }
-  </style>
+  <link href="assets/css/app-theme.css?v=20261014" rel="stylesheet">
 </head>
 <body>
   <?php include $navbar; ?>

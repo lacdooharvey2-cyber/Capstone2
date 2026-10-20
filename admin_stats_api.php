@@ -46,9 +46,9 @@ $stats = [
       WHERE repair_status='Completed' AND updated_at >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
     "),
     'avg_turnaround' => (float)adminStatValue($conn, "
-      SELECT COALESCE(AVG(TIMESTAMPDIFF(DAY, created_at, updated_at)),0) AS total
+      SELECT COALESCE(AVG(GREATEST(TIMESTAMPDIFF(DAY, created_at, updated_at), 0)),0) AS total
       FROM repairs
-      WHERE repair_status='Completed' AND updated_at IS NOT NULL
+      WHERE repair_status='Completed' AND updated_at IS NOT NULL AND updated_at >= created_at
     "),
     'cancellations_this_month' => (int)adminStatValue($conn, "
       SELECT COUNT(*) AS total

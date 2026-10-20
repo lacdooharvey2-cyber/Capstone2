@@ -102,20 +102,7 @@ $repairBreakdowns = [
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Manage Repairs - FixTrack Admin</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .repair-live-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
-    .repair-live-card { border-left-width: 4px !important; min-height: 104px; }
-    .repair-kpi-button { background: transparent; border: 0; padding: 0; text-align: left; width: 100%; }
-    .repair-kpi-button .card { cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
-    .repair-kpi-button:hover .card { transform: translateY(-2px); box-shadow: 0 .7rem 1.4rem rgba(31,41,55,.12) !important; }
-    .repair-live-label { color: #6c757d; font-size: .8rem; font-weight: 700; margin-bottom: 6px; }
-    .repair-live-value { font-size: 1.55rem; font-weight: 800; margin-bottom: 0; }
-    .record-actions { display:flex; flex-wrap:wrap; gap:6px; min-width:210px; }
-    .record-actions .btn { min-width:76px; }
-    .record-actions .btn:first-child { min-width:104px; }
-    @media (max-width: 900px) { .repair-live-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 575px) { .repair-live-grid { grid-template-columns: 1fr; } }
-  </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
   <?php include("navbaradmin.php"); ?> <!-- make sure file exists -->

@@ -52,9 +52,9 @@ $monthlyRevenue = (float)dashboardValue($conn, "
   WHERE repair_status='Completed' AND updated_at >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
 ");
 $avgTurnaround = (float)dashboardValue($conn, "
-  SELECT COALESCE(AVG(TIMESTAMPDIFF(DAY, created_at, updated_at)),0) AS total
+  SELECT COALESCE(AVG(GREATEST(TIMESTAMPDIFF(DAY, created_at, updated_at), 0)),0) AS total
   FROM repairs
-  WHERE repair_status='Completed' AND updated_at IS NOT NULL
+  WHERE repair_status='Completed' AND updated_at IS NOT NULL AND updated_at >= created_at
 ");
 $cancellationsThisMonth = (int)dashboardValue($conn, "
   SELECT COUNT(*) AS total
@@ -164,9 +164,9 @@ $dashboardBreakdowns = [
         'title' => 'Turnaround Breakdown',
         'headers' => ['ID', 'Customer', 'Created', 'Completed', 'Days'],
         'rows' => dashboardRows($conn, "
-            SELECT r.repair_id, COALESCE(u.name, CONCAT('Customer #', r.customer_id)) AS customer, r.created_at, r.updated_at, TIMESTAMPDIFF(DAY, r.created_at, r.updated_at) AS days
+            SELECT r.repair_id, COALESCE(u.name, CONCAT('Customer #', r.customer_id)) AS customer, r.created_at, r.updated_at, GREATEST(TIMESTAMPDIFF(DAY, r.created_at, r.updated_at), 0) AS days
             FROM repairs r LEFT JOIN users u ON u.user_id = r.customer_id
-            WHERE r.repair_status='Completed' AND r.updated_at IS NOT NULL
+            WHERE r.repair_status='Completed' AND r.updated_at IS NOT NULL AND r.updated_at >= r.created_at
             ORDER BY r.updated_at DESC LIMIT 50
         "),
         'fields' => ['repair_id', 'customer', 'created_at', 'updated_at', 'days'],
@@ -196,25 +196,7 @@ if ($isAssistantAdmin) {
   <title>Admin Dashboard - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .admin-kpi-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-    .kpi-card { min-height: 142px; }
-    .kpi-body { align-items: flex-start; height: 100%; padding: 18px; position: relative; }
-    .kpi-label { color: var(--app-muted); font-size: .82rem; font-weight: 700; letter-spacing: 0; margin-bottom: .5rem; max-width: calc(100% - 48px); min-height: 2.2em; }
-    .kpi-value { font-size: clamp(1.1rem, 2vw, 1.8rem); font-weight: 800; line-height: 1.08; margin-bottom: .55rem; overflow-wrap: anywhere; }
-    .kpi-note { color: var(--app-muted); font-size: .78rem; line-height: 1.3; margin-bottom: 0; }
-    .kpi-icon { align-items: center; background: #e5f8e9; border-radius: 8px; display: inline-flex; height: 42px; justify-content: center; position: absolute; right: 18px; top: 18px; width: 42px; }
-    .kpi-button { background: transparent; border: 0; padding: 0; text-align: left; width: 100%; }
-    .kpi-button .card { cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
-    .kpi-button:hover .card { transform: translateY(-2px); box-shadow: 0 .7rem 1.4rem rgba(31,41,55,.12) !important; }
-    @media (max-width: 900px) { .admin-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 575px) { .admin-kpi-grid { grid-template-columns: 1fr; } }
-    .chart-card { min-height: 340px; padding: 20px; }
-    .chart-card h6 { font-size: .95rem; margin-bottom: 4px; }
-    .chart-subtitle { color: #6c757d; font-size: .78rem; margin-bottom: 18px; }
-    .chart-card canvas { height: 245px !important; max-height: 245px; }
-  </style>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <?php include("navbaradmin.php"); ?>

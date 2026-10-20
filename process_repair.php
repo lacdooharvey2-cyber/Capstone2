@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Customer') {
 }
 
 ensureRepairAutomationSchema($conn);
-ensureStripeSchema($conn);
+ensureNetcorepaySchema($conn);
 syncWarrantyStatuses($conn);
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

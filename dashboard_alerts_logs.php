@@ -40,15 +40,6 @@ function renderDashboardAlerts(mysqli $conn, string $role, int $userId): void
     }
 
     ?>
-    <style>
-      .dashboard-alerts-logs { margin-bottom: 1.25rem; }
-      .dashboard-alerts-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-      .dashboard-alert-item { min-height: 88px; border-left: 4px solid currentColor; border-radius: 8px; padding: 12px 14px; background: #fff; box-shadow: 0 4px 14px rgba(31,41,55,.06); }
-      .dashboard-alert-item h6 { font-size: .86rem; margin-bottom: 4px; }
-      .dashboard-alert-item p { color: #6c757d; font-size: .78rem; line-height: 1.35; margin: 0; }
-      .dashboard-alert-item a { color: inherit; text-decoration: none; }
-      @media (max-width: 900px) { .dashboard-alerts-grid { grid-template-columns: 1fr; } }
-    </style>
     <section class="dashboard-alerts-logs" aria-label="Reminders and alerts">
       <div class="dashboard-alerts-grid">
         <?php foreach ($alerts as [$color, $title, $text, $link]): ?>

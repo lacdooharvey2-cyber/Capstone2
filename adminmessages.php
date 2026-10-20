@@ -33,7 +33,7 @@ function messageRoleLabel(string $role): string
   <div class="container-fluid mt-3">
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-3 border-end bg-light">
+    <div class="col-3 border-end bg-white">
       <div class="d-flex justify-content-between align-items-center mt-3 mb-2">
         <h5>Messages</h5>
         <a href="newmessage.php" class="btn btn-sm btn-primary">+ New Message</a>

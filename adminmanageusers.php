@@ -17,6 +17,7 @@ $result = $conn->query("SELECT user_id, custom_id, name, email, contact_number, 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Manage Users - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
   <?php include("navbaradmin.php"); ?>

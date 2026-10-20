@@ -44,45 +44,9 @@ $timeSlots = ['10:00 AM - 11:30 AM', '11:30 AM - 1:00 PM', '1:00 PM - 2:30 PM', 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Repair Request Form - FixTrack</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
-    .form-container {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 30px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0px 6px 20px rgba(0,0,0,0.15);
-      animation: fadeInUp 1s ease;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    h3 { color: #198754; font-weight: bold; margin-bottom: 20px; }
-    .form-label { font-weight: 500; margin-bottom: 4px; }
-    .summary-box { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 16px; }
-    .summary-label { color: #6c757d; font-size: 14px; margin-bottom: 4px; }
-    .summary-value { font-weight: 700; margin-bottom: 0; }
-    .btn-success { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-    .btn-success:hover {
-      transform: translateY(-2px);
-      box-shadow: 0px 4px 12px rgba(25,135,84,0.4);
-    }
-    input:focus, select:focus, textarea:focus {
-      box-shadow: 0 0 6px rgba(25,135,84,0.5);
-      border-color: #198754;
-    }
-    .availability-calendar { border: 1px solid #dee2e6; border-radius: 8px; overflow: hidden; }
-    .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
-    .calendar-cell { align-items: center; background: #fff; border-right: 1px solid #edf0f2; border-top: 1px solid #edf0f2; display: flex; font-size: .82rem; font-weight: 700; justify-content: center; min-height: 42px; }
-    .calendar-cell:nth-child(7n) { border-right: 0; }
-    .calendar-head { background: #f3f5f3; color: #374151; font-size: .72rem; min-height: 34px; text-transform: uppercase; }
-    .calendar-muted { color: #adb5bd; }
-    .calendar-full { background: #198754; color: #fff; }
-    .calendar-selected { outline: 3px solid rgba(25,135,84,.35); outline-offset: -3px; }
-  </style>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+   <link href="assets/css/app-theme.css?v=20261014" rel="stylesheet">
 </head>
 <body>
   <?php include("navbarcustomer.php"); ?>

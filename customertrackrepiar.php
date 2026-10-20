@@ -39,18 +39,8 @@ if ($tracking_number !== '') {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Track Repair - FixTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    .tracking-shell { max-width: 840px; margin: 34px auto; padding: 0 16px 42px; }
-    .tracking-card { animation: trackRise .55s ease both; }
-    .tracking-code { font-family: Consolas, "Courier New", monospace; letter-spacing: .02em; }
-    .detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-    .detail-box { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 14px; }
-    .detail-label { color: #6c757d; font-size: .82rem; font-weight: 700; margin-bottom: 4px; }
-    .detail-value { font-weight: 700; margin-bottom: 0; overflow-wrap: anywhere; }
-    @keyframes trackRise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 640px) { .detail-grid { grid-template-columns: 1fr; } }
-  </style>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+   <link href="assets/css/app-theme.css?v=20261014" rel="stylesheet">
 </head>
 <body>
   <?php include("navbarcustomer.php"); ?>

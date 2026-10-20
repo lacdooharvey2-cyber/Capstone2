@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . '/stripe_config.php';
+require_once __DIR__ . '/app_config.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 
 function sendFixTrackEmail(string $recipient, string $recipientName, string $subject, string $htmlBody, string $textBody): bool
 {
-    loadStripeEnvironment();
+    loadAppEnvironment();
 
     $host = trim((string)(getenv('SMTP_HOST') ?: ''));
     $username = trim((string)(getenv('SMTP_USERNAME') ?: ''));
